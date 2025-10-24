@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -22,17 +24,31 @@ public class Player_Script : MonoBehaviour
     private float _velocityY;
     private float _currentTurnVelocity;
 
+    private int health;
+    private bool canTakeDmg = true;
+    [SerializeField] private float IFrameTime = 1;
+    //used to trigger a death animation and death screen
+    private bool canMove = true;
+
+
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
+        
+        //sets base health
+        health = 3;
     }
 
     private void Update()
     {
+        //stops everything on player death
+        if(!canMove) return;
+
         ApplyGravity();
         ApplyRotation();
         ApplyMovement();
+
     }
 
     private void ApplyMovement()
@@ -100,6 +116,7 @@ public class Player_Script : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (!canMove) return;
         if (!context.started) return;
         if (!_characterController.isGrounded) return;
 
@@ -107,5 +124,36 @@ public class Player_Script : MonoBehaviour
 
         //plays jump animation
         _animator.SetTrigger("Jump");
+    }
+
+    //will handle all collision
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Enemy") && canTakeDmg)
+        {
+            health -= 1;
+            Debug.Log(health);
+            StartCoroutine(IFrames());
+            _animator.SetTrigger("TookDamage");
+        }
+    }
+
+    IEnumerator IFrames()
+    {
+        canTakeDmg = false;
+        if (health <= 0 && canMove)
+        {
+            Death();
+        }
+
+        yield return new WaitForSeconds(IFrameTime);
+        canTakeDmg = true;
+    }
+
+
+    public void Death()
+    {
+        canMove = false;
+        _animator.SetTrigger("Death");
     }
 }
