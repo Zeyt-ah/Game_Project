@@ -8,6 +8,10 @@ TagManager:
   - Breakable
   - AttackHitboxTag
   - Pushable
+  - Coin
+  - Crystal
+  - Egg
+  - PickupTag
   layers:
   - Default
   - TransparentFX
