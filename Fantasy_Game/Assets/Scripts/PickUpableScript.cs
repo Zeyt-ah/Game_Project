@@ -7,6 +7,8 @@ public class PickUpableScript : MonoBehaviour
     public Player_Script playerScript;
     private MeshRenderer meshRenderer;
     private Light light;
+
+    private bool pickedUp = false;
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -22,6 +24,7 @@ public class PickUpableScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         this.meshRenderer.enabled = false;
+        pickedUp = true;
         if (this.CompareTag("Crystal"))
         {
             light = this.GetComponentInChildren<Light>();
@@ -33,7 +36,7 @@ public class PickUpableScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && pickedUp)
         {
             Destroy(this.gameObject);
             playerScript.pickedUp = false;

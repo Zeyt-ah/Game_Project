@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 6140932730246777077}
-  player: {fileID: 0}
+  player: {fileID: 2349387442342309162, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
   attackCollider: {fileID: 4160322688371424053}
   animator: {fileID: 1891875018413555480}
   detectionRange: 10

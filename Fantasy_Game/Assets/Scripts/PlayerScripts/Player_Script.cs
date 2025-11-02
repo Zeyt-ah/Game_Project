@@ -61,7 +61,7 @@ public class Player_Script : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         
         //sets base health
-        health = 3;
+        health = 100;
     }
 
     private void Update()
@@ -200,10 +200,11 @@ public class Player_Script : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("Enemy") && canTakeDmg)
         {
-            health -= 1;
+            health -= 25;
             Debug.Log(health);
             StartCoroutine(IFrames());
             _animator.SetTrigger("TookDamage");
+            gameManager.UpdateHealth(25);
         }
     }
 
@@ -211,11 +212,12 @@ public class Player_Script : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && canTakeDmg && !dead)
         {
-            health -= 1;
+            health -= 25;
             Debug.Log(health);
 
             StartCoroutine(IFrames());
             _animator.SetTrigger("TookDamage");
+            gameManager.UpdateHealth(25);
         }
 
         else if (other.CompareTag("Crystal"))
