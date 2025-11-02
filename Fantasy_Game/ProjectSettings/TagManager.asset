@@ -8,6 +8,10 @@ TagManager:
   - Breakable
   - AttackHitboxTag
   - Pushable
+  - MovingPlatform
+  - WayBack
+  - TeleportTrigger
+  - zone2
   layers:
   - Default
   - TransparentFX
