@@ -20,12 +20,7 @@ public class Player_Script : MonoBehaviour
 
     private CharacterController _characterController;
     private Animator _animator;
-    public BoxCollider pickupHitbox;
     public BoxCollider _attackHitbox;
-
-    public CapsuleCollider hurtBox;
-
-    public GameManagerScript gameManager;
 
     private Vector2 _input;
     private Vector3 _moveDir;
@@ -41,22 +36,11 @@ public class Player_Script : MonoBehaviour
     private bool canMove = true;
     private bool canAttack = true;
     private bool dead = false;
-    private bool isInteracting = false;
-
-    private int coinCount = 0;
-    private int crystalCount = 0;
-    private int eggCount = 0;
-    private bool onPickupable = false;
-    public bool pickedUp = false;
 
 
 
     private void Awake()
     {
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         _animator = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
         
@@ -67,7 +51,8 @@ public class Player_Script : MonoBehaviour
     private void Update()
     {
         //stops everything on player death
-        if(dead || !canMove) return;
+        if(!canMove) return;
+
         ApplyGravity();
         ApplyRotation();
         ApplyMovement();
@@ -140,11 +125,10 @@ public class Player_Script : MonoBehaviour
     public void Sprint(InputAction.CallbackContext context)
     {
         if (context.started)
-        { 
+        {
             speed = speed * sprintSpeedMult;
             _animator.SetBool("isSprinting", true);
         }
-
         else if (context.canceled)
             {
                 speed = speed / sprintSpeedMult;
@@ -192,10 +176,10 @@ public class Player_Script : MonoBehaviour
     //waits a bit to enable attack hitbox
     IEnumerator AttackHitboxOn()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(.5f);
         _attackHitbox.enabled = true;
     }
-    //will handle all collision for player running into something
+    //will handle all collision
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.CompareTag("Enemy") && canTakeDmg)
@@ -207,52 +191,10 @@ public class Player_Script : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Enemy") && canTakeDmg && !dead)
-        {
-            health -= 1;
-            Debug.Log(health);
-
-            StartCoroutine(IFrames());
-            _animator.SetTrigger("TookDamage");
-        }
-
-        else if (other.CompareTag("Crystal"))
-        {
-            onPickupable = true;
-            if (isInteracting && !pickedUp)
-            {
-                pickedUp = true;
-                crystalCount++;
-                gameManager.UpdateScore(20);
-            }
-        }
-        else if (other.CompareTag("Egg"))
-        {
-            onPickupable = true;
-            if (isInteracting)
-            {
-                eggCount++;
-            }
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Crystal"))
-        {
-            onPickupable = false;
-        }
-        else if (other.CompareTag("Egg"))
-        {
-            onPickupable = false;
-        }
-    }
     IEnumerator IFrames()
     {
         canTakeDmg = false;
-        if (health <= 0)
+        if (health <= 0 && canMove)
         {
             Death();
         }
@@ -268,43 +210,5 @@ public class Player_Script : MonoBehaviour
         dead = true;
         _animator.SetTrigger("Death");
         _animator.SetBool("Dead", true);
-        gameManager.GameOver();
-    }
-
-
-    //coin detection
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Coin"))
-        {
-            coinCount++;
-            gameManager.UpdateScore(10);
-        }
-    }
-
-          
-    //checks if player is interacting
-    public void Interact(InputAction.CallbackContext context)
-    {
-        if (context.started && onPickupable)
-        {
-            isInteracting = true;
-            _animator.SetTrigger("isGathering");
-            canMove = false;
-            pickupHitbox.enabled = true;
-            StartCoroutine(GatherTime());   
-        }
-
-        else if (context.canceled)
-        {
-            isInteracting = false;
-        }
-    }
-
-    IEnumerator GatherTime()
-    {
-        yield return new WaitForSeconds(1.5f);
-        canMove = true;
-        pickupHitbox.enabled = false;
     }
 }
