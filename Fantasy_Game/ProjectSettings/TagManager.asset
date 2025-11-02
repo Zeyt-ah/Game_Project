@@ -12,10 +12,6 @@ TagManager:
   - WayBack
   - TeleportTrigger
   - zone2
-  - Coin
-  - Crystal
-  - Egg
-  - PickupTag
   layers:
   - Default
   - TransparentFX
