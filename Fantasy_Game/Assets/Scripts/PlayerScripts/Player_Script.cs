@@ -32,7 +32,7 @@ public class Player_Script : MonoBehaviour
     private float _velocityY;
     private float _currentTurnVelocity;
 
-    private int health;
+    public int health;
     private bool canTakeDmg = true;
     [SerializeField] private float IFrameTime = 1;
 
@@ -50,6 +50,8 @@ public class Player_Script : MonoBehaviour
     public bool pickedUp = false;
     private bool alreadyFalling = false;
 
+    private float speedForFall;
+
 
 
     private void Awake()
@@ -63,12 +65,17 @@ public class Player_Script : MonoBehaviour
         
         //sets base health
         health = 100;
+        speedForFall = -9f;
     }
 
     private void Update()
     {
         //stops everything on player death
         if (dead || !canMove) return;
+        if (health < 0)
+        {
+            Death();
+        }
         ApplyGravity();
         ApplyRotation();
         ApplyMovement();
@@ -133,7 +140,7 @@ public class Player_Script : MonoBehaviour
             _velocityY += gravity * gravityMultiplier * Time.deltaTime;
         }
 
-        if (_velocityY <= -7f && !alreadyFalling)
+        if (_velocityY <= speedForFall && !alreadyFalling && !_characterController.isGrounded)
         {
             alreadyFalling = true;
             _animator.SetBool("isFalling", true);
@@ -253,6 +260,19 @@ public class Player_Script : MonoBehaviour
 
             }
         }
+
+        else if (other.CompareTag("Mushroom"))
+        {
+            onPickupable = true;
+            if (isInteracting && !pickedUp)
+            {
+                pickedUp = true;
+                jumpPower = 10;
+                gravityMultiplier = 0.7f;
+                speedForFall = 2f;
+                _animator.SetBool("mushroomPicked", true);
+            }
+        }
     }
 
     public void OnTriggerExit(Collider other)
@@ -262,6 +282,10 @@ public class Player_Script : MonoBehaviour
             onPickupable = false;
         }
         else if (other.CompareTag("Egg"))
+        {
+            onPickupable = false;
+        }
+        else if (other.CompareTag("Mushroom"))
         {
             onPickupable = false;
         }

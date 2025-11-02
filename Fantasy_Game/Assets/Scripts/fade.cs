@@ -3,6 +3,10 @@ using System.Collections;
 
 public class FadeController : MonoBehaviour
 {
+    //for damage on fall
+    public GameManagerScript gameManagerScript;
+    public Player_Script playerScript;
+
     public CanvasGroup canvasGroup;
     public float fadeDuration = 0.5f;
 
@@ -26,6 +30,8 @@ public class FadeController : MonoBehaviour
             yield return null;
         }
         canvasGroup.alpha = 1f;
+
+        TakeDamage();
     }
 
     public IEnumerator FadeIn()
@@ -40,5 +46,16 @@ public class FadeController : MonoBehaviour
             yield return null;
         }
         canvasGroup.alpha = 0f;
+
+    }
+
+
+    public void TakeDamage()
+    {
+        //takes away 10 health from UI
+        gameManagerScript.UpdateHealth(10);
+
+        //takes away 10 health from player
+        playerScript.health -= 10;
     }
 }

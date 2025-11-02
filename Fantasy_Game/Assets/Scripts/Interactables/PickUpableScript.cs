@@ -5,6 +5,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class PickUpableScript : MonoBehaviour
 {
     public Player_Script playerScript;
+    public GameObject wholeMushroomObject;
     private MeshRenderer meshRenderer;
     private Light light;
 
@@ -32,6 +33,10 @@ public class PickUpableScript : MonoBehaviour
             {
                 light.enabled = false;
             }
+        }
+        if (wholeMushroomObject != null)
+        {
+            wholeMushroomObject.SetActive(false);
         }
     }
     private void OnTriggerExit(Collider other)

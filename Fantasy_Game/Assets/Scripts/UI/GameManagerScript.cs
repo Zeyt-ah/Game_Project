@@ -42,8 +42,15 @@ public class GameManagerScript : MonoBehaviour
 
     public void UpdateHealth(int healthToTakeAway)
     {
-        health -= healthToTakeAway;
-        healthText.text = " " + health + "/100";
+        if (health <= 0)
+        {
+            healthText.text = " 0/100";
+        }
+        else
+        {
+            health -= healthToTakeAway;
+            healthText.text = " " + health + "/100";
+        }
     }
 
     public void UpdateEggs()
