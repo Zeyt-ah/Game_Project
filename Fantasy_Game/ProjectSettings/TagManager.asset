@@ -12,6 +12,7 @@ TagManager:
   - Crystal
   - Egg
   - PickupTag
+  - Nest
   layers:
   - Default
   - TransparentFX

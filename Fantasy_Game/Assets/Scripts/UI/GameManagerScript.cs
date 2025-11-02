@@ -9,18 +9,26 @@ public class GameManagerScript : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
+    public TextMeshProUGUI eggText;
+
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
     public Button quitButton;
 
+    public TextMeshProUGUI winText;
+    public TextMeshProUGUI finalScore;
+    public Button quitButtonWin;
+
     private int score;
     private int health;
+    private int eggCount;
     
     void Start()
     {
         score = 0;
         health = 100;
-        UpdateScore(0);
+        eggCount = 0;
+        UpdateScore(score);
     }
 
 
@@ -29,12 +37,19 @@ public class GameManagerScript : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
+        finalScore.text = "Final Score: " + score;
     }
 
     public void UpdateHealth(int healthToTakeAway)
     {
         health -= healthToTakeAway;
         healthText.text = " " + health + "/100";
+    }
+
+    public void UpdateEggs()
+    {
+        eggCount++;
+        eggText.text = "Eggs: " + eggCount + "/3";
     }
 
     public void GameOver()
@@ -45,6 +60,15 @@ public class GameManagerScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+    }
+
+    public void Win()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        winText.gameObject.SetActive(true);
+        finalScore.gameObject.SetActive(true);
+        quitButtonWin.gameObject.SetActive(true);
     }
 
     public void RestartGame()

@@ -45,9 +45,10 @@ public class Player_Script : MonoBehaviour
 
     private int coinCount = 0;
     private int crystalCount = 0;
-    private int eggCount = 0;
+    public int eggCount = 0;
     private bool onPickupable = false;
     public bool pickedUp = false;
+    private bool alreadyFalling = false;
 
 
 
@@ -67,7 +68,7 @@ public class Player_Script : MonoBehaviour
     private void Update()
     {
         //stops everything on player death
-        if(dead || !canMove) return;
+        if (dead || !canMove) return;
         ApplyGravity();
         ApplyRotation();
         ApplyMovement();
@@ -125,12 +126,25 @@ public class Player_Script : MonoBehaviour
         if (_characterController.isGrounded && _velocityY < 0f)
         {
             _velocityY = -2f; // small downward force to stay grounded
+            alreadyFalling = false;
         }
         else
         {
             _velocityY += gravity * gravityMultiplier * Time.deltaTime;
         }
+
+        if (_velocityY <= -7f && !alreadyFalling)
+        {
+            alreadyFalling = true;
+            _animator.SetBool("isFalling", true);
+        }
+        else
+        {
+            _animator.SetBool("isFalling", false);
+
+        }
     }
+
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -164,7 +178,6 @@ public class Player_Script : MonoBehaviour
         //plays jump animation
         _animator.SetTrigger("Jump");
     }
-
 
     public void Attack(InputAction.CallbackContext context)
     {
@@ -201,7 +214,6 @@ public class Player_Script : MonoBehaviour
         if (hit.gameObject.CompareTag("Enemy") && canTakeDmg)
         {
             health -= 25;
-            Debug.Log(health);
             StartCoroutine(IFrames());
             _animator.SetTrigger("TookDamage");
             gameManager.UpdateHealth(25);
@@ -213,7 +225,6 @@ public class Player_Script : MonoBehaviour
         if (other.CompareTag("Enemy") && canTakeDmg && !dead)
         {
             health -= 25;
-            Debug.Log(health);
 
             StartCoroutine(IFrames());
             _animator.SetTrigger("TookDamage");
@@ -227,15 +238,19 @@ public class Player_Script : MonoBehaviour
             {
                 pickedUp = true;
                 crystalCount++;
-                gameManager.UpdateScore(20);
+                gameManager.UpdateScore(50);
             }
         }
         else if (other.CompareTag("Egg"))
         {
+
             onPickupable = true;
-            if (isInteracting)
+            if (isInteracting && !pickedUp)
             {
+                pickedUp = true;
                 eggCount++;
+                gameManager.UpdateEggs();
+
             }
         }
     }
@@ -254,11 +269,14 @@ public class Player_Script : MonoBehaviour
     IEnumerator IFrames()
     {
         canTakeDmg = false;
+        canMove = false;
         if (health <= 0)
         {
             Death();
         }
-
+        //stun
+        yield return new WaitForSeconds(0.6f);
+        canMove = true;
         yield return new WaitForSeconds(IFrameTime);
         canTakeDmg = true;
     }
@@ -280,7 +298,7 @@ public class Player_Script : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             coinCount++;
-            gameManager.UpdateScore(10);
+            gameManager.UpdateScore(20);
         }
     }
 

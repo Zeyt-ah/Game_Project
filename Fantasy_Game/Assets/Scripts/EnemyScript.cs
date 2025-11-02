@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour
     public Transform player;
     public Collider attackCollider;
     public Animator animator;
+    public GameManagerScript gameManager;
 
     [Header("Stats")]
     public float detectionRange = 10f;
@@ -178,5 +179,6 @@ public class EnemyScript : MonoBehaviour
         agent.isStopped = true;
         attackCollider.enabled = false;
         Destroy(gameObject, 10f);
+        gameManager.UpdateScore(100);
     }
 }

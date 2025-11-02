@@ -1796,7 +1796,7 @@ Transform:
   m_GameObject: {fileID: 5182154664827961304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.16, y: -1.412, z: -16.56}
+  m_LocalPosition: {x: -3.1600003, y: -1.4119987, z: -16.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1890,9 +1890,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 6140932730246777077}
-  player: {fileID: 2349387442342309162, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+  player: {fileID: 0}
   attackCollider: {fileID: 4160322688371424053}
   animator: {fileID: 1891875018413555480}
+  gameManager: {fileID: 0}
   detectionRange: 10
   attackRange: 2
   attackCooldown: 2
