@@ -351,4 +351,5 @@ public class Player_Script : MonoBehaviour
         canMove = true;
         pickupHitbox.enabled = false;
     }
+
 }

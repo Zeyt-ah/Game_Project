@@ -3199,6 +3199,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2163368169657335540, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+      propertyPath: isHuman
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163368169657335540, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2349387442342309162, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -65.2
@@ -3259,9 +3267,17 @@ PrefabInstance:
       propertyPath: gravityMultiplier
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6616296496220650276, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7604236437163355053, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8909429756503797140, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18751,7 +18767,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 0.15423986, g: 0.35110646, b: 0.98490566, a: 1}
-  m_Intensity: 200
+  m_Intensity: 150
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
