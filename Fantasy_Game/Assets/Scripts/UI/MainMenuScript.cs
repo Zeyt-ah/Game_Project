@@ -18,6 +18,10 @@ public class MainMenuScript : MonoBehaviour
     {
         SceneManager.LoadScene(3);
     }
+    public void Settings()
+    {
+        SceneManager.LoadScene(5);
+    }
 
     public void QuitGame()
     {
