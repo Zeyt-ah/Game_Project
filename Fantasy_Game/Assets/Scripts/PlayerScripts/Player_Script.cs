@@ -65,14 +65,14 @@ public class Player_Script : MonoBehaviour
         
         //sets base health
         health = 100;
-        speedForFall = -9f;
+        speedForFall = -11f;
     }
 
     private void Update()
     {
         //stops everything on player death
         if (dead || !canMove) return;
-        if (health < 0)
+        if (health <= 0)
         {
             Death();
         }
@@ -269,7 +269,7 @@ public class Player_Script : MonoBehaviour
                 pickedUp = true;
                 jumpPower = 10;
                 gravityMultiplier = 0.7f;
-                speedForFall = 2f;
+                speedForFall = 0f;
                 _animator.SetBool("mushroomPicked", true);
             }
         }
