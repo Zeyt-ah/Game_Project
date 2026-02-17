@@ -17,6 +17,7 @@ public class PlayerMovementScript : MonoBehaviour
     public int jumpCount = 1;
     public int maxJumpCount = 2;
 
+    [SerializeField]
     private Vector2 input;
     private Vector3 moveDir;
     private float velocityY;
@@ -134,7 +135,8 @@ public class PlayerMovementScript : MonoBehaviour
         Vector3 finalMove = move * speed;
         finalMove.y = velocityY;
 
-        player._characterController.Move(finalMove * Time.deltaTime);
+        //player._characterController.Move(finalMove * Time.deltaTime);
+        player._characterController.Move(new Vector3(input.x * speed, velocityY, input.y * speed) * Time.deltaTime);
 
         moveDir = move;
 
