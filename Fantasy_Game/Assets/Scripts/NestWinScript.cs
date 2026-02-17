@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class NestWin : MonoBehaviour
 {
-    public Player_Script playerScript;
+    public PlayerInteractionScript playerScript;
     public GameManagerScript gameManager;
 
     private bool hasWon = false;

@@ -14,6 +14,10 @@ TagManager:
   - PickupTag
   - Nest
   - Mushroom
+  - WayBack
+  - checkpoint
+  - MovingPlatform
+  - ClimbableWallTag
   layers:
   - Default
   - TransparentFX

@@ -19,6 +19,8 @@ public class GameManagerScript : MonoBehaviour
     public TextMeshProUGUI finalScore;
     public Button quitButtonWin;
 
+    public PlayerScriptNew playerScript;
+
     private int score;
     private int health;
     private int eggCount;
@@ -26,7 +28,6 @@ public class GameManagerScript : MonoBehaviour
     void Start()
     {
         score = 0;
-        health = 100;
         eggCount = 0;
         UpdateScore(score);
     }
@@ -40,16 +41,15 @@ public class GameManagerScript : MonoBehaviour
         finalScore.text = "Final Score: " + score;
     }
 
-    public void UpdateHealth(int healthToTakeAway)
+    public void UpdateHealth(int newHealth)
     {
-        if (health <= 0)
+        if (playerScript.CurrentHealth() <= 0)
         {
             healthText.text = " 0/100";
         }
         else
         {
-            health -= healthToTakeAway;
-            healthText.text = " " + health + "/100";
+            healthText.text = " " + playerScript.CurrentHealth() + "/100";
         }
     }
 

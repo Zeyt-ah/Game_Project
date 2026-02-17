@@ -5,7 +5,7 @@ public class FadeController : MonoBehaviour
 {
     //for damage on fall
     public GameManagerScript gameManagerScript;
-    public Player_Script playerScript;
+    public PlayerScriptNew playerScript;
 
     public CanvasGroup canvasGroup;
     public float fadeDuration = 0.5f;
@@ -52,10 +52,11 @@ public class FadeController : MonoBehaviour
 
     public void TakeDamage()
     {
-        //takes away 10 health from UI
-        gameManagerScript.UpdateHealth(10);
 
         //takes away 10 health from player
-        playerScript.health -= 10;
+        playerScript.TakeDamage(10);
+
+        //takes away 10 health from UI
+        gameManagerScript.UpdateHealth(playerScript.CurrentHealth());
     }
 }

@@ -1,0 +1,113 @@
+using UnityEngine;
+using System.Collections;
+
+public class PlayerScriptNew : MonoBehaviour
+{
+    [Header("State")]
+    private bool canMove = true;
+    private bool canAttack = true;
+    private bool canTakeDmg = true;
+    private bool dead = false;
+    private int maxHealth = 100;
+    private int currentHealth = 100;
+
+    [Header("References")]
+    public Transform cam;
+    public CharacterController _characterController;
+    public Animator _animator;
+    public GameManagerScript gameManager;
+
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        _animator = GetComponentInChildren<Animator>();
+        _characterController = GetComponent<CharacterController>();
+    }
+
+
+    public void TakeDamage(int amount)
+    {
+        if (!canTakeDmg || dead) return;
+
+        currentHealth -= amount;
+        _animator.SetTrigger("TookDamage");
+        gameManager.UpdateHealth(currentHealth);
+
+        canTakeDmg = false;
+        canMove = false;
+
+        if (currentHealth <= 0 && !dead)
+        {
+            Death();
+            return;
+        }
+
+        StartCoroutine(IFrames());
+    }
+
+    private IEnumerator IFrames()
+    {
+        yield return new WaitForSeconds(0.6f); // stun duration
+        canMove = true;
+        yield return new WaitForSeconds(1); // remaining i-frame duration
+        canTakeDmg = true;
+    }
+
+    // Collision events just call TakeDamage()
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(25);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            TakeDamage(25);
+        }
+    }
+
+    private void Death()
+    {
+        _animator.SetTrigger("Death");
+        _animator.SetBool("Dead", true);
+        canMove = false;
+        dead = true;
+        gameManager.GameOver();
+    }
+
+    public void EnableMovement()
+    {
+        canAttack = true;
+        canMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        canAttack = false;
+        canMove = false;
+    }
+
+    //for checks in other scripts if the player is dead
+    public bool IsDead()
+    {
+        return dead;
+    }
+    public bool CanMove()
+    {
+        return canMove;
+    }
+    public bool CanAttack()
+    {
+        return canAttack;
+    }
+    public int CurrentHealth()
+    {
+        return currentHealth;
+    }
+}

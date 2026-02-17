@@ -1,15 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEditor.UI;
 
 public class PickUpableScript : MonoBehaviour
 {
-    public Player_Script playerScript;
+    public PlayerInteractionScript playerScript;
     public GameObject wholeMushroomObject;
     private MeshRenderer meshRenderer;
     private Light light;
 
-    private bool pickedUp = false;
+
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -25,7 +26,8 @@ public class PickUpableScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         this.meshRenderer.enabled = false;
-        pickedUp = true;
+        this.gameObject.SetActive(false);
+        playerScript.PickedUp();
         if (this.CompareTag("Crystal"))
         {
             light = this.GetComponentInChildren<Light>();
@@ -39,12 +41,6 @@ public class PickUpableScript : MonoBehaviour
             wholeMushroomObject.SetActive(false);
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && pickedUp)
-        {
-            Destroy(this.gameObject);
-            playerScript.pickedUp = false;
-        }
-    }
+
+
 }

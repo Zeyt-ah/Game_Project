@@ -5024,8 +5024,12 @@ GameObject:
   - component: {fileID: 2349387442342309162}
   - component: {fileID: 3505749756175962158}
   - component: {fileID: 5562813654500383738}
-  - component: {fileID: 4326391734394264479}
   - component: {fileID: 1489698808564261814}
+  - component: {fileID: 5992941390319098183}
+  - component: {fileID: 6350874228907103381}
+  - component: {fileID: 3454717043649674448}
+  - component: {fileID: 8899221878527705476}
+  - component: {fileID: 4010120495125013396}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5087,39 +5091,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7604236437163355053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d05786b15afe6c646983aba78a52f299, type: 3}
+  m_Script: {fileID: 11500000, guid: 4053611279a25424c9002eaa62de3209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  sprintSpeedMult: 2
-  smoothTime: 0.1
-  jumpPower: 6
-  gravity: -9.81
-  gravityMultiplier: 2
   cam: {fileID: 0}
-  pickupHitbox: {fileID: 6230428702840660098}
-  _attackHitbox: {fileID: 5726799048068438887}
-  hurtBox: {fileID: 1489698808564261814}
+  _characterController: {fileID: 0}
+  _animator: {fileID: 0}
   gameManager: {fileID: 0}
-  health: 0
-  IFrameTime: 1.5
-  attackTime: 0.9
-  eggCount: 0
-  pickedUp: 0
---- !u!114 &4326391734394264479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7604236437163355053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b13cdda9da921d348860d732b4e9c083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pushForce: 0.1
-  torqueForce: 0.1
 --- !u!136 &1489698808564261814
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5143,6 +5121,82 @@ CapsuleCollider:
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5992941390319098183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604236437163355053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d860871ed5ce018478f0e8bb198bb018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackHitbox: {fileID: 0}
+  attackTime: 0.9
+--- !u!114 &6350874228907103381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604236437163355053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d811d123e8f1e5b429572b1d5145b0ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  pickupHitbox: {fileID: 0}
+  eggCount: 0
+--- !u!114 &3454717043649674448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604236437163355053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669d5ba60b6350c4588afe8a89f62acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSpeed: 6
+  sprintSpeed: 9
+  smoothTime: 0.1
+  jumpPower: 8
+  gravity: -9.81
+  gravityMultiplier: 3
+  speedForFall: -11
+  jumpCount: 1
+  maxJumpCount: 2
+--- !u!114 &8899221878527705476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604236437163355053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13cdda9da921d348860d732b4e9c083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushForce: 5
+  torqueForce: 5
+--- !u!114 &4010120495125013396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604236437163355053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9048192b9b3c85042bf9d9328e354658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7612785856166921903
 GameObject:
   m_ObjectHideFlags: 0
