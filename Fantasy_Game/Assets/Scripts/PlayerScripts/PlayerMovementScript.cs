@@ -130,13 +130,13 @@ public class PlayerMovementScript : MonoBehaviour
         camRight.Normalize();
 
         Vector3 move = camForward * input.y + camRight * input.x;
-        move.Normalize();
+        move = Vector3.ClampMagnitude(move, 1f);
 
         Vector3 finalMove = move * speed;
         finalMove.y = velocityY;
 
-        //player._characterController.Move(finalMove * Time.deltaTime); OLD CODE FOR SAFETY
-        player._characterController.Move(new Vector3(input.x * speed, velocityY, input.y * speed) * Time.deltaTime);
+        player._characterController.Move(finalMove * Time.deltaTime);
+        //player._characterController.Move(new Vector3(input.x * speed, velocityY, input.y * speed) * Time.deltaTime);
 
         moveDir = move;
 
