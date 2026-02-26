@@ -7,8 +7,8 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 3DH FTT Path_001 ForestGround_001 2K
-  m_DiffuseTexture: {fileID: 2800000, guid: 5fc895f5044dd9f46a5ec9e4725cf3a2, type: 3}
-  m_NormalMapTexture: {fileID: 0}
+  m_DiffuseTexture: {fileID: 2800000, guid: c009ad1b59944934bb5993b02d4298f8, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: e3c345def5335a043bdc2816b98c07d9, type: 3}
   m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 1.497076, y: 1.497076}
   m_TileOffset: {x: 0, y: 0}
@@ -17,6 +17,7 @@ TerrainLayer:
   m_Smoothness: 0
   m_NormalScale: 1
   m_DiffuseRemapMin: {x: 0, y: 0, z: 0, w: 0}
-  m_DiffuseRemapMax: {x: 1, y: 1, z: 1, w: 1}
+  m_DiffuseRemapMax: {x: 0.16981131, y: 0.16981131, z: 0.16981131, w: 1}
   m_MaskMapRemapMin: {x: 0, y: 0, z: 0, w: 0}
   m_MaskMapRemapMax: {x: 1, y: 1, z: 1, w: 1}
+  m_SmoothnessSource: 1
