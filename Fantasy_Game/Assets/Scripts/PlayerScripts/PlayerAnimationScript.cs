@@ -24,6 +24,8 @@ public class PlayerAnimationScript : MonoBehaviour
         combatScript.OnAttackStarted += AttackAnimation;
         interactionScript.OnInteractStarted += InteractAnimation;
         movementScript.OnJumpStarted += JumpAnimation;
+        movementScript.OnClimbStarted += ClimbAnimation;
+        movementScript.OnDodgeStarted += DodgeAnimation;
     }
 
     private void Update()
@@ -35,20 +37,14 @@ public class PlayerAnimationScript : MonoBehaviour
         //checks if the player is grounded for the running animation
         animator.SetBool("Grounded", movementScript.IsGrounded());
 
-        bool falling = !movementScript.IsGrounded() && movementScript.VerticalVelocity() < -10.0;
+        bool falling = !movementScript.IsGrounded() && movementScript.VerticalVelocity() < -1.5;
         animator.SetBool("isFalling", falling);
 
-        if (movementScript.IsClimbing())
-        {
-            animator.SetBool("isClimbing", movementScript.IsClimbing());
-            animator.SetBool("KeepLooping", true);
-        }
-        else
-        {
-            animator.SetBool("isClimbing", movementScript.IsClimbing());
-            animator.SetBool("KeepLooping", false);
-        }
+        animator.SetBool("isClimbingBool", movementScript.IsClimbing());
+
+        animator.SetBool("isDodging", movementScript.IsDodging());
     }
+
 
 
     private void AttackAnimation()
@@ -66,11 +62,29 @@ public class PlayerAnimationScript : MonoBehaviour
         animator.SetTrigger("Jump");
     }
 
+    private void ClimbAnimation()
+    {
+        animator.SetTrigger("isClimbing");
+    }
+
+    private void DodgeAnimation()
+    {
+        Vector2 dodgeDir = movementScript.DodgeDirection();
+        animator.SetFloat("DodgeX", dodgeDir.x);
+        animator.SetFloat("DodgeY", dodgeDir.y);
+
+        animator.SetBool("IsDodging", true);
+        animator.SetTrigger("Dodge");
+    }
+
+    
+
     private void OnDestroy()
     {
         combatScript.OnAttackStarted -= AttackAnimation;
         interactionScript.OnInteractStarted -= InteractAnimation;
         movementScript.OnJumpStarted -= JumpAnimation;
+        movementScript.OnDodgeStarted -= DodgeAnimation;
 
     }
 }

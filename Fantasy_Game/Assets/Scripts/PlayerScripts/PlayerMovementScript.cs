@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,14 +27,22 @@ public class PlayerMovementScript : MonoBehaviour
     private bool isSprinting = false;
     private float horizontalSpeed = 0;
 
+    //for dodging
+    private float dodgeSpeed = 10;
+    private bool isDodging = false;
+    private Vector3 dodgeDirection;
+
     //for climbing
     private bool isClimbing = false;
     private bool isInClimbZone = false;
     public float climbSpeed = 3f;
+    private Transform currentWall;
 
 
     //events
     public System.Action OnJumpStarted;
+    public System.Action OnClimbStarted;
+    public System.Action OnDodgeStarted;
 
     private void Awake()
     {
@@ -47,11 +56,20 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (isInClimbZone && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            isClimbing = !isClimbing;
+            if (!isClimbing)
+            {
+                isClimbing = true;
+                OnClimbStarted?.Invoke();
+            }
+            else
+            {
+                isClimbing = false; 
+            }
         }
 
         if (isClimbing)
         {
+            jumpCount = 0;
             Climb();
             return; //stops gravity and such for climbing
         }
@@ -67,6 +85,8 @@ public class PlayerMovementScript : MonoBehaviour
             jumpCount = maxJumpCount;
         }
     }
+
+
 
     bool playerCanMove()
     {
@@ -113,12 +133,31 @@ public class PlayerMovementScript : MonoBehaviour
         if (!playerCanMove()) return;
         jumpCount -= 1;
         velocityY = jumpPower;
-
+        
         //plays jump animation
         OnJumpStarted?.Invoke();
     }
 
     void ApplyMovement()
+    {
+        Vector3 move = GetCameraRelativeInputDirection();
+
+        Vector3 finalMove = move * speed;
+        if (IsDodging())
+        {
+            finalMove = dodgeDirection * dodgeSpeed;
+        }
+        finalMove.y = velocityY;
+
+        player._characterController.Move(finalMove * Time.deltaTime);
+        //player._characterController.Move(new Vector3(input.x * speed, velocityY, input.y * speed) * Time.deltaTime);
+
+        moveDir = GetCameraRelativeInputDirection();
+
+        horizontalSpeed = new Vector3(moveDir.x, 0f, moveDir.z).magnitude;
+    }
+
+    Vector3 GetCameraRelativeInputDirection()
     {
         Vector3 camForward = player.cam.forward;
         Vector3 camRight = player.cam.right;
@@ -129,18 +168,8 @@ public class PlayerMovementScript : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        Vector3 move = camForward * input.y + camRight * input.x;
-        move = Vector3.ClampMagnitude(move, 1f);
-
-        Vector3 finalMove = move * speed;
-        finalMove.y = velocityY;
-
-        player._characterController.Move(finalMove * Time.deltaTime);
-        //player._characterController.Move(new Vector3(input.x * speed, velocityY, input.y * speed) * Time.deltaTime);
-
-        moveDir = move;
-
-        horizontalSpeed = new Vector3(moveDir.x, 0f, moveDir.z).magnitude;
+        Vector3 direction = camForward * input.y + camRight * input.x;
+        return Vector3.ClampMagnitude(direction, 1f);
     }
 
     //for animations
@@ -155,7 +184,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void ApplyRotation()
     {
-        if (input.sqrMagnitude < 0.01f) return;
+        if (input.sqrMagnitude < 0.01f || IsDodging()) return;
 
         float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
         float smoothAngle = Mathf.SmoothDampAngle(
@@ -170,6 +199,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void ApplyGravity()
     {
+        if (IsDodging()) return;
         if (player._characterController.isGrounded && velocityY < 0f)
         {
             velocityY = -2f;
@@ -194,31 +224,96 @@ public class PlayerMovementScript : MonoBehaviour
         if (other.CompareTag("ClimbableWallTag"))
         {
             isInClimbZone = true;
+            currentWall = other.transform;
         }
     }
 
+    //stops climbing on exiting climbable surface
     public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("ClimbableWallTag"))
         {
             isInClimbZone = false;
             isClimbing = false;
+            currentWall = null;
+
         }
     }
 
     public void Climb()
     {
+        if (currentWall == null) return;
+
         velocityY = 0f;
 
-        float verticalInput = input.y; // W/S control for climbing
+        float verticalInput = input.y;
+        float horizontalInput = input.x;
 
-        Vector3 climbMove = Vector3.up * verticalInput * climbSpeed;
+        // Wall normal
+        Vector3 wallNormal = currentWall.forward;
+
+        // Direction along wall surface
+        Vector3 wallRight = Vector3.Cross(wallNormal, Vector3.up).normalized;
+        Vector3 wallUp = Vector3.up;
+
+        Vector3 climbMove = (wallUp * verticalInput + wallRight * horizontalInput);
+
+        // Prevents faster diagonal movement
+        if (climbMove.magnitude > 1f)
+            climbMove.Normalize();
+
+        climbMove *= climbSpeed;
 
         player._characterController.Move(climbMove * Time.deltaTime);
+
+        // Rotate player to face wall
+        Quaternion targetRotation = Quaternion.LookRotation(-wallNormal);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
     }
+
 
     public bool IsClimbing()
     {
         return isClimbing;
+    }
+
+
+    public void Dodge(InputAction.CallbackContext context)
+    {
+        if (!context.started || !IsGrounded() || IsDodging()) return;
+
+        Vector3 inputDirection = GetCameraRelativeInputDirection();
+        if (moveDir.sqrMagnitude < 0.01f)
+        {
+            dodgeDirection = -player.cam.transform.forward;
+        }
+        else
+        {
+            dodgeDirection = inputDirection.normalized;
+        }
+
+        isDodging = true;
+        OnDodgeStarted?.Invoke();
+        StartCoroutine(DodgingTimer());
+
+        
+    }
+
+    IEnumerator DodgingTimer()
+    {
+       yield return new WaitForSeconds(0.6f);
+       isDodging = false;
+    }
+
+    public bool IsDodging()
+    {
+        return isDodging;
+    }
+
+
+    public Vector2 DodgeDirection()
+    {
+        Vector3 localDir = transform.InverseTransformDirection(dodgeDirection);
+        return new Vector2(localDir.x, localDir.z);
     }
 }
