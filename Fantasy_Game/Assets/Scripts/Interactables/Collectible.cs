@@ -3,7 +3,7 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     [Header("Value of the collectible (e.g. score, coins, etc.)")]
-    public int value = 1;
+    public int healthToAdd = 50;
 
     [Header("Effect prefab to spawn on collect (optional)")]
     public GameObject collectEffect;
@@ -16,8 +16,11 @@ public class Collectible : MonoBehaviour
         // Check if the object that entered the trigger is the player
         if (!other.CompareTag("Player")) return;
 
-        // Add value to player's score or inventory (replace with your own system)
-        // Example: GameManager.Instance.AddScore(value);
+        PlayerScriptNew player = other.GetComponent<PlayerScriptNew>();
+        if (player != null)
+        {
+            player.Heal(50);
+        }
 
         // Spawn a visual or sound effect if assigned
         if (collectEffect != null)

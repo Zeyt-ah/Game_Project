@@ -73,7 +73,7 @@ public class PlayerAnimationScript : MonoBehaviour
         animator.SetFloat("DodgeX", dodgeDir.x);
         animator.SetFloat("DodgeY", dodgeDir.y);
 
-        animator.SetBool("IsDodging", true);
+        animator.SetBool("isDodging", true);
         animator.SetTrigger("Dodge");
     }
 

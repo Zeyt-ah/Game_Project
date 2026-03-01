@@ -47,6 +47,22 @@ public class PlayerScriptNew : MonoBehaviour
         StartCoroutine(IFrames());
     }
 
+    public void Heal(int amount)
+    {
+        if (dead) return;
+
+
+        //makes sure you dont go above the current max health
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        gameManager.UpdateHealth(currentHealth);
+    }
+
+    //for dodge invulnerability
+    public void SetInvulnerable(bool value)
+    {
+        canTakeDmg = !value;
+    }
+
     private IEnumerator IFrames()
     {
         yield return new WaitForSeconds(0.6f); // stun duration
@@ -91,6 +107,16 @@ public class PlayerScriptNew : MonoBehaviour
     {
         canAttack = false;
         canMove = false;
+    }
+
+    public void EnableAttack()
+    {
+        canAttack = true;
+    }
+
+    public void DisableAttack()
+    {
+        canAttack = false;
     }
 
     //for checks in other scripts if the player is dead

@@ -1,8 +1,9 @@
 using System;
-using Unity.VisualScripting;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerMovementScript : MonoBehaviour
 {
@@ -28,8 +29,9 @@ public class PlayerMovementScript : MonoBehaviour
     private float horizontalSpeed = 0;
 
     //for dodging
-    private float dodgeSpeed = 10;
+    private float dodgeSpeed = 8;
     private bool isDodging = false;
+    private bool canDodge = true;
     private Vector3 dodgeDirection;
 
     //for climbing
@@ -143,10 +145,14 @@ public class PlayerMovementScript : MonoBehaviour
         Vector3 move = GetCameraRelativeInputDirection();
 
         Vector3 finalMove = move * speed;
+
+        //diff movement for dodging
         if (IsDodging())
         {
             finalMove = dodgeDirection * dodgeSpeed;
         }
+
+
         finalMove.y = velocityY;
 
         player._characterController.Move(finalMove * Time.deltaTime);
@@ -199,7 +205,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     void ApplyGravity()
     {
-        if (IsDodging()) return;
         if (player._characterController.isGrounded && velocityY < 0f)
         {
             velocityY = -2f;
@@ -280,10 +285,10 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void Dodge(InputAction.CallbackContext context)
     {
-        if (!context.started || !IsGrounded() || IsDodging()) return;
+        if (!context.started || !IsGrounded() || IsDodging() || !canDodge || !player.CanMove()) return;
 
         Vector3 inputDirection = GetCameraRelativeInputDirection();
-        if (moveDir.sqrMagnitude < 0.01f)
+        if (inputDirection.sqrMagnitude < 0.01f)
         {
             dodgeDirection = -player.cam.transform.forward;
         }
@@ -292,9 +297,14 @@ public class PlayerMovementScript : MonoBehaviour
             dodgeDirection = inputDirection.normalized;
         }
 
+        
+        player.SetInvulnerable(true);
+        player.DisableAttack();
         isDodging = true;
+        canDodge = false;
         OnDodgeStarted?.Invoke();
         StartCoroutine(DodgingTimer());
+        StartCoroutine(DodgingCooldown());
 
         
     }
@@ -303,6 +313,14 @@ public class PlayerMovementScript : MonoBehaviour
     {
        yield return new WaitForSeconds(0.6f);
        isDodging = false;
+       player.EnableAttack();
+       player.SetInvulnerable(false);
+    }
+
+    IEnumerator DodgingCooldown()
+    {
+        yield return new WaitForSeconds(1f);
+        canDodge = true;
     }
 
     public bool IsDodging()

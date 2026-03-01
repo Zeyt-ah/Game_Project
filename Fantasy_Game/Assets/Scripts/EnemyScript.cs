@@ -124,7 +124,7 @@ public class EnemyScript : MonoBehaviour
         animator.SetTrigger("Attack");
 
         animator.SetBool("IsRoaming", false);
-        // (Optional: trigger animation here)
+
         yield return new WaitForSeconds(0.3f); // delay before attack collider turns on
         attackCollider.enabled = true;
         yield return new WaitForSeconds(0.2f); // duration collider stays active
@@ -143,7 +143,7 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    // === Damage System ===
+    //damage system
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("AttackHitboxTag"))
@@ -174,11 +174,18 @@ public class EnemyScript : MonoBehaviour
     private void Die()
     {
         isDead = true;
+        DropReward();
         animator.SetTrigger("Death");
         animator.SetBool("Dead",true);
         agent.isStopped = true;
         attackCollider.enabled = false;
         Destroy(gameObject, 10f);
         gameManager.UpdateScore(100);
+    }
+
+    private void DropReward()
+    {
+        Vector3 dropPosition = transform.position + Vector3.up * 0.5f;
+        Instantiate(gameManager.heartPrefab, dropPosition, Quaternion.identity);
     }
 }

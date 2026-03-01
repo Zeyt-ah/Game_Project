@@ -49,4 +49,5 @@ public class PlayerCombatScript : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _attackHitbox.enabled = true;
     }
+
 }
