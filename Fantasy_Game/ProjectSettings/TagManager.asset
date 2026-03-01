@@ -18,7 +18,6 @@ TagManager:
   - checkpoint
   - MovingPlatform
   - ClimbableWallTag
-  - PlayerDamageHitbox
   layers:
   - Default
   - TransparentFX

@@ -5171,6 +5171,8 @@ MonoBehaviour:
   speedForFall: -11
   jumpCount: 1
   maxJumpCount: 2
+  input: {x: 0, y: 0}
+  climbSpeed: 3
 --- !u!114 &8899221878527705476
 MonoBehaviour:
   m_ObjectHideFlags: 0

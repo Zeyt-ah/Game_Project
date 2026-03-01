@@ -22,6 +22,7 @@ public class PlayerAnimationScript : MonoBehaviour
 
         //event listeners
         combatScript.OnAttackStarted += AttackAnimation;
+        combatScript.OnCastStarted += CastAnimation;
         interactionScript.OnInteractStarted += InteractAnimation;
         movementScript.OnJumpStarted += JumpAnimation;
         movementScript.OnClimbStarted += ClimbAnimation;
@@ -50,6 +51,10 @@ public class PlayerAnimationScript : MonoBehaviour
     private void AttackAnimation()
     {
         animator.SetTrigger("Attack");
+    }
+    private void CastAnimation()
+    {
+        animator.SetTrigger("castSpell");
     }
 
     private void InteractAnimation()
