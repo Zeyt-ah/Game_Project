@@ -10,6 +10,7 @@ public class PlayerInteractionScript : MonoBehaviour
 
     [SerializeField] private GameManagerScript gameManager;
     [SerializeField] private BoxCollider pickupHitbox;
+    [SerializeField] private InteractionPromptUI promptUI;
 
     private bool isInteracting = false;
 
@@ -19,6 +20,11 @@ public class PlayerInteractionScript : MonoBehaviour
     private bool onPickupable = false;
     private bool countIncreased = false;
 
+    private bool npcInRange = false;
+    private NPCSystem currentNpc;
+    private bool lastNpcInRange;
+    private bool lastOnPickupable;
+
     public System.Action OnInteractStarted;
 
     private void Awake()
@@ -27,12 +33,23 @@ public class PlayerInteractionScript : MonoBehaviour
         player = GetComponent<PlayerScriptNew>();
     }
 
+    private void Update()
+    {
+        if (npcInRange != lastNpcInRange || onPickupable != lastOnPickupable)
+        {
+            lastNpcInRange = npcInRange;
+            lastOnPickupable = onPickupable;
+            UpdatePrompt();
+        }
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Crystal"))
         {
-            onPickupable = true;
+            if (!onPickupable) { onPickupable = true; UpdatePrompt(); }
+
             if (isInteracting && !countIncreased)
             {
                 countIncreased = true;
@@ -43,7 +60,8 @@ public class PlayerInteractionScript : MonoBehaviour
         else if (other.CompareTag("Egg"))
         {
 
-            onPickupable = true;
+            if (!onPickupable) { onPickupable = true; UpdatePrompt(); }
+
             if (isInteracting && !countIncreased)
             {
                 countIncreased = true;
@@ -55,7 +73,8 @@ public class PlayerInteractionScript : MonoBehaviour
 
         else if (other.CompareTag("Mushroom"))
         {
-            onPickupable = true;
+            if (!onPickupable) { onPickupable = true; UpdatePrompt(); }
+
             if (isInteracting && !countIncreased)
             {
                 countIncreased = true;
@@ -74,21 +93,26 @@ public class PlayerInteractionScript : MonoBehaviour
             coinCount++;
             gameManager.UpdateScore(20);
         }
+        else if (other.CompareTag("NPCTrigger"))
+        {
+            npcInRange = true;
+            currentNpc = other.GetComponentInParent<NPCSystem>();
+            UpdatePrompt();
+        }
     }
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Crystal"))
+        if (other.CompareTag("Crystal") || other.CompareTag("Egg") || other.CompareTag("Mushroom"))
         {
             onPickupable = false;
+            UpdatePrompt();
         }
-        else if (other.CompareTag("Egg"))
+        else if (other.CompareTag("NPCTrigger"))
         {
-            onPickupable = false;
-        }
-        else if (other.CompareTag("Mushroom"))
-        {
-            onPickupable = false;
+            npcInRange = false;
+            currentNpc = null;
+            UpdatePrompt();
         }
     }
 
@@ -96,18 +120,24 @@ public class PlayerInteractionScript : MonoBehaviour
     //checks if player is interacting
     public void Interact(InputAction.CallbackContext context)
     {
-        if (context.started && onPickupable && player.CanMove())
+        if (!context.started) return;
+        if (!player.CanMove()) return;
+
+        if (npcInRange && currentNpc != null)
+        {
+            currentNpc.StartDialogue();
+            promptUI.Hide();
+            return;
+        }
+
+        if (onPickupable)
         {
             player.DisableMovement();
             isInteracting = true;
             OnInteractStarted?.Invoke();
             pickupHitbox.enabled = true;
             StartCoroutine(GatherTime());
-        }
-
-        else if (context.canceled)
-        {
-            isInteracting = false;
+            promptUI.Hide();
         }
     }
 
@@ -122,5 +152,24 @@ public class PlayerInteractionScript : MonoBehaviour
     public void PickedUp()
     {
         onPickupable = false;
+    }
+
+    private void UpdatePrompt()
+    {
+        if (promptUI == null) return;
+
+        bool canInteract = npcInRange || onPickupable;
+
+        if (!canInteract)
+        {
+            promptUI.Hide();
+            return;
+        }
+
+        // NPC override pickup text
+        if (npcInRange)
+            promptUI.Show("Press E to talk");
+        else
+            promptUI.Show("Press E to pick up");
     }
 }
