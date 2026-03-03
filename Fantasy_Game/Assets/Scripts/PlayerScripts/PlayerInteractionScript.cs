@@ -125,7 +125,7 @@ public class PlayerInteractionScript : MonoBehaviour
 
         if (npcInRange && currentNpc != null)
         {
-            currentNpc.StartDialogue();
+            currentNpc.StartDialogue(player);
             promptUI.Hide();
             return;
         }
