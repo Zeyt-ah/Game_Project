@@ -7,7 +7,7 @@ public class ShopNPCInteraction : MonoBehaviour
     public KeyCode interactKey = KeyCode.E;
     public bool closeWhenLeave = true;
 
-    public PlayerInput playerInput;   // PlayerInput 오브젝트 넣기(Inspector에서 드래그)
+    public PlayerInput playerInput;   // PlayerInput obeject (Inspector drag)
 
     private bool playerInRange = false;
 
@@ -38,7 +38,7 @@ public class ShopNPCInteraction : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            if (playerInput != null) playerInput.enabled = false; // ★ 공격/이동 입력 차단
+            if (playerInput != null) playerInput.enabled = false; // attack move cancel
         }
         else
         {
