@@ -3,8 +3,8 @@ using TMPro;
 
 public class InteractionPromptUI : MonoBehaviour
 {
-    [SerializeField] private GameObject root;     // panel root (or just use this.gameObject)
-    [SerializeField] private TMP_Text promptText; // optional
+    [SerializeField] private GameObject root;   
+    [SerializeField] private TMP_Text promptText;
 
     private void Awake()
     {

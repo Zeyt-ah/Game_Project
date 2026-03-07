@@ -11,6 +11,7 @@ public class PlayerInteractionScript : MonoBehaviour
     [SerializeField] private GameManagerScript gameManager;
     [SerializeField] private BoxCollider pickupHitbox;
     [SerializeField] private InteractionPromptUI promptUI;
+    [SerializeField] private DialogueManager dialogueManager;
 
     private bool isInteracting = false;
 
@@ -31,6 +32,9 @@ public class PlayerInteractionScript : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovementScript>();
         player = GetComponent<PlayerScriptNew>();
+
+        if (dialogueManager == null)
+            dialogueManager = FindFirstObjectByType<DialogueManager>();
     }
 
     private void Update()
@@ -122,6 +126,7 @@ public class PlayerInteractionScript : MonoBehaviour
     {
         if (!context.started) return;
         if (!player.CanMove()) return;
+        if (dialogueManager != null && dialogueManager.IsOpen) return;
 
         if (npcInRange && currentNpc != null)
         {
@@ -158,6 +163,13 @@ public class PlayerInteractionScript : MonoBehaviour
     {
         if (promptUI == null) return;
 
+        // If dialogue is open, never show the interact prompt
+        if (dialogueManager != null && dialogueManager.IsOpen)
+        {
+            promptUI.Hide();
+            return;
+        }
+
         bool canInteract = npcInRange || onPickupable;
 
         if (!canInteract)
@@ -166,7 +178,6 @@ public class PlayerInteractionScript : MonoBehaviour
             return;
         }
 
-        // NPC override pickup text
         if (npcInRange)
             promptUI.Show("Press E to talk");
         else

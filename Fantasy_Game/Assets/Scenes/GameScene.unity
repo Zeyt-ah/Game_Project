@@ -7067,7 +7067,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &480822663
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19132,8 +19132,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -20933,8 +20933,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -31460,8 +31460,9 @@ MonoBehaviour:
   option2Button: {fileID: 2003315905}
   option2Label: {fileID: 1172549688}
   playerInput: {fileID: 452482189}
-  gameplayMap: Gameplay
+  gameplayMap: Player
   uiMap: UI
+  cinemachineRotationControl: {fileID: 496164873}
 --- !u!4 &1813377689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5521807432873174370, guid: 768a9a1d507347440aa8921a9a517f9c, type: 3}
@@ -32577,8 +32578,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495e9d788f1c2e948880992efb8fa4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 1812292676}
   npcName: Peasant
+  startingNode: {fileID: 11400000, guid: 2396f76efa6d15844a600e494f1c659b, type: 2}
 --- !u!4 &1944429806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4496485239499847535, guid: ffaa45151ef9cef46ae5e5c0571d70be, type: 3}
@@ -33161,6 +33163,10 @@ PrefabInstance:
       propertyPath: pickupHitbox
       value: 
       objectReference: {fileID: 1980876970}
+    - target: {fileID: 6350874228907103381, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 1812292676}
     - target: {fileID: 7508128304815912259, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
       propertyPath: m_DefaultControlScheme
       value: Keyboard&Mouse

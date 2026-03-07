@@ -1,7 +1,8 @@
 using System;
+using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -17,12 +18,13 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Input")]
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private string gameplayMap = "Gameplay";
+    [SerializeField] private string gameplayMap = "Player";
     [SerializeField] private string uiMap = "UI";
+    [SerializeField] private Behaviour cinemachineRotationControl;
 
-    private Action option1Action;
-    private Action option2Action;
+    private string currentNpcName;
     private Action onClose;
+    private DialogueNode currentNode;
 
     public bool IsOpen { get; private set; }
 
@@ -31,50 +33,63 @@ public class DialogueManager : MonoBehaviour
         dialogueRoot.SetActive(false);
     }
 
-    public void Open(
-        string npcName,
-        string line,
-        (string text, Action onClick)? option1 = null,
-        (string text, Action onClick)? option2 = null,
-        Action onClosed = null)
+
+    public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null)
     {
+        if (startNode == null) return;
+
         IsOpen = true;
+        currentNpcName = npcName;
+        currentNode = startNode;
         onClose = onClosed;
 
-        // Freeze gameplay controls + enable UI controls
         if (playerInput) playerInput.SwitchCurrentActionMap(uiMap);
+
+        if (cinemachineRotationControl) cinemachineRotationControl.enabled = false;
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
         dialogueRoot.SetActive(true);
-        nameText.text = npcName;
-        lineText.text = line;
 
-        SetupButton(option1Button, option1Label, option1, out option1Action);
-        SetupButton(option2Button, option2Label, option2, out option2Action);
+        ShowNode(currentNode);
+    }
+    private void ShowNode(DialogueNode node)
+    {
+        currentNode = node;
 
-        option1Button.onClick.RemoveAllListeners();
-        option2Button.onClick.RemoveAllListeners();
+        nameText.text = currentNpcName;
+        lineText.text = node.line;
 
-        option1Button.onClick.AddListener(() => option1Action?.Invoke());
-        option2Button.onClick.AddListener(() => option2Action?.Invoke());
+        SetupChoice(option1Button, option1Label, node.option1);
+        SetupChoice(option2Button, option2Label, node.option2);
     }
 
-    private void SetupButton(Button btn, TMP_Text label, (string text, Action onClick)? opt, out Action action)
+    private void SetupChoice(Button button, TMP_Text label, DialogueChoice choice)
     {
-        if (opt.HasValue)
+        button.onClick.RemoveAllListeners();
+
+        // If no text hide button
+        if (choice == null || string.IsNullOrWhiteSpace(choice.text))
         {
-            btn.gameObject.SetActive(true);
-            label.text = opt.Value.text;
-            action = opt.Value.onClick;
+            button.gameObject.SetActive(false);
+            return;
         }
-        else
+
+        button.gameObject.SetActive(true);
+        label.text = choice.text;
+
+        button.onClick.AddListener(() =>
         {
-            btn.gameObject.SetActive(false);
-            label.text = "";
-            action = null;
-        }
+            if (choice.next == null)
+            {
+                Close();
+            }
+            else
+            {
+                ShowNode(choice.next);
+            }
+        });
     }
 
     public void Close()
@@ -85,10 +100,13 @@ public class DialogueManager : MonoBehaviour
 
         if (playerInput) playerInput.SwitchCurrentActionMap(gameplayMap);
 
+        if (cinemachineRotationControl) cinemachineRotationControl.enabled = true;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         onClose?.Invoke();
         onClose = null;
+        currentNode = null;
     }
 }

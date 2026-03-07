@@ -2,39 +2,26 @@ using UnityEngine;
 
 public class NPCSystem : MonoBehaviour
 {
-    [SerializeField] private DialogueManager dialogue;   // assign in inspector
+    [SerializeField] private DialogueManager dialogue;
     [SerializeField] private string npcName = "Peasant";
+    [SerializeField] private DialogueNode startingNode;
 
     private void Awake()
     {
         if (dialogue == null)
-            dialogue = FindFirstObjectByType<DialogueManager>(); // or FindObjectOfType
+            dialogue = FindFirstObjectByType<DialogueManager>();
     }
 
     public void StartDialogue(PlayerScriptNew player)
     {
-        Debug.Log($"StartDialogue called. dialogue={(dialogue ? dialogue.name : "NULL")} player={(player ? player.name : "NULL")}");
-
-        if (dialogue == null)
-        {
-            Debug.LogError("DialogueManager is NULL. Assign it in NPCSystem inspector, or ensure one exists in scene.");
-            return;
-        }
-
-        if (player == null)
-        {
-            Debug.LogError("PlayerScriptNew passed to StartDialogue is NULL.");
-            return;
-        }
+        if (dialogue == null || startingNode == null) return;
 
         player.DisableMovement();
 
-        dialogue.Open(
+        dialogue.StartDialogue(
             npcName,
-            "Hello traveller.",
-            option1: ("Goodbye", () => { dialogue.Close(); player.EnableMovement(); }
-        ),
-            option2: null
+            startingNode,
+            onClosed: () => player.EnableMovement()
         );
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Peasant_02_Request
+  m_EditorClassIdentifier: 
+  line: "If you could get it out, I\u2019d be forever grateful.\nThere\u2019s a barrel
+    nearby - push it to my house, jump up, and grab the egg from the chimney."
+  option1:
+    text: Alright, I'll help.
+    next: {fileID: 11400000, guid: 08ff9c9275614f148b04eb8ad699c8a0, type: 2}
+  option2:
+    text: Sounds dangerous.
+    next: {fileID: 11400000, guid: 78cb98729e446174b92320b3cba42642, type: 2}
