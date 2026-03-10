@@ -3,7 +3,9 @@ using System;
 
 public class PlayerWallet : MonoBehaviour
 {
+    [Header("Gold Settings")]
     public int startGold = 1000;
+
     public int Gold { get; private set; }
 
     public event Action<int> OnGoldChanged;
@@ -22,5 +24,11 @@ public class PlayerWallet : MonoBehaviour
         Gold -= amount;
         OnGoldChanged?.Invoke(Gold);
         return true;
+    }
+
+    public void AddGold(int amount)
+    {
+        Gold += amount;
+        OnGoldChanged?.Invoke(Gold);
     }
 }

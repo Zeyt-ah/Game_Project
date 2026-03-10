@@ -3,17 +3,18 @@ using UnityEngine.InputSystem;
 
 public class ShopNPCInteraction : MonoBehaviour
 {
-    public GameObject shopCanvas;
+    public ShopManager shopManager;
     public KeyCode interactKey = KeyCode.E;
     public bool closeWhenLeave = true;
 
-    public PlayerInput playerInput;   // PlayerInput obeject (Inspector drag)
+    public PlayerInput playerInput;
 
     private bool playerInRange = false;
 
     void Start()
     {
-        if (shopCanvas != null) shopCanvas.SetActive(false);
+        if (shopManager != null)
+            shopManager.CloseShop();
     }
 
     void Update()
@@ -28,30 +29,36 @@ public class ShopNPCInteraction : MonoBehaviour
 
     void ToggleShop()
     {
-        if (shopCanvas == null) return;
+        if (shopManager == null || shopManager.shopUI == null) return;
 
-        bool open = !shopCanvas.activeSelf;
-        shopCanvas.SetActive(open);
+        bool open = !shopManager.shopUI.activeSelf;
 
         if (open)
         {
+            shopManager.OpenShop();
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            if (playerInput != null) playerInput.enabled = false; // attack move cancel
+            if (playerInput != null)
+                playerInput.enabled = false;
         }
         else
         {
+            shopManager.CloseShop();
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            if (playerInput != null) playerInput.enabled = true;
+            if (playerInput != null)
+                playerInput.enabled = true;
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) playerInRange = true;
+        if (other.CompareTag("Player"))
+            playerInRange = true;
     }
 
     void OnTriggerExit(Collider other)
@@ -60,13 +67,15 @@ public class ShopNPCInteraction : MonoBehaviour
 
         playerInRange = false;
 
-        if (closeWhenLeave && shopCanvas != null && shopCanvas.activeSelf)
+        if (closeWhenLeave && shopManager != null && shopManager.shopUI != null && shopManager.shopUI.activeSelf)
         {
-            shopCanvas.SetActive(false);
+            shopManager.CloseShop();
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            if (playerInput != null) playerInput.enabled = true;
+            if (playerInput != null)
+                playerInput.enabled = true;
         }
     }
 }
