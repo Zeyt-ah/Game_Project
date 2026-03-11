@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Peasant_01_Intro
+  m_EditorClassIdentifier: 
+  line: "Oi! Traveller! A dragon egg fell from the sky, straight down my chimney!\nIt\u2019s
+    stuck up there and I can\u2019t reach the roof\u2026"
+  option1:
+    text: What do you need?
+    next: {fileID: 11400000, guid: 0701407a4a6ec4943a175613dfbcc5d6, type: 2}
+  option2:
+    text: Not my problem.
+    next: {fileID: 11400000, guid: 7fdac768a173e214a80dea7d945ec17f, type: 2}
