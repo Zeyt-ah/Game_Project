@@ -76,14 +76,14 @@ public class PlayerCombatScript : MonoBehaviour
     //waits a bit to enable attack hitbox
     IEnumerator SpellHitboxOn()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1.35f);
         GameObject spell = Instantiate(fireSpell, transform.position, transform.rotation);
         StartCoroutine(SpellMovement(spell));
     }
     IEnumerator SpellMovement(GameObject spell)
     {
         float speed = 15f;
-        float duration = 4f;
+        float duration = 1.5f;
         float elapsed = 0f;
 
         Vector3 moveDirection = transform.forward;
@@ -94,9 +94,7 @@ public class PlayerCombatScript : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-
         Destroy(spell); // remove spell after movement
     }
-       
-        
+
 }

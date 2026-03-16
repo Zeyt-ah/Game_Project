@@ -27,6 +27,7 @@ public class PlayerMovementScript : MonoBehaviour
     private float speed = 6;
     private bool isSprinting = false;
     private float horizontalSpeed = 0;
+    private float maxFallVelocity = 0;
 
     //for dodging
     private float dodgeSpeed = 8;
@@ -37,7 +38,11 @@ public class PlayerMovementScript : MonoBehaviour
     //for climbing
     private bool isClimbing = false;
     private bool isInClimbZone = false;
-    public float climbSpeed = 3f;
+    private float climbSpeed = 3f;
+    private float climbStamina = 100f;
+    //Numbers can be tweaked
+    public float staminaDrain = 50f;
+    public float staminaRecovery = 100f;
     private Transform currentWall;
 
 
@@ -65,17 +70,20 @@ public class PlayerMovementScript : MonoBehaviour
             }
             else
             {
-                isClimbing = false; 
+                isClimbing = false;
             }
         }
 
-        if (isClimbing)
+        if (isClimbing && climbStamina > 0)
         {
             jumpCount = 0;
             Climb();
             return; //stops gravity and such for climbing
         }
-
+        else
+        {
+            isClimbing = false;
+        }
         ApplyGravity();
         ApplyMovement();
         ApplyRotation();
@@ -85,7 +93,10 @@ public class PlayerMovementScript : MonoBehaviour
         if (player._characterController.isGrounded)
         {
             jumpCount = maxJumpCount;
+            climbStamina += staminaRecovery * Time.deltaTime; // gradual recovery
+            climbStamina = Mathf.Min(climbStamina, 100f);
         }
+
     }
 
 
@@ -135,7 +146,11 @@ public class PlayerMovementScript : MonoBehaviour
         if (!playerCanMove()) return;
         jumpCount -= 1;
         velocityY = jumpPower;
-        
+
+
+        // Cancel fall damage since player jumped mid-air
+        maxFallVelocity = 0f;
+
         //plays jump animation
         OnJumpStarted?.Invoke();
     }
@@ -207,11 +222,37 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (player._characterController.isGrounded && velocityY < 0f)
         {
+            if(maxFallVelocity < -25f)
+            {
+                int damage = 0;
+
+                if (maxFallVelocity > -30f)
+                {
+                    // Moderate fall damage
+                    damage = -(int)Mathf.Floor(maxFallVelocity);
+                }
+                else
+                {
+                    // Hard fall damage, capped at 100
+                    damage = Mathf.Min(-(int)Mathf.Floor(maxFallVelocity) * 2, 100);
+                }
+
+                player.TakeDamage(damage);
+            }
+
+            // Reset for next fall
+            maxFallVelocity = 0f;
             velocityY = -2f;
         }
         else
         {
             velocityY += gravity * gravityMultiplier * Time.deltaTime;
+
+            //Track downward velocity
+            if (velocityY < maxFallVelocity)
+            {
+                maxFallVelocity = velocityY;
+            }
         }
     }
 
@@ -274,6 +315,8 @@ public class PlayerMovementScript : MonoBehaviour
         // Rotate player to face wall
         Quaternion targetRotation = Quaternion.LookRotation(-wallNormal);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+        
+        climbStamina -= staminaDrain * Time.deltaTime;
     }
 
 
