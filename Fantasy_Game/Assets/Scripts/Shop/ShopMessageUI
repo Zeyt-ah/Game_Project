@@ -1,0 +1,36 @@
+using UnityEngine;
+using TMPro;
+using System.Collections;
+
+public class ShopMessageUI : MonoBehaviour
+{
+    public TextMeshProUGUI messageText;
+    public float showTime = 2f;
+
+    private Coroutine messageCoroutine;
+
+    void Start()
+    {
+        messageText.text = "";
+        messageText.gameObject.SetActive(false);
+    }
+
+    public void ShowMessage(string message)
+    {
+        if (messageCoroutine != null)
+            StopCoroutine(messageCoroutine);
+
+        messageCoroutine = StartCoroutine(ShowMessageRoutine(message));
+    }
+
+    IEnumerator ShowMessageRoutine(string message)
+    {
+        messageText.gameObject.SetActive(true);
+        messageText.text = message;
+
+        yield return new WaitForSeconds(showTime);
+
+        messageText.text = "";
+        messageText.gameObject.SetActive(false);
+    }
+}
