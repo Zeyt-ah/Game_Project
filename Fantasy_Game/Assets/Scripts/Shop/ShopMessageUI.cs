@@ -9,21 +9,30 @@ public class ShopMessageUI : MonoBehaviour
 
     private Coroutine messageCoroutine;
 
-    void Start()
+    private void Start()
     {
-        messageText.text = "";
-        messageText.gameObject.SetActive(false);
+        if (messageText != null)
+        {
+            messageText.text = "";
+            messageText.gameObject.SetActive(false);
+        }
     }
 
     public void ShowMessage(string message)
     {
+        if (messageText == null)
+        {
+            Debug.LogWarning("MessageText is not assigned in ShopMessageUI!");
+            return;
+        }
+
         if (messageCoroutine != null)
             StopCoroutine(messageCoroutine);
 
         messageCoroutine = StartCoroutine(ShowMessageRoutine(message));
     }
 
-    IEnumerator ShowMessageRoutine(string message)
+    private IEnumerator ShowMessageRoutine(string message)
     {
         messageText.gameObject.SetActive(true);
         messageText.text = message;
@@ -32,5 +41,6 @@ public class ShopMessageUI : MonoBehaviour
 
         messageText.text = "";
         messageText.gameObject.SetActive(false);
+        messageCoroutine = null;
     }
 }

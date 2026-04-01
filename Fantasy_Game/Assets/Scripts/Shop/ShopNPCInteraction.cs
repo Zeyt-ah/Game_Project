@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public class ShopNPCInteraction : MonoBehaviour
 {
     public ShopManager shopManager;
+    public ShopMessageUI shopMessageUI;
+
     public KeyCode interactKey = KeyCode.E;
     public bool closeWhenLeave = true;
 
@@ -52,13 +54,20 @@ public class ShopNPCInteraction : MonoBehaviour
 
             if (playerInput != null)
                 playerInput.enabled = true;
+
+            if (shopMessageUI != null)
+                shopMessageUI.ShowMessage("Shop closed");
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-            playerInRange = true;
+        if (!other.CompareTag("Player")) return;
+
+        playerInRange = true;
+
+        if (shopMessageUI != null)
+            shopMessageUI.ShowMessage("Press E to open shop");
     }
 
     void OnTriggerExit(Collider other)
@@ -76,6 +85,9 @@ public class ShopNPCInteraction : MonoBehaviour
 
             if (playerInput != null)
                 playerInput.enabled = true;
+
+            if (shopMessageUI != null)
+                shopMessageUI.ShowMessage("Shop closed");
         }
     }
 }

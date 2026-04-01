@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 
+
 public class ShopManager : MonoBehaviour
 {
     [Header("Item Data")]
@@ -14,7 +15,7 @@ public class ShopManager : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text goldText;
-    public TMP_Text messageText;
+    public ShopMessageUI shopMessageUI;
 
     [Header("Shop UI Root")]
     public GameObject shopUI;
@@ -28,9 +29,6 @@ public class ShopManager : MonoBehaviour
             wallet.OnGoldChanged += UpdateGoldUI;
             UpdateGoldUI(wallet.Gold);
         }
-
-        if (messageText != null)
-            messageText.text = "";
     }
 
     void OnDestroy()
@@ -45,26 +43,35 @@ public class ShopManager : MonoBehaviour
             goldText.text = "Gold: " + gold;
     }
 
+    void ShowShopMessage(string message)
+    {
+        if (shopMessageUI != null)
+            shopMessageUI.ShowMessage(message);
+        else
+            Debug.Log(message);
+    }
+
     public void OpenShop()
     {
-        if (shopUI != null) shopUI.SetActive(true);
+        if (shopUI != null)
+            shopUI.SetActive(true);
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-        if (messageText != null)
-            messageText.text = "";
 
         if (wallet != null)
             UpdateGoldUI(wallet.Gold);
 
         if (inventoryUI != null)
             inventoryUI.Refresh();
+
+        ShowShopMessage("Select an item");
     }
 
     public void CloseShop()
     {
-        if (shopUI != null) shopUI.SetActive(false);
+        if (shopUI != null)
+            shopUI.SetActive(false);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -108,30 +115,26 @@ public class ShopManager : MonoBehaviour
 
         if (item.oneTimePurchase && ownedInventory.IsOwned(item.itemId))
         {
-            if (messageText != null)
-                messageText.text = item.displayName + " already purchased!";
+            ShowShopMessage(item.displayName + " already purchased!");
             return;
         }
 
         if (playerInventory.items.Count >= playerInventory.maxSlots)
         {
-            if (messageText != null)
-                messageText.text = "Inventory is full!";
+            ShowShopMessage("Inventory is full!");
             return;
         }
 
         if (!wallet.Spend(item.price))
         {
-            if (messageText != null)
-                messageText.text = "Not enough gold!";
+            ShowShopMessage("Not enough gold!");
             return;
         }
 
         bool added = playerInventory.AddItem(item);
         if (!added)
         {
-            if (messageText != null)
-                messageText.text = "Inventory is full!";
+            ShowShopMessage("Inventory is full!");
             return;
         }
 
@@ -141,12 +144,12 @@ public class ShopManager : MonoBehaviour
         if (inventoryUI != null)
             inventoryUI.Refresh();
 
-        if (messageText != null)
-            messageText.text = item.displayName + " purchased!";
+        ShowShopMessage(item.displayName + " purchased!");
     }
 
     public void TestClick()
     {
         Debug.Log("TEST CLICK OK");
+        ShowShopMessage("Test message");
     }
 }
