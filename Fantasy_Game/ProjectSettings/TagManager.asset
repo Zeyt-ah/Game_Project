@@ -19,6 +19,7 @@ TagManager:
   - MovingPlatform
   - ClimbableWallTag
   - NPCTrigger
+  - Horse
   layers:
   - Default
   - TransparentFX

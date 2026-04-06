@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,7 +21,7 @@ public class PlayerMovementScript : MonoBehaviour
     public int maxJumpCount = 2;
 
     [SerializeField]
-    private Vector2 input;
+    public Vector2 input;
     private Vector3 moveDir;
     private float velocityY;
     private float turnVelocity;
@@ -46,10 +47,16 @@ public class PlayerMovementScript : MonoBehaviour
     private Transform currentWall;
 
 
+    //for horse
+    public HorseScript currentHorse;
+    public float mountDistance = 2f;
+    private bool isMounted = false;
+
     //events
     public System.Action OnJumpStarted;
     public System.Action OnClimbStarted;
     public System.Action OnDodgeStarted;
+
 
     private void Awake()
     {
@@ -84,6 +91,13 @@ public class PlayerMovementScript : MonoBehaviour
         {
             isClimbing = false;
         }
+
+        if (isMounted && currentHorse != null)
+        {
+            currentHorse.Move(input, player.cam, isSprinting);
+        }
+
+
         ApplyGravity();
         ApplyMovement();
         ApplyRotation();
@@ -127,7 +141,7 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
 
-    //for animations
+    //for animations + horse
     public bool IsSprinting()
     {
         return isSprinting;
@@ -157,6 +171,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void ApplyMovement()
     {
+        if (isMounted && currentHorse != null) return;
         Vector3 move = GetCameraRelativeInputDirection();
 
         Vector3 finalMove = move * speed;
@@ -166,7 +181,6 @@ public class PlayerMovementScript : MonoBehaviour
         {
             finalMove = dodgeDirection * dodgeSpeed;
         }
-
 
         finalMove.y = velocityY;
 
@@ -205,6 +219,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void ApplyRotation()
     {
+        moveDir = GetCameraRelativeInputDirection();
         if (input.sqrMagnitude < 0.01f || IsDodging()) return;
 
         float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
@@ -377,4 +392,54 @@ public class PlayerMovementScript : MonoBehaviour
         Vector3 localDir = transform.InverseTransformDirection(dodgeDirection);
         return new Vector2(localDir.x, localDir.z);
     }
+
+
+    public void Mount(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        if (!isMounted)
+        {
+            TryMount();
+        }
+        else
+        {
+            Dismount();
+        }
+    }
+
+    void TryMount()
+    {
+        if (currentHorse == null) return;
+
+        float distance = Vector3.Distance(transform.position, currentHorse.transform.position);
+        if (distance > mountDistance) return;
+
+        // Mount horse
+        isMounted = true;
+        currentHorse.isMounted = true;
+        transform.position = currentHorse.transform.position + new Vector3(0, 1.5f, 0);
+        transform.SetParent(currentHorse.transform);
+
+        // Position player on horse
+        transform.position = currentHorse.transform.position + new Vector3(0, 1.5f, 0); // adjust height
+
+    }
+
+    void Dismount()
+    {
+        if (currentHorse == null) return;
+
+        isMounted = false;
+        currentHorse.isMounted = false;
+
+        // Detach player
+        transform.SetParent(null);
+
+        // Enable player movement
+        this.enabled = true;
+
+        transform.position += transform.forward * 1.5f;
+    }
+
 }
