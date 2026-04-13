@@ -117,9 +117,9 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 0
-    - _Bend_Distortion: 0.1
-    - _Bend_Speed: 1
-    - _Bend_Strength: 4
+    - _Bend_Distortion: 0
+    - _Bend_Speed: 0
+    - _Bend_Strength: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -145,8 +145,8 @@ Material:
     - _Strength: 1
     - _Surface: 0
     - _UVSec: 0
-    - _Wiggle_Speed: 0.7
-    - _Wiggle_Strength: 0.2
+    - _Wiggle_Speed: 0
+    - _Wiggle_Strength: 0
     - _WorkflowMode: 0
     - _ZTest: 4
     - _ZWrite: 1
