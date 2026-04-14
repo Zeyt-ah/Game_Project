@@ -124,6 +124,7 @@ public class PlayerInteractionScript : MonoBehaviour
     //checks if player is interacting
     public void Interact(InputAction.CallbackContext context)
     {
+        if (playerMovement.isRidingHorse()) return;
         if (!context.started) return;
         if (!player.CanMove()) return;
         if (dialogueManager != null && dialogueManager.IsOpen) return;

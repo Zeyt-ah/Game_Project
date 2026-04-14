@@ -68,7 +68,7 @@ public class PlayerMovementScript : MonoBehaviour
         if (player == null) return;
         if (!playerCanMove()) return;
 
-        if (isInClimbZone && Keyboard.current.eKey.wasPressedThisFrame)
+        if (isInClimbZone && Keyboard.current.eKey.wasPressedThisFrame && !isRidingHorse())
         {
             if (!isClimbing)
             {
@@ -95,6 +95,7 @@ public class PlayerMovementScript : MonoBehaviour
         if (isMounted && currentHorse != null)
         {
             currentHorse.Move(input, player.cam, isSprinting);
+            return;
         }
 
 
@@ -171,7 +172,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     void ApplyMovement()
     {
-        if (isMounted && currentHorse != null) return;
         Vector3 move = GetCameraRelativeInputDirection();
 
         Vector3 finalMove = move * speed;
@@ -412,12 +412,15 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (currentHorse == null) return;
 
+
+        player.DisableAttack();
         float distance = Vector3.Distance(transform.position, currentHorse.transform.position);
         if (distance > mountDistance) return;
 
         // Mount horse
         isMounted = true;
         currentHorse.isMounted = true;
+        transform.rotation = currentHorse.transform.rotation;
         transform.position = currentHorse.transform.position + new Vector3(0, 1.5f, 0);
         transform.SetParent(currentHorse.transform);
 
@@ -429,7 +432,7 @@ public class PlayerMovementScript : MonoBehaviour
     void Dismount()
     {
         if (currentHorse == null) return;
-
+        player.EnableAttack();
         isMounted = false;
         currentHorse.isMounted = false;
 
@@ -439,7 +442,11 @@ public class PlayerMovementScript : MonoBehaviour
         // Enable player movement
         this.enabled = true;
 
-        transform.position += transform.forward * 1.5f;
     }
 
+
+    public bool isRidingHorse()
+    {
+        return isMounted;
+    }
 }

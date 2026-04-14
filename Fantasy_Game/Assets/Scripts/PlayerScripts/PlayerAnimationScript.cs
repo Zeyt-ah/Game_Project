@@ -44,36 +44,44 @@ public class PlayerAnimationScript : MonoBehaviour
         animator.SetBool("isClimbingBool", movementScript.IsClimbing());
 
         animator.SetBool("isDodging", movementScript.IsDodging());
+
+        animator.SetBool("allowAnimations", !movementScript.isRidingHorse());
     }
 
 
 
     private void AttackAnimation()
     {
+        if (movementScript.isRidingHorse()) return;
         animator.SetTrigger("Attack");
     }
     private void CastAnimation()
     {
+        if (movementScript.isRidingHorse()) return;
         animator.SetTrigger("castSpell");
     }
 
     private void InteractAnimation()
     {
+        if (movementScript.isRidingHorse()) return;
         animator.SetTrigger("isGathering");
     }
 
     private void JumpAnimation()
     {
+        if (movementScript.isRidingHorse()) return;
         animator.SetTrigger("Jump");
     }
 
     private void ClimbAnimation()
     {
+        if (movementScript.isRidingHorse()) return;
         animator.SetTrigger("isClimbing");
     }
 
     private void DodgeAnimation()
     {
+        if (movementScript.isRidingHorse()) return;
         Vector2 dodgeDir = movementScript.DodgeDirection();
         animator.SetFloat("DodgeX", dodgeDir.x);
         animator.SetFloat("DodgeY", dodgeDir.y);
