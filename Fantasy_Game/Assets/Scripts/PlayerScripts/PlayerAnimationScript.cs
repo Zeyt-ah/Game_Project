@@ -27,6 +27,7 @@ public class PlayerAnimationScript : MonoBehaviour
         movementScript.OnJumpStarted += JumpAnimation;
         movementScript.OnClimbStarted += ClimbAnimation;
         movementScript.OnDodgeStarted += DodgeAnimation;
+        movementScript.MountedHorse += MountAnimation;
     }
 
     private void Update()
@@ -92,12 +93,19 @@ public class PlayerAnimationScript : MonoBehaviour
 
     
 
+    private void MountAnimation()
+    {
+        if (!movementScript.isRidingHorse()) return;
+        animator.SetTrigger("mountedHorse");
+    }
+
     private void OnDestroy()
     {
         combatScript.OnAttackStarted -= AttackAnimation;
         interactionScript.OnInteractStarted -= InteractAnimation;
         movementScript.OnJumpStarted -= JumpAnimation;
         movementScript.OnDodgeStarted -= DodgeAnimation;
+        movementScript.MountedHorse -= MountAnimation;
 
     }
 }

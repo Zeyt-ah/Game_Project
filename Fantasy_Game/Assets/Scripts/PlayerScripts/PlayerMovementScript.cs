@@ -56,6 +56,7 @@ public class PlayerMovementScript : MonoBehaviour
     public System.Action OnJumpStarted;
     public System.Action OnClimbStarted;
     public System.Action OnDodgeStarted;
+    public System.Action MountedHorse;
 
 
     private void Awake()
@@ -65,6 +66,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
+        if (player.IsDead()) Dismount();
         if (player == null) return;
         if (!playerCanMove()) return;
 
@@ -165,7 +167,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         // Cancel fall damage since player jumped mid-air
         maxFallVelocity = 0f;
-
+        
         //plays jump animation
         OnJumpStarted?.Invoke();
     }
@@ -396,7 +398,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void Mount(InputAction.CallbackContext context)
     {
-        if (!context.started) return;
+        if (!context.started || player.IsDead()) return;
 
         if (!isMounted)
         {
@@ -425,13 +427,16 @@ public class PlayerMovementScript : MonoBehaviour
         transform.SetParent(currentHorse.transform);
 
         // Position player on horse
-        transform.position = currentHorse.transform.position + new Vector3(0, 1.5f, 0); // adjust height
+        transform.position = currentHorse.transform.position + new Vector3(0, 1.48f, 0); // adjust height
+
+        MountedHorse?.Invoke();
 
     }
 
     void Dismount()
     {
         if (currentHorse == null) return;
+
         player.EnableAttack();
         isMounted = false;
         currentHorse.isMounted = false;
@@ -439,8 +444,11 @@ public class PlayerMovementScript : MonoBehaviour
         // Detach player
         transform.SetParent(null);
 
-        // Enable player movement
-        this.enabled = true;
+        Vector3 dismountDir = currentHorse.transform.right;
+
+        Vector3 dismountOffset = dismountDir * 2f + Vector3.up * 0.5f;
+        dismountOffset.y -= 0.5f;
+        transform.position = currentHorse.transform.position + dismountOffset;
 
     }
 
