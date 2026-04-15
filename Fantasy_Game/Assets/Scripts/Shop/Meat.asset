@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a1a30722fc7cc4c81e06779668e309, type: 3}
-  m_Name: Golden Egg
+  m_Name: Meat
   m_EditorClassIdentifier: 
-  itemId: golden_egg
-  displayName: Golden Egg
+  itemId: roasted_meat
+  displayName: Roasted Meat
   type: 0
-  price: 300
-  icon: {fileID: 0}
+  price: 80
+  icon: {fileID: 21300000, guid: 2c550e535aeb1a14eaed71076538d187, type: 3}
   description: 
-  oneTimePurchase: 1
+  oneTimePurchase: 0

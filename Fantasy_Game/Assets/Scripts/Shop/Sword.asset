@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a1a30722fc7cc4c81e06779668e309, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  itemId: sword_01
-  displayName: Sword
+  itemId: iron_Sword
+  displayName: Iron Sword
   type: 1
-  price: 200
+  price: 300
   icon: {fileID: 0}
   description: 
   oneTimePurchase: 1

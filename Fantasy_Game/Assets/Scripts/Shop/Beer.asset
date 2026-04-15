@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90a1a30722fc7cc4c81e06779668e309, type: 3}
-  m_Name: Test Potion
+  m_Name: Beer
   m_EditorClassIdentifier: 
-  itemId: Test Potion
-  displayName: Test Potion
+  itemId: Beer
+  displayName: Beer
   type: 0
-  price: 400
-  icon: {fileID: 1904889426, guid: 7bb12e1a1363c514bb9ee72a9acafce2, type: 3}
+  price: 50
+  icon: {fileID: 21300000, guid: 07c644e092ca3de45af522d1a22bf4d8, type: 3}
   description: 
-  oneTimePurchase: 1
+  oneTimePurchase: 0
