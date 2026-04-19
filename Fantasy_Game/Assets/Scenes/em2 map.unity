@@ -2841,6 +2841,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3505749756175962158, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
+      propertyPath: m_Radius
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505749756175962158, guid: 5329412cba6c0964cbcc7ceeb5ff4b6b, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -18162,8 +18166,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8, y: 6, z: 3}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Size: {x: 0.8, y: 2.2, z: 3}
+  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!1001 &818741049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25063,6 +25067,10 @@ PrefabInstance:
     - target: {fileID: 8340141635516486846, guid: 52cba6ede276abe4b830b350b301538d, type: 3}
       propertyPath: m_Mass
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340141635516486846, guid: 52cba6ede276abe4b830b350b301538d, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9031955986544496556, guid: 52cba6ede276abe4b830b350b301538d, type: 3}
       propertyPath: m_Name
@@ -45982,7 +45990,7 @@ GameObject:
   - component: {fileID: 1959992427}
   m_Layer: 0
   m_Name: Horse
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46001,13 +46009,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 10
   gallopSpeed: 30
-  jumpPower: 8
+  jumpPower: 10
   stamina: 100
   staminaDrain: 10
-  staminaRecovery: 5
+  staminaRecovery: 20
   gravity: -9.81
   gravityMultiplier: 3
   isMounted: 0
+  player: {fileID: 1937843043}
 --- !u!65 &1959992422
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46024,7 +46033,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.8, y: 2.1, z: 1}
@@ -46117,7 +46126,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08

@@ -43,7 +43,6 @@ public class PlayerScriptNew : MonoBehaviour
             Death();
             return;
         }
-
         StartCoroutine(IFrames());
     }
 
@@ -66,6 +65,7 @@ public class PlayerScriptNew : MonoBehaviour
     private IEnumerator IFrames()
     {
         yield return new WaitForSeconds(0.6f); // stun duration
+        _animator.SetTrigger("mountedHorse");
         canMove = true;
         yield return new WaitForSeconds(1); // remaining i-frame duration
         canTakeDmg = true;
@@ -136,4 +136,5 @@ public class PlayerScriptNew : MonoBehaviour
     {
         return currentHealth;
     }
+
 }

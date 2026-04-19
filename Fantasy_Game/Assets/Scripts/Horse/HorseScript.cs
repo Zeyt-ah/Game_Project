@@ -23,9 +23,11 @@ public class HorseScript : MonoBehaviour
     //to have a threshold that needs to be met before you can sprint again
     private bool enoughStaminaRecovered = true;
     public bool isMounted = false;
+    private bool isMoving = false;
 
-
-
+    //for fall damage
+    private float maxFallVelocity = 0;
+    public PlayerScriptNew player;
 
 
     private void Awake()
@@ -36,6 +38,16 @@ public class HorseScript : MonoBehaviour
 
     public void Update()
     {
+        //makes sure the horse stops when player dies.
+        if (player.IsDead())
+        {
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isSprinting", false);
+            animator.ResetTrigger("Jump");
+            return;
+        }
+
+
         ApplyGravity();
         Vector3 finalMove = moveDir;
         if (!isMounted)
@@ -46,7 +58,6 @@ public class HorseScript : MonoBehaviour
         finalMove.y = verticalVelocity;
 
         controller.Move(finalMove * Time.deltaTime);
-
 
 
         if (stamina < 100 && !isMounted)
@@ -62,12 +73,22 @@ public class HorseScript : MonoBehaviour
         {
             Jump();
         }
+        animator.SetBool("grounded", controller.isGrounded);
     }
 
 
 
     public void Move(Vector2 input, Transform cam, bool sprinting)
     {
+        //makes sure the horse stops when player dies.
+        if (player.IsDead())
+        {
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isSprinting", false);
+            animator.ResetTrigger("jump");
+            return;
+        }
+
         if (!isMounted) return;
         float currentSpeed;
 
@@ -99,7 +120,7 @@ public class HorseScript : MonoBehaviour
         {
             stamina -= staminaDrain * Time.deltaTime;
         }
-        else if (stamina < 100)
+        else if (stamina <= 100)
         {
             stamina += staminaRecovery * Time.deltaTime;
             stamina = Mathf.Min(stamina, 100);
@@ -116,14 +137,41 @@ public class HorseScript : MonoBehaviour
 
 
     public void ApplyGravity()
-    { 
+    {
+
+
         if (controller.isGrounded && verticalVelocity < 0f)
         {
+            if (maxFallVelocity < -25f)
+            {
+                int damage = 0;
+
+                if (maxFallVelocity > -30f)
+                {
+                    // Moderate fall damage
+                    damage = -(int)Mathf.Floor(maxFallVelocity);
+                }
+                else
+                {
+                    // Hard fall damage, capped at 100
+                    damage = Mathf.Min(-(int)Mathf.Floor(maxFallVelocity) * 2, 100);
+                }
+                if (isMounted) player.TakeDamage(damage);
+            }
+
+            // Reset for next fall
+            maxFallVelocity = 0f;
             verticalVelocity = -2f;
         }
         else
         {
             verticalVelocity += gravity * gravityMultiplier * Time.deltaTime;
+
+            //Track downward velocity
+            if (verticalVelocity < maxFallVelocity)
+            {
+                maxFallVelocity = verticalVelocity;
+            }
         }
     }
 
@@ -133,16 +181,6 @@ public class HorseScript : MonoBehaviour
         verticalVelocity = jumpPower;
         animator.SetTrigger("Jump");
     }
-
-
-
-
-
-
-
-
-
-
 
 
     public void CheckIfMoving(Vector3 moveDirection)

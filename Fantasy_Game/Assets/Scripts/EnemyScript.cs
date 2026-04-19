@@ -15,7 +15,7 @@ public class EnemyScript : MonoBehaviour
 
     [Header("Stats")]
     public float detectionRange = 10f;
-    public float attackRange = 1f;
+    private float attackRange = 2.2f;
     public float attackCooldown = 1.5f;
     public int maxHealth = 3;
 
