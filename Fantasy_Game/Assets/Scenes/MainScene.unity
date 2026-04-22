@@ -2841,8 +2841,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 55, y: 55}
-  m_Spacing: {x: 10, y: 10}
+  m_CellSize: {x: 80, y: 80}
+  m_Spacing: {x: 15, y: 15}
   m_Constraint: 1
   m_ConstraintCount: 4
 --- !u!114 &979104164
@@ -4434,7 +4434,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   gameManager: {fileID: 0}
   detectionRange: 10
-  attackRange: 1
   attackCooldown: 1.5
   maxHealth: 3
   roamRadius: 10
