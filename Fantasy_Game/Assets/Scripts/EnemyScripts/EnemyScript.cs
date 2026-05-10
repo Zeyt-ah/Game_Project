@@ -150,6 +150,10 @@ public class EnemyScript : MonoBehaviour
         {
             TakeDamage(1);
         }
+        else if (other.CompareTag("SwordAttackHitboxTag"))
+        {
+            TakeDamage(2);
+        }
     }
 
     private void TakeDamage(int dmg)

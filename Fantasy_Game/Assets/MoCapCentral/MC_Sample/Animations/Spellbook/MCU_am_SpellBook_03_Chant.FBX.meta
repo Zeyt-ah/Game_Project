@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: fc98cb2445d6c97409a41babef1fb11d
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291284
+  packageName: MC Sample - Believable 3D Animations by MoCap Central
+  packageVersion: 1.2.1
+  assetPath: Assets/MoCapCentral/MC_Sample/Animations/Spellbook/MCU_am_SpellBook_03_Chant.FBX
+  uploadId: 896658
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +23,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -44,7 +49,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -1222,8 +1227,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 5958d20394757cd4092feaf67ab80b97,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 5958d20394757cd4092feaf67ab80b97, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
@@ -1235,10 +1239,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 291284
-  packageName: MC Sample - Believable 3D Animations by MoCap Central
-  packageVersion: 1.2.1
-  assetPath: Assets/MoCapCentral/MC_Sample/Animations/Spellbook/MCU_am_SpellBook_03_Chant.FBX
-  uploadId: 896658

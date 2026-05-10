@@ -10,6 +10,7 @@ public class PlayerScriptNew : MonoBehaviour
     private bool dead = false;
     private int maxHealth = 100;
     private int currentHealth = 100;
+    private bool tookDamageRecently = false;
 
     [Header("References")]
     public Transform cam;
@@ -32,6 +33,7 @@ public class PlayerScriptNew : MonoBehaviour
         if (!canTakeDmg || dead) return;
 
         currentHealth -= amount;
+        tookDamageRecently = true;
         _animator.SetTrigger("TookDamage");
         gameManager.UpdateHealth(currentHealth);
 
@@ -65,6 +67,7 @@ public class PlayerScriptNew : MonoBehaviour
     private IEnumerator IFrames()
     {
         yield return new WaitForSeconds(0.6f); // stun duration
+        tookDamageRecently = false;
         _animator.SetTrigger("mountedHorse");
         canMove = true;
         yield return new WaitForSeconds(1); // remaining i-frame duration
@@ -135,6 +138,11 @@ public class PlayerScriptNew : MonoBehaviour
     public int CurrentHealth()
     {
         return currentHealth;
+    }
+
+    public bool TookDamageRecently()
+    {
+        return tookDamageRecently;
     }
 
 }

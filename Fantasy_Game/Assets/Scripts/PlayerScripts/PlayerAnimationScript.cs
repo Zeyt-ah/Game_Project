@@ -22,6 +22,7 @@ public class PlayerAnimationScript : MonoBehaviour
 
         //event listeners
         combatScript.OnAttackStarted += AttackAnimation;
+        combatScript.OnSwordAttackStarted += SwordAnimation;
         combatScript.OnCastStarted += CastAnimation;
         interactionScript.OnInteractStarted += InteractAnimation;
         movementScript.OnJumpStarted += JumpAnimation;
@@ -56,6 +57,12 @@ public class PlayerAnimationScript : MonoBehaviour
         if (movementScript.isRidingHorse()) return;
         animator.SetTrigger("Attack");
     }
+    private void SwordAnimation()
+    {
+        if (movementScript.isRidingHorse()) return;
+        animator.SetTrigger("SwordAttack");
+    }
+
     private void CastAnimation()
     {
         if (movementScript.isRidingHorse()) return;

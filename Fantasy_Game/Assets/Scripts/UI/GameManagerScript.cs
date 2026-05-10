@@ -26,6 +26,7 @@ public class GameManagerScript : MonoBehaviour
     private int eggCount;
 
     public GameObject heartPrefab;
+    public GameObject coinPrefab;
 
     void Start()
     {

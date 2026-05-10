@@ -7,14 +7,19 @@ public class PlayerCombatScript : MonoBehaviour
     private PlayerScriptNew player;
 
     public BoxCollider _attackHitbox;
+    public BoxCollider swordAttackHitbox;
 
     public GameObject fireSpell;
+    public GameObject sword;
 
     [SerializeField] private float attackTime = 0.9f;
+    [SerializeField] private float swordAttackTime = 0.9f;
     [SerializeField] private float spellTime = 2f;
+    private bool swordEquipped = false;
 
     public System.Action OnAttackStarted;
     public System.Action OnCastStarted;
+    public System.Action OnSwordAttackStarted;
 
 
 
@@ -27,12 +32,21 @@ public class PlayerCombatScript : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
         if (!context.started || !player.CanAttack() || player.IsDead()) return;
-        if (player._characterController.isGrounded)
+        if (!player._characterController.isGrounded) return;
+        //checks if the sword is currently equipped
+        if (!swordEquipped)
         {
             player.DisableMovement();
             OnAttackStarted?.Invoke();
 
             StartCoroutine(Attacking());
+        }
+        else
+        {
+            player.DisableMovement();
+            OnSwordAttackStarted?.Invoke();
+
+            StartCoroutine(SwordAttacking());
         }
 
     }
@@ -61,9 +75,25 @@ public class PlayerCombatScript : MonoBehaviour
     IEnumerator AttackHitboxOn()
     {
         yield return new WaitForSeconds(0.6f);
-        _attackHitbox.enabled = true;
+        if(!player.TookDamageRecently())_attackHitbox.enabled = true;
     }
 
+
+    //for sword
+    IEnumerator SwordAttacking()
+    {
+        StartCoroutine(SwordAttackHitboxOn());
+        yield return new WaitForSeconds(swordAttackTime);
+        player.EnableMovement();
+        swordAttackHitbox.enabled = false;
+    }
+
+    //waits a bit to enable attack hitbox
+    IEnumerator SwordAttackHitboxOn()
+    {
+        yield return new WaitForSeconds(0.6f);
+        if(!player.TookDamageRecently())swordAttackHitbox.enabled = true;
+    }
 
     //for spells
     IEnumerator CastingSpell()
@@ -73,12 +103,16 @@ public class PlayerCombatScript : MonoBehaviour
         player.EnableMovement();
     }
 
-    //waits a bit to enable attack hitbox
+    //waits a bit to enable spell hitbox
     IEnumerator SpellHitboxOn()
     {
         yield return new WaitForSeconds(1.35f);
-        GameObject spell = Instantiate(fireSpell, transform.position, transform.rotation);
-        StartCoroutine(SpellMovement(spell));
+        //makes sure you dont cast a spell mid hit.
+        if (!player.TookDamageRecently())
+        {
+            GameObject spell = Instantiate(fireSpell, transform.position, transform.rotation);
+            StartCoroutine(SpellMovement(spell));
+        }
     }
     IEnumerator SpellMovement(GameObject spell)
     {
@@ -97,4 +131,38 @@ public class PlayerCombatScript : MonoBehaviour
         Destroy(spell); // remove spell after movement
     }
 
+
+    //switching between weapons (hand or sword)
+    public void SwappingWeapons(InputAction.CallbackContext context)
+    {
+        //makes sure you can only swap if not attacking and once per scroll tick
+        if (!context.performed || !player.CanAttack()) return;
+        Vector2 scroll = context.ReadValue<Vector2>();
+        
+        if (scroll.y != 0)
+        {
+            if (!sword.activeSelf)
+            {
+                swordEquipped = true;
+                sword.SetActive(true);
+            }
+            else
+            {
+                swordEquipped = false;
+                sword.SetActive(false);
+            }
+        }
+
+    }
+
+    public bool SwordEquipped()
+    {
+        return swordEquipped;
+    }
+
+    public void UnequipSword()
+    {
+        swordEquipped = false;
+        sword.SetActive(swordEquipped);
+    }
 }

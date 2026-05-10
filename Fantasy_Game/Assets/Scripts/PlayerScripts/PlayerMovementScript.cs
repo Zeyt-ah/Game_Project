@@ -9,6 +9,8 @@ using static UnityEngine.Rendering.DebugUI;
 public class PlayerMovementScript : MonoBehaviour
 {
     private PlayerScriptNew player;
+    private PlayerCombatScript playerCombat;
+
     [Header("stats")]
     public float baseSpeed = 6f;
     public float sprintSpeed = 9f;
@@ -62,6 +64,7 @@ public class PlayerMovementScript : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<PlayerScriptNew>();
+        playerCombat = GetComponent<PlayerCombatScript>();
     }
 
     private void Update()
@@ -414,10 +417,14 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (currentHorse == null) return;
 
-
-        player.DisableAttack();
         float distance = Vector3.Distance(transform.position, currentHorse.transform.position);
         if (distance > mountDistance) return;
+
+        //unequips the sword when mounting the horse
+        if (playerCombat.SwordEquipped())playerCombat.UnequipSword();
+
+
+        player.DisableAttack();
 
         // Mount horse
         isMounted = true;

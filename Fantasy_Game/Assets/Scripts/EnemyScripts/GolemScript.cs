@@ -29,6 +29,7 @@ public class GolemScript : MonoBehaviour
     private float IFrames = 0.5f;
     private bool canDamage = true;
     private bool facingPlayer = false;
+    private bool isAttacking = false;
 
     private enum State { Roaming, Chasing, Attacking, Dead }
     private State currentState = State.Roaming;
@@ -123,7 +124,7 @@ public class GolemScript : MonoBehaviour
             StartCoroutine(DoAttack());
         }
 
-        if (distanceToPlayer > attackRange + 1f)
+        if (distanceToPlayer > attackRange + 1f && !isAttacking)
         {
             attackCollider.enabled = false;
             currentState = State.Chasing;
@@ -132,6 +133,7 @@ public class GolemScript : MonoBehaviour
 
     private IEnumerator DoAttack()
     {
+        isAttacking = true;
         animator.SetTrigger("Attack");
 
         animator.SetBool("IsRoaming", false);
@@ -140,6 +142,7 @@ public class GolemScript : MonoBehaviour
         attackCollider.enabled = true;
         yield return new WaitForSeconds(0.1f); // duration collider stays active
         animator.SetBool("IsRoaming", true);
+        isAttacking = false;
         attackCollider.enabled = false;
     }
 
@@ -160,6 +163,10 @@ public class GolemScript : MonoBehaviour
         if (other.CompareTag("AttackHitboxTag"))
         {
             TakeDamage(1);
+        }
+        else if (other.CompareTag("SwordAttackHitboxTag"))
+        {
+            TakeDamage(2);
         }
     }
 
@@ -198,6 +205,7 @@ public class GolemScript : MonoBehaviour
     {
         Vector3 dropPosition = transform.position + Vector3.up * 0.5f;
         Instantiate(gameManager.heartPrefab, dropPosition, Quaternion.identity);
+        Instantiate(gameManager.coinPrefab, dropPosition, Quaternion.identity);
     }
 }
 
