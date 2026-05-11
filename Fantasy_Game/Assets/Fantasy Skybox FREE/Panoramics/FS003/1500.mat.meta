@@ -1,15 +1,8 @@
 fileFormatVersion: 2
-guid: f80eb85bae18ff54582236d0cf5c8b03
-timeCreated: 1513895188
-licenseType: Store
+guid: 93c4c3ab224e442429944470762d5af1
 NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 103633
-  packageName: Skybox Series Free
-  packageVersion: 4.3
-  assetPath: Assets/SkySeries Freebie/Cloudymorning.mat
-  uploadId: 472193
