@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Ilumisoft.HealthSystem; // Required for HealthComponent
 
 public class ShopManager : MonoBehaviour
 {
@@ -52,7 +53,6 @@ public class ShopManager : MonoBehaviour
         }
 
         Debug.Log("ShopManager Start complete");
-        Debug.Log("Items length: " + (items != null ? items.Length.ToString() : "NULL"));
     }
 
     private void Update()
@@ -82,153 +82,125 @@ public class ShopManager : MonoBehaviour
 
     private void ShowShopMessage(string message)
     {
-        Debug.Log("ShowShopMessage: " + message);
+        Debug.Log("Shop Message: " + message);
 
         if (shopMessageUI != null)
             shopMessageUI.ShowMessage(message);
-        else
-            Debug.LogWarning("ShopMessageUI is not assigned");
     }
 
     public void OpenShop()
     {
-        Debug.Log("OpenShop called");
-
-        if (shopUI != null)
-            shopUI.SetActive(true);
-        else
-            Debug.LogWarning("shopUI is not assigned");
+        if (shopUI != null) shopUI.SetActive(true);
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        if (wallet != null)
-            UpdateGoldUI(wallet.Gold);
-
-        if (inventoryUI != null)
-            inventoryUI.Refresh();
-        else
-            Debug.LogWarning("inventoryUI is not assigned");
+        if (wallet != null) UpdateGoldUI(wallet.Gold);
+        if (inventoryUI != null) inventoryUI.Refresh();
 
         ShowShopMessage("Welcome to the Tavern.");
     }
 
     public void CloseShop()
     {
-        if (shopUI != null)
-            shopUI.SetActive(false);
+        if (shopUI != null) shopUI.SetActive(false);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Core logic for buying items from the shop
+    /// </summary>
     public void Buy(int index)
     {
-        Debug.Log("=== BUY START ===");
-        Debug.Log("Buy called index: " + index);
-
-        if (items == null)
+        // 1. Validation Checks
+        if (items == null || index < 0 || index >= items.Length)
         {
-            Debug.LogWarning("items is null");
-            return;
-        }
-
-        Debug.Log("items length: " + items.Length);
-
-        if (index < 0 || index >= items.Length)
-        {
-            Debug.LogWarning("Invalid item index!");
-            return;
-        }
-
-        if (wallet == null)
-        {
-            Debug.LogWarning("Wallet is not assigned!");
-            return;
-        }
-
-        if (ownedInventory == null)
-        {
-            Debug.LogWarning("Owned Inventory is not assigned!");
-            return;
-        }
-
-        if (playerInventory == null)
-        {
-            Debug.LogWarning("Player Inventory is not assigned!");
+            Debug.LogError("ShopManager: Invalid item index!");
             return;
         }
 
         ItemData item = items[index];
+        if (item == null) return;
 
-        if (item == null)
+        // 2. Check One-Time Purchase
+        if (item.oneTimePurchase && ownedInventory != null && ownedInventory.IsOwned(item.itemId))
         {
-            Debug.LogWarning("Item is null!");
+            ShowShopMessage("You already own this item.");
             return;
         }
 
-        Debug.Log("item name: " + item.displayName);
-        Debug.Log("item id: " + item.itemId);
-        Debug.Log("item price: " + item.price);
-        Debug.Log("current gold before spend: " + wallet.Gold);
-
-        bool alreadyOwned = ownedInventory.IsOwned(item.itemId);
-        Debug.Log("already owned: " + alreadyOwned);
-        Debug.Log("oneTimePurchase: " + item.oneTimePurchase);
-
-        if (item.oneTimePurchase && alreadyOwned)
+        // 3. Try to spend gold
+        if (wallet == null || !wallet.Spend(item.price))
         {
-            Debug.LogWarning("Blocked: already purchased");
-            ShowShopMessage("You already bought that.");
-            return;
-        }
-
-        Debug.Log("inventory count: " + playerInventory.items.Count + "/" + playerInventory.maxSlots);
-
-        if (playerInventory.items.Count >= playerInventory.maxSlots)
-        {
-            Debug.LogWarning("Blocked: inventory full");
-            ShowShopMessage("Your bag is full.");
-            return;
-        }
-
-        bool spendSuccess = wallet.Spend(item.price);
-        Debug.Log("Spend success: " + spendSuccess);
-        Debug.Log("current gold after spend: " + wallet.Gold);
-
-        if (!spendSuccess)
-        {
-            Debug.LogWarning("Blocked: not enough gold");
             ShowShopMessage("You don't have enough gold.");
             return;
         }
 
-        bool added = playerInventory.AddItem(item);
-        Debug.Log("AddItem success: " + added);
+        // 4. Branching Logic based on Item Index
+        bool purchaseProcessed = false;
 
-        if (!added)
+        // INDEX 0 & 1: Consumables (Roasted Meat, Beer) -> Immediate Healing
+        if (index == 0 || index == 1)
         {
-            Debug.LogWarning("Blocked: AddItem failed");
-            ShowShopMessage("Your bag is full.");
-            return;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                HealthComponent health = player.GetComponent<HealthComponent>();
+                if (health != null)
+                {
+                    // Restores 20 health. You can change this value.
+                    health.AddHealth(20f);
+                    ShowShopMessage("You consumed " + item.displayName + " and felt better!");
+                    purchaseProcessed = true;
+                }
+                else
+                {
+                    Debug.LogWarning("Player found but HealthComponent is missing!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Player object with tag 'Player' not found!");
+            }
+        }
+        // INDEX 2 (and others): Equipment (Sword) -> Add to Inventory
+        else
+        {
+            if (playerInventory != null)
+            {
+                purchaseProcessed = playerInventory.AddItem(item);
+
+                if (purchaseProcessed)
+                {
+                    ShowShopMessage("Purchased " + item.displayName + ".");
+                }
+                else
+                {
+                    // Refund if inventory is full
+                    ShowShopMessage("Your bag is full.");
+                    wallet.AddGold(item.price); 
+                    return; 
+                }
+            }
         }
 
-        if (item.oneTimePurchase)
-            ownedInventory.Add(item.itemId);
+        // 5. Finalize Purchase
+        if (purchaseProcessed)
+        {
+            if (item.oneTimePurchase && ownedInventory != null)
+            {
+                ownedInventory.Add(item.itemId);
+            }
 
-        if (inventoryUI != null)
-            inventoryUI.Refresh();
-        else
-            Debug.LogWarning("inventoryUI is null, so UI was not refreshed");
-
-        UpdateGoldUI(wallet.Gold);
-        ShowShopMessage("You bought " + item.displayName + ".");
-        Debug.Log("=== BUY COMPLETE ===");
+            if (inventoryUI != null) inventoryUI.Refresh();
+            UpdateGoldUI(wallet.Gold);
+        }
     }
 
     public void TestClick()
     {
-        Debug.Log("TEST CLICK OK");
-        ShowShopMessage("Test message");
+        ShowShopMessage("Test message works!");
     }
 }
