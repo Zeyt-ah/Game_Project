@@ -21,6 +21,7 @@ TagManager:
   - NPCTrigger
   - Horse
   - SwordAttackHitboxTag
+  - BossTrigger
   layers:
   - Default
   - TransparentFX

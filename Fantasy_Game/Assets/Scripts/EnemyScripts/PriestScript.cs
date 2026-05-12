@@ -51,7 +51,6 @@ public class PriestScript : MonoBehaviour
 
     void Update()
     {
-        print(currentState);
         if (isDead) return;
 
 
