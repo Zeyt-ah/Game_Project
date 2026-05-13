@@ -12,6 +12,8 @@ public class EnemyScript : MonoBehaviour
     public Collider attackCollider;
     public Animator animator;
     public GameManagerScript gameManager;
+    public BossScript boss;
+    public bool summonedByBoss = false;
 
     [Header("Stats")]
     public float detectionRange = 10f;
@@ -37,6 +39,9 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (gameManager == null) gameManager = FindAnyObjectByType<GameManagerScript>();
+
         startPosition = transform.position;
         currentHealth = maxHealth;
         SetNewRoamTarget();
@@ -66,6 +71,12 @@ public class EnemyScript : MonoBehaviour
 
     private void RoamBehavior(float distanceToPlayer)
     {
+        //makes sure the skeletons don't roam if summoned by the boss
+        if (summonedByBoss)
+        {
+            currentState = State.Chasing;
+            return;
+        }
         agent.isStopped = false;
         animator.SetBool("IsRoaming", true);
         agent.SetDestination(roamTarget);
@@ -177,6 +188,10 @@ public class EnemyScript : MonoBehaviour
 
     private void Die()
     {
+        if (boss != null)
+        {
+            boss.currentMinionCount--;
+        }
         isDead = true;
         DropReward();
         animator.SetTrigger("Death");

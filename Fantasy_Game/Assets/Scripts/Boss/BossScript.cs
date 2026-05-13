@@ -14,6 +14,8 @@ public class BossScript : MonoBehaviour
     public Animator animator;
     public GameManagerScript gameManager;
     public GameObject shieldVisual;
+    public GameObject hand;
+    public GameObject spell;
 
     [Header("Stats")]
     public float activationRange = 10f;
@@ -31,10 +33,29 @@ public class BossScript : MonoBehaviour
     private bool shieldActive = true;
     private int hitsTaken = 0;
 
+
+
+    //used for runaway behaviour after exiting tired state.
+    private Vector3 runAwayTarget;
+    public Transform[] escapePoints;
+    private float normalSpeed = 5f;
+    private float runAwaySpeed = 10f;
+    private bool shieldAnimationHappened = false;
+
+    //for minions attack
+    public GameObject minion;
+    public Transform[] minionsSpawnpoints;
+    public int currentMinionCount = 0;
+    private int maxMinionCount = 3;
+
+    //for AOE attack
+    public GameObject spellAOEIndicator;
+    public GameObject spellAOE;
+
     private bool isTiredCoroutineRunning = false;
     private bool isAttacking = false;
 
-    private enum State { Idle, Chasing, Attacking, Tired, Dead }
+    private enum State { Idle, Chasing, Attacking, Tired, RunAway, Dead }
     private State currentState = State.Idle;
 
     //for attack types
@@ -50,6 +71,7 @@ public class BossScript : MonoBehaviour
     {
         if (isDead) return;
         print(currentHealth);
+        print(currentState);
 
         UpdatePhase();
         attackTimer -= Time.deltaTime;
@@ -69,19 +91,82 @@ public class BossScript : MonoBehaviour
             case State.Tired:
                 TiredBehaviour();
                 break;
+            case State.RunAway:
+                RunAwayBehaviour();
+                break;
         }
     }
 
     private void UpdatePhase()
     {
-        //phase 3 if under 30% health
-        if (currentHealth <= maxHealth * 0.3f) currentPhase = 3;
-        //phase 2 if under 70% health
-        else if (currentHealth <= maxHealth * 0.7f) currentPhase = 2;
-        //phase 1 from start until under 70% health
+        //phase 3 if under 50% health
+        if (currentHealth <= maxHealth * 0.5f) currentPhase = 3;
+        //phase 2 if under 80% health
+        else if (currentHealth <= maxHealth * 0.8f) currentPhase = 2;
+        //phase 1 from start until under 80% health
         else currentPhase = 1;
     }
 
+
+    private void IdleBehaviour()
+    {
+        animator.SetBool("isIdle", true);
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+        if (distanceToPlayer <= activationRange)
+        {
+            currentState = State.Chasing;
+            animator.SetBool("isIdle", false);
+        }
+    }
+
+
+    private void ChaseBehaviour()
+    {
+        agent.isStopped = false;
+        agent.speed = normalSpeed;
+        animator.SetTrigger("Chasing");
+        animator.SetBool("isChasing", true);
+        agent.SetDestination(player.position);
+
+        // Rotate toward player
+        Vector3 direction = (player.position - transform.position);
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+
+        //if in attack range switch to attacking
+        if (distanceToPlayer <= attackRange)
+        {
+            currentState = State.Attacking;
+            animator.SetBool("isChasing", false);
+        }
+
+    }
+
+    private void AttackBehaviour()
+    {
+        agent.isStopped = true;
+
+        Vector3 direction = (player.position - transform.position);
+        direction.y = 0f; // ignore height difference
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        if (!isAttacking && attackTimer <= 0f)
+        {
+            isAttacking = true;
+            attackTimer = attackCooldown;
+            StartCoroutine(DoAttackCycle());
+        }
+    }
 
     //used to ensure the correct attacks are available based on current phase
     private AttackType[] GetAvailableAttacks()
@@ -89,13 +174,13 @@ public class BossScript : MonoBehaviour
         switch (currentPhase)
         {
             case 1:
-                return new AttackType[] {AttackType.Spell };
+                return new AttackType[] { AttackType.Spell };
             case 2:
-                return new AttackType[] {AttackType.Spell, AttackType.Minions };
+                return new AttackType[] { AttackType.Spell, AttackType.Minions };
             case 3:
-                return new AttackType[] {AttackType.Spell, AttackType.Minions, AttackType.AOE };
+                return new AttackType[] { AttackType.Spell, AttackType.Minions, AttackType.AOE };
             default:
-                return new AttackType[] {AttackType.Spell };
+                return new AttackType[] { AttackType.Spell };
         }
     }
 
@@ -160,88 +245,71 @@ public class BossScript : MonoBehaviour
     private IEnumerator DoSpell()
     {
         animator.SetTrigger("Spell");
-        // TODO: spawn projectile
+        Vector3 castPosition = hand.transform.position;
+
+        Vector3 moveDirection = (player.position - castPosition).normalized;
+        Quaternion rotation = Quaternion.LookRotation(moveDirection) * Quaternion.Euler(90, 0, 0); ;
+
+        yield return new WaitForSeconds(0.3f);
+        GameObject spawnedSpell = Instantiate(spell, castPosition, rotation);
+
+        StartCoroutine(MoveSpell(spawnedSpell, moveDirection));
         yield return new WaitForSeconds(0.7f);
     }
 
+    private IEnumerator MoveSpell(GameObject spell, Vector3 direction)
+    {
+        float speed = 5f;
+        float duration = 3f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            spell.transform.position += direction * speed * Time.deltaTime; // move forward
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(spell); // remove spell after movement
+
+    }
     private IEnumerator DoSpawnMinions()
     {
         animator.SetTrigger("Minions");
-        // TODO: instantiate minions
+        int spawnCount = 2;
+        for (int i = 0; i < spawnCount; i++)
+        {
+            int randomIndex = Random.Range(0,minionsSpawnpoints.Length);
+            if (!(currentMinionCount >= maxMinionCount))
+            {
+                currentMinionCount++;
+                GameObject minionForBoss = Instantiate(minion, minionsSpawnpoints[randomIndex].position, Quaternion.identity);
+                EnemyScript minionScript = minionForBoss.GetComponent<EnemyScript>();
+                minionScript.boss = this;
+                minionScript.summonedByBoss = true;
+            }
+        }
+
         yield return new WaitForSeconds(1f);
+
     }
 
     private IEnumerator DoAOE()
     {
         animator.SetTrigger("AOE");
-        // TODO: send a sky strike esque AOE 
-        yield return new WaitForSeconds(1.5f);
-    }
+        
+        Vector3 targetPosition = player.position;
+        targetPosition.y--;
+        //spawns the indicator for the AOE spell
+        GameObject indicator = Instantiate(spellAOEIndicator, targetPosition, Quaternion.identity);
 
+        float warningTime = 1.5f;
+        yield return new WaitForSeconds(warningTime);
 
-    private void IdleBehaviour()
-    {
-        animator.SetBool("isIdle", true);
-        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-        if (distanceToPlayer <= activationRange)
-        {
-            currentState = State.Chasing;
-            animator.SetBool("isIdle", false);
-        }
-    }
+        Destroy(indicator);
+        GameObject spell =  Instantiate(spellAOE,targetPosition, Quaternion.identity);
+        yield return new WaitForSeconds(0.7f);
+        Destroy(spell);
 
-
-    private void ChaseBehaviour()
-    {
-        agent.isStopped = false;
-        animator.SetTrigger("Chasing");
-        animator.SetBool("isChasing", true);
-        agent.SetDestination(player.position);
-
-        // Rotate toward player
-        Vector3 direction = (player.position - transform.position);
-        direction.y = 0f;
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
-        }
-
-        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
-
-        //if in attack range switch to attacking
-        if (distanceToPlayer <= attackRange)
-        {
-            currentState = State.Attacking;
-            animator.SetBool("isChasing", false);
-        }
-
-        //if player moves too far away back to idle
-        if (distanceToPlayer > activationRange * 1.5f)
-        {
-            currentState = State.Idle;
-            animator.SetBool("isChasing", false);
-        }
-    }
-
-    private void AttackBehaviour()
-    {
-        agent.isStopped = true;
-
-        Vector3 direction = (player.position - transform.position);
-        direction.y = 0f; // ignore height difference
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
-        }
-
-        if (!isAttacking && attackTimer <= 0f)
-        {
-            isAttacking = true;
-            attackTimer = attackCooldown;
-            StartCoroutine(DoAttackCycle());
-        }
     }
 
 
@@ -272,24 +340,78 @@ public class BossScript : MonoBehaviour
     private void EndTiredState()
     {
         isTiredCoroutineRunning = false;
-        shieldActive = true;
         agent.isStopped = false;
         animator.SetBool("isTired", false);
-        currentState = State.Idle;
+
+        Transform furthestPoint = GetFurthestEscapePoint();
+
+        if (furthestPoint != null) runAwayTarget = furthestPoint.position;
+
+        currentState = State.RunAway;
+
     }
 
-
-    // Call this whenever the boss takes damage
-    private void RegisterHitDuringTired(int hitAmount)
+    private void RunAwayBehaviour()
     {
-        if (!isTiredCoroutineRunning) return;
+        animator.SetBool("isChasing", true);
 
-        hitsTaken += hitAmount;
-        if (hitsTaken >= 3)
+        agent.isStopped = false;
+        agent.speed = runAwaySpeed;
+        agent.SetDestination(runAwayTarget);
+
+        // rotate toward movement direction
+        Vector3 direction = (runAwayTarget - transform.position);
+        direction.y = 0f;
+
+        if (direction != Vector3.zero)
         {
-            EndTiredState();
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        // after running away, chases the player again.
+        if (Vector3.Distance(transform.position, runAwayTarget) < 2f)
+        {
+            StartCoroutine(ActivateShield());
         }
     }
+
+    private IEnumerator ActivateShield()
+    {
+        if (!shieldAnimationHappened)
+        {
+            shieldAnimationHappened = true;
+            animator.SetTrigger("ShieldAnimation");
+
+            yield return new WaitForSeconds(1.5f);
+
+            shieldActive = true;
+            currentState = State.Chasing;
+            animator.SetBool("isChasing", false);
+            shieldAnimationHappened = false;
+        }
+    }
+
+    private Transform GetFurthestEscapePoint()
+    {
+        Transform furthestPoint = null;
+        float maxDistance = 0f;
+
+        foreach (Transform point in escapePoints)
+        {
+            float distance = Vector3.Distance(player.position, point.position);
+
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                furthestPoint = point;
+            }
+        }
+        return furthestPoint;
+    }
+
+
+
 
     //damage system
     private void OnTriggerEnter(Collider other)
@@ -319,6 +441,18 @@ public class BossScript : MonoBehaviour
         if (currentHealth <= 0 && !isDead)
         {
             Die();
+        }
+    }
+
+    // Call this whenever the boss takes damage
+    private void RegisterHitDuringTired(int hitAmount)
+    {
+        if (!isTiredCoroutineRunning) return;
+
+        hitsTaken += hitAmount;
+        if (hitsTaken >= 3)
+        {
+            EndTiredState();
         }
     }
     IEnumerator IFramesTime()

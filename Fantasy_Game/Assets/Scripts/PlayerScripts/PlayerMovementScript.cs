@@ -14,6 +14,8 @@ public class PlayerMovementScript : MonoBehaviour
     [Header("stats")]
     public float baseSpeed = 6f;
     public float sprintSpeed = 9f;
+    public float iceBaseSpeed = 4f;
+    public float iceSprintSpeed = 7f;
     public float smoothTime = 0.1f;
     public float jumpPower = 8f;
     public float gravity = -9.81f;
@@ -138,12 +140,20 @@ public class PlayerMovementScript : MonoBehaviour
         {
             speed = sprintSpeed;
             isSprinting = true;
+            if (player.IsIcey())
+            {
+                speed = iceSprintSpeed;
+            }
         }
 
         else if (context.canceled)
         {
             speed = baseSpeed;
             isSprinting = false;
+            if (player.IsIcey())
+            {
+                speed = iceBaseSpeed;
+            }
         }
     }
 
@@ -180,7 +190,10 @@ public class PlayerMovementScript : MonoBehaviour
         Vector3 move = GetCameraRelativeInputDirection();
 
         Vector3 finalMove = move * speed;
-
+        if (player.IsIcey())
+        {
+            finalMove = move * iceBaseSpeed;
+        }
         //diff movement for dodging
         if (IsDodging())
         {

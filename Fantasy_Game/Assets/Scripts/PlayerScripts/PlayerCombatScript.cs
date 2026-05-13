@@ -83,15 +83,18 @@ public class PlayerCombatScript : MonoBehaviour
     IEnumerator SwordAttacking()
     {
         StartCoroutine(SwordAttackHitboxOn());
-        yield return new WaitForSeconds(swordAttackTime);
-        player.EnableMovement();
+        //time before hitbox is disabled
+        yield return new WaitForSeconds(0.7f);
         swordAttackHitbox.enabled = false;
+        //time before you can move again
+        yield return new WaitForSeconds(swordAttackTime - 0.7f);
+        player.EnableMovement();
     }
 
     //waits a bit to enable attack hitbox
     IEnumerator SwordAttackHitboxOn()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.4f);
         if(!player.TookDamageRecently())swordAttackHitbox.enabled = true;
     }
 

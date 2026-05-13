@@ -22,6 +22,7 @@ TagManager:
   - Horse
   - SwordAttackHitboxTag
   - BossTrigger
+  - EnemyIce
   layers:
   - Default
   - TransparentFX

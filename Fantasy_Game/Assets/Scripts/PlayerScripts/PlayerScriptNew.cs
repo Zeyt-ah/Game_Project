@@ -11,6 +11,7 @@ public class PlayerScriptNew : MonoBehaviour
     private int maxHealth = 100;
     private int currentHealth = 100;
     private bool tookDamageRecently = false;
+    private bool hitWithIce = false;
 
     [Header("References")]
     public Transform cam;
@@ -89,6 +90,18 @@ public class PlayerScriptNew : MonoBehaviour
         {
             TakeDamage(25);
         }
+        if (other.CompareTag("EnemyIce"))
+        {
+            TakeDamage(25);
+            hitWithIce = true;
+            StartCoroutine(IcePhysicsOff());
+        }
+    }
+
+    private IEnumerator IcePhysicsOff()
+    {
+        yield return new WaitForSeconds(2f);
+        hitWithIce = false;
     }
 
     private void Death()
@@ -145,4 +158,8 @@ public class PlayerScriptNew : MonoBehaviour
         return tookDamageRecently;
     }
 
+    public bool IsIcey()
+    {
+        return hitWithIce;
+    }
 }
