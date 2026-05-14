@@ -32,6 +32,11 @@ Material:
     - _CUSTOMCOLORSTINTING: 1
     - _Gradient: 0
     - _GradientPower: 0.45
+    - _Smoothness: 0
+    - _WINDMASKONOFF: 0
+    - _WindDensity: 0
+    - _WindMovement: 0
+    - _WindStrength: 0
     m_Colors:
     - _GroundColor: {r: 0.01132071, g: 0.01132071, b: 0.01132071, a: 1}
     - _TopColor: {r: 0.0008935774, g: 0.0007421945, b: 0.0005513204, a: 1}
