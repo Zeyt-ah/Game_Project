@@ -33,6 +33,7 @@ public class PlayerMovementScript : MonoBehaviour
     private bool isSprinting = false;
     private float horizontalSpeed = 0;
     private float maxFallVelocity = 0;
+    public bool disableFallDamage = false;
 
     //for dodging
     private float dodgeSpeed = 8;
@@ -255,7 +256,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (player._characterController.isGrounded && velocityY < 0f)
         {
-            if(maxFallVelocity < -25f)
+            if (!disableFallDamage && maxFallVelocity < -25f)
             {
                 int damage = 0;
 
