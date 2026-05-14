@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: e58e6333f78e8a749ad8617e8dbe7af9
+AssetOrigin:
+  serializedVersion: 1
+  productId: 327618
+  packageName: CliffStonePackS
+  packageVersion: 1.0
+  assetPath: Assets/Dzeruza/CliffStonePackS/Textures/Stones/T_Cliffs_S_Grey_BaseMap.png
+  uploadId: 782871
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -141,10 +148,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 327618
-  packageName: CliffStonePackS
-  packageVersion: 1.0
-  assetPath: Assets/Dzeruza/CliffStonePackS/Textures/Stones/T_Cliffs_S_Grey_BaseMap.png
-  uploadId: 782871
