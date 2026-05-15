@@ -32,6 +32,7 @@ public class BossScript : MonoBehaviour
     private bool canDamage = true;
     private bool shieldActive = true;
     private int hitsTaken = 0;
+    private bool startedFight = false;
 
 
 
@@ -55,8 +56,8 @@ public class BossScript : MonoBehaviour
     private bool isTiredCoroutineRunning = false;
     private bool isAttacking = false;
 
-    private enum State { Idle, Chasing, Attacking, Tired, RunAway, Dead }
-    private State currentState = State.Idle;
+    private enum State {Start,Idle, Chasing, Attacking, Tired, RunAway, Dead }
+    private State currentState = State.Start;
 
     //for attack types
     private enum AttackType { Spell, Minions, AOE}
@@ -70,8 +71,6 @@ public class BossScript : MonoBehaviour
     void Update()
     {
         if (isDead) return;
-        print(currentHealth);
-        print(currentState);
 
         UpdatePhase();
         attackTimer -= Time.deltaTime;
@@ -79,6 +78,9 @@ public class BossScript : MonoBehaviour
 
         switch (currentState)
         {
+            case State.Start:
+                StartBehaviour();
+                break;
             case State.Idle:
                 IdleBehaviour();
                 break;
@@ -119,7 +121,24 @@ public class BossScript : MonoBehaviour
         }
     }
 
+    private void StartBehaviour()
+    {
+        float distanceToPlayer = Vector3.Distance(player.position, transform.position);
+        if (distanceToPlayer <= activationRange && !startedFight)
+        {
+            startedFight = true;
+            activationRange = 15;
+            animator.SetTrigger("BossStart");
+            StartCoroutine(WaitForCinematic());
+        }
+    }
 
+    private IEnumerator WaitForCinematic()
+    {
+        yield return new WaitForSeconds(8f);
+        currentState = State.Chasing;
+        animator.SetBool("isIdle", false);
+    }
     private void ChaseBehaviour()
     {
         agent.isStopped = false;
@@ -254,7 +273,7 @@ public class BossScript : MonoBehaviour
         GameObject spawnedSpell = Instantiate(spell, castPosition, rotation);
 
         StartCoroutine(MoveSpell(spawnedSpell, moveDirection));
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.6f);
     }
 
     private IEnumerator MoveSpell(GameObject spell, Vector3 direction)
@@ -289,7 +308,7 @@ public class BossScript : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
 
     }
 
@@ -307,7 +326,7 @@ public class BossScript : MonoBehaviour
 
         Destroy(indicator);
         GameObject spell =  Instantiate(spellAOE,targetPosition, Quaternion.identity);
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(spell);
 
     }
@@ -467,9 +486,9 @@ public class BossScript : MonoBehaviour
         animator.SetTrigger("Death");
         animator.SetBool("isDead", true);
         agent.isStopped = true;
-        attackCollider.enabled = false;
-        Destroy(gameObject, 10f);
-        gameManager.UpdateScore(100);
+        gameManager.UpdateScore(1000);
+        gameManager.Win();
+        Destroy(gameObject, 2f);
     }
 
 }

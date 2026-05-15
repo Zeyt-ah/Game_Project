@@ -23,6 +23,7 @@ TagManager:
   - SwordAttackHitboxTag
   - BossTrigger
   - EnemyIce
+  - BossFightTriggerTag
   layers:
   - Default
   - TransparentFX

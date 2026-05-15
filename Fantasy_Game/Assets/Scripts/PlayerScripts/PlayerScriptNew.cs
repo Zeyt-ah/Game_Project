@@ -18,6 +18,7 @@ public class PlayerScriptNew : MonoBehaviour
     public CharacterController _characterController;
     public Animator _animator;
     public GameManagerScript gameManager;
+    public int eggsRequired;
 
     private void Awake()
     {
@@ -97,6 +98,27 @@ public class PlayerScriptNew : MonoBehaviour
             StartCoroutine(IcePhysicsOff());
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BossFightTriggerTag"))// && gameManager.EggCount() == eggsRequired)
+        {
+            DisableAttack();
+            DisableMovement();
+            _animator.SetBool("BossIdleAnimation",true);
+            StartCoroutine(BossCutsceneTimer());
+        }
+
+    }
+
+    private IEnumerator BossCutsceneTimer()
+    {
+        yield return new WaitForSeconds(8f);
+        EnableAttack();
+        EnableMovement();
+        _animator.SetBool("BossIdleAnimation", false);
+    }
+
 
     private IEnumerator IcePhysicsOff()
     {

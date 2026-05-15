@@ -79,6 +79,13 @@ public class GameManagerScript : MonoBehaviour
         winText.gameObject.SetActive(true);
         finalScore.gameObject.SetActive(true);
         quitButtonWin.gameObject.SetActive(true);
+        StartCoroutine(WaitForWin());
+    }
+
+    private IEnumerator WaitForWin()
+    {
+        yield return new WaitForSeconds(1f);
+        Time.timeScale = 0f;
     }
 
     public void RestartGame()
@@ -89,5 +96,10 @@ public class GameManagerScript : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public int EggCount()
+    {
+        return eggCount;
     }
 }
