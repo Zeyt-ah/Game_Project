@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BossScript : MonoBehaviour
 {
@@ -10,12 +11,21 @@ public class BossScript : MonoBehaviour
     [Header("References")]
     public NavMeshAgent agent;
     public Transform player;
-    public Collider attackCollider;
     public Animator animator;
     public GameManagerScript gameManager;
     public GameObject shieldVisual;
     public GameObject hand;
     public GameObject spell;
+    public GameObject sparks;
+    public AudioSource audioSource;
+    public AudioClip hitSound;
+    public AudioClip spellSound;
+    public AudioClip aoeSound;
+    public AudioClip minionSound;
+
+    [Header("UI")]
+    public Image bossHealthBar;
+
 
     [Header("Stats")]
     public float activationRange = 10f;
@@ -136,6 +146,7 @@ public class BossScript : MonoBehaviour
     private IEnumerator WaitForCinematic()
     {
         yield return new WaitForSeconds(8f);
+        bossHealthBar.transform.parent.gameObject.SetActive(true);
         currentState = State.Chasing;
         animator.SetBool("isIdle", false);
     }
@@ -271,6 +282,7 @@ public class BossScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         GameObject spawnedSpell = Instantiate(spell, castPosition, rotation);
+        audioSource.PlayOneShot(spellSound);
 
         StartCoroutine(MoveSpell(spawnedSpell, moveDirection));
         yield return new WaitForSeconds(0.6f);
@@ -278,8 +290,8 @@ public class BossScript : MonoBehaviour
 
     private IEnumerator MoveSpell(GameObject spell, Vector3 direction)
     {
-        float speed = 5f;
-        float duration = 3f;
+        float speed = 7f;
+        float duration = 6f;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -294,6 +306,7 @@ public class BossScript : MonoBehaviour
     private IEnumerator DoSpawnMinions()
     {
         animator.SetTrigger("Minions");
+        audioSource.PlayOneShot(minionSound);
         int spawnCount = 2;
         for (int i = 0; i < spawnCount; i++)
         {
@@ -322,6 +335,7 @@ public class BossScript : MonoBehaviour
         GameObject indicator = Instantiate(spellAOEIndicator, targetPosition, Quaternion.identity);
 
         float warningTime = 1.5f;
+        audioSource.PlayOneShot(aoeSound);
         yield return new WaitForSeconds(warningTime);
 
         Destroy(indicator);
@@ -452,16 +466,19 @@ public class BossScript : MonoBehaviour
         if (!canDamage) return;
 
         RegisterHitDuringTired(dmg);
-        
         canDamage = false;
         currentHealth -= dmg;
+        UpdateHealthBar();
+        sparks.SetActive(true);
+        audioSource.PlayOneShot(hitSound);
         StartCoroutine(IFramesTime());
         animator.SetTrigger("tookDamage");
         if (currentHealth <= 0 && !isDead)
         {
-            Die();
+            StartCoroutine(DeathSequence());
         }
     }
+
 
     // Call this whenever the boss takes damage
     private void RegisterHitDuringTired(int hitAmount)
@@ -474,21 +491,51 @@ public class BossScript : MonoBehaviour
             EndTiredState();
         }
     }
+
+    private void UpdateHealthBar()
+    {
+        bossHealthBar.fillAmount = (float)currentHealth / maxHealth;
+    }
+
     IEnumerator IFramesTime()
     {
         yield return new WaitForSeconds(IFrames);
+        sparks.SetActive(false);
         canDamage = true;
     }
 
-    private void Die()
+    private IEnumerator DeathSequence()
     {
         isDead = true;
+
         animator.SetTrigger("Death");
         animator.SetBool("isDead", true);
+
         agent.isStopped = true;
+
         gameManager.UpdateScore(1000);
+
+        // Remove remaining summoned enemies
+        DestroySummonedMinions();
+
+        yield return new WaitForSeconds(2f);
         gameManager.Win();
-        Destroy(gameObject, 2f);
+
+        Destroy(gameObject);
     }
 
+
+
+    private void DestroySummonedMinions()
+    {
+        EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
+
+        foreach (EnemyScript enemy in enemies)
+        {
+            if (enemy.summonedByBoss)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+    }
 }

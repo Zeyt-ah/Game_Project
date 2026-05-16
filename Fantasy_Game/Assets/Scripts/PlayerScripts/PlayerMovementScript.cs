@@ -5,11 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI;
 
 public class PlayerMovementScript : MonoBehaviour
 {
     private PlayerScriptNew player;
     private PlayerCombatScript playerCombat;
+    public Image staminaBar;
+    public GameObject staminaBarBackground;
 
     [Header("stats")]
     public float baseSpeed = 6f;
@@ -45,6 +48,7 @@ public class PlayerMovementScript : MonoBehaviour
     private bool isClimbing = false;
     private bool isInClimbZone = false;
     private float climbSpeed = 3f;
+    private float totalClimbStamina = 100f;
     private float climbStamina = 100f;
     //Numbers can be tweaked
     public float staminaDrain = 50f;
@@ -75,11 +79,12 @@ public class PlayerMovementScript : MonoBehaviour
         if (player.IsDead()) Dismount();
         if (player == null) return;
         if (!playerCanMove()) return;
-
+        UpdateStaminaBar();
         if (isInClimbZone && Keyboard.current.eKey.wasPressedThisFrame && !isRidingHorse())
         {
             if (!isClimbing)
             {
+                staminaBarBackground.SetActive(true);
                 isClimbing = true;
                 OnClimbStarted?.Invoke();
             }
@@ -88,6 +93,7 @@ public class PlayerMovementScript : MonoBehaviour
                 isClimbing = false;
             }
         }
+        if(!isClimbing) staminaBarBackground.SetActive(false);
 
         if (isClimbing && climbStamina > 0)
         {
@@ -353,6 +359,10 @@ public class PlayerMovementScript : MonoBehaviour
         climbStamina -= staminaDrain * Time.deltaTime;
     }
 
+    private void UpdateStaminaBar()
+    {
+        staminaBar.fillAmount = (float) climbStamina/ totalClimbStamina;
+    }
 
     public bool IsClimbing()
     {
