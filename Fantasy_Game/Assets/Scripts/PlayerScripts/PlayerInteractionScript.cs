@@ -81,10 +81,6 @@ public class PlayerInteractionScript : MonoBehaviour
             if (isInteracting && !countIncreased)
             {
                 countIncreased = true;
-                playerMovement.jumpPower = 10;
-                playerMovement.gravityMultiplier = 0.7f;
-                playerMovement.speedForFall = 0f;
-                player._animator.SetBool("mushroomPicked", true);
             }
         }
     }

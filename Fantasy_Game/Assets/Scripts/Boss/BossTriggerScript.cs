@@ -36,7 +36,7 @@ public class BossTriggerScript : MonoBehaviour
         if (triggered) return;
 
 
-        if (other.CompareTag("Player"))// && gameManager.EggCount() == eggsRequired)
+        if (other.CompareTag("Player") && gameManager.EggCount() == eggsRequired)
         {
            
             triggered = true;
@@ -79,12 +79,6 @@ public class BossTriggerScript : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
 
         dialoguePanel.SetActive(false);
-
-        StartBossFight();
-    }
-
-    private void StartBossFight()
-    {
 
     }
 }

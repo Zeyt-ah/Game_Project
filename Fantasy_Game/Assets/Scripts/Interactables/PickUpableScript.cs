@@ -6,6 +6,7 @@ using UnityEditor.UI;
 public class PickUpableScript : MonoBehaviour
 {
     public PlayerInteractionScript playerScript;
+    public PlayerMovementScript playerMovement;
     public GameObject wholeMushroomObject;
     private MeshRenderer meshRenderer;
     private Light light;
@@ -36,9 +37,11 @@ public class PickUpableScript : MonoBehaviour
                 light.enabled = false;
             }
         }
+        //only mushroom object should return true here
         if (wholeMushroomObject != null)
         {
             wholeMushroomObject.SetActive(false);
+            if (playerMovement != null)playerMovement.EnableDoubleJump();
         }
     }
 

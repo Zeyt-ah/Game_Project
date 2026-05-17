@@ -25,7 +25,7 @@ public class PlayerMovementScript : MonoBehaviour
     public float gravityMultiplier = 3f;
     public float speedForFall = -11f;
     public int jumpCount = 1;
-    public int maxJumpCount = 2;
+    public int maxJumpCount = 1;
 
     [SerializeField]
     public Vector2 input;
@@ -487,5 +487,10 @@ public class PlayerMovementScript : MonoBehaviour
     public bool isRidingHorse()
     {
         return isMounted;
+    }
+
+    public void EnableDoubleJump()
+    {
+        maxJumpCount = 2;
     }
 }

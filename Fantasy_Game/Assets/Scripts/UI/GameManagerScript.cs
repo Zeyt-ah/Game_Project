@@ -59,7 +59,7 @@ public class GameManagerScript : MonoBehaviour
     public void UpdateEggs()
     {
         eggCount++;
-        eggText.text = "Eggs: " + eggCount + "/3";
+        eggText.text = "Eggs: " + eggCount + "/5";
     }
 
     public void GameOver()
