@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Dayne1.1.2.1.2.1
+  m_EditorClassIdentifier: 
+  line: You fool. If Kleora returns home to find her eggs missing she will kill us
+    all.
+  option1:
+    text: Kleora?
+    next: {fileID: 11400000, guid: 08ff9c9275614f148b04eb8ad699c8a0, type: 2}
+    action: 0
+  option2:
+    text: What do you know about dragons?
+    next: {fileID: 0}
+    action: 0

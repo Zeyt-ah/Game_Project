@@ -1,6 +1,8 @@
 using System.Collections;
+
 using UnityEngine;
 using UnityEngine.AI;
+
 public class PriestScript : MonoBehaviour
 {
 
@@ -19,6 +21,9 @@ public class PriestScript : MonoBehaviour
     public float attackRange = 10f;
     public float attackCooldown = 10f;
     public int maxHealth = 1;
+    public float spellSpeed = 5f;
+    public float spellRange = 10f;
+    public float spellDuration = 3f;
 
     [Header("Roaming")]
     public float roamRadius = 10f;
@@ -76,9 +81,9 @@ public class PriestScript : MonoBehaviour
         agent.isStopped = true;
         animator.SetBool("Idling", true);
 
-        if (distanceToPlayer >= detectionRange && attackTimer <=2f) currentState = State.Roaming;
-        if (attackTimer <= 0f)currentState = State.Attacking;
-        
+        if (distanceToPlayer >= detectionRange && attackTimer <= 2f) currentState = State.Roaming;
+        if (attackTimer <= 0f) currentState = State.Attacking;
+
     }
     private void RoamBehavior(float distanceToPlayer)
     {
@@ -183,18 +188,17 @@ public class PriestScript : MonoBehaviour
 
     private IEnumerator MoveFireball(GameObject spell, Vector3 direction)
     {
-        float speed = 5f;
-        float duration = 3f;
-        float elapsed = 0f;
+        float elapsedTime = 0f;
 
-        while (elapsed < duration)
+        while (elapsedTime < spellDuration)
         {
-            spell.transform.position += direction * speed * Time.deltaTime; // move forward
-            elapsed += Time.deltaTime;
+            float moveStep = spellSpeed * Time.deltaTime;
+            spell.transform.position += direction * moveStep;
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-        Destroy(spell); // remove spell after movement
 
+        Destroy(spell);
     }
 
     private void SetNewRoamTarget()

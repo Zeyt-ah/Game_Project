@@ -120,7 +120,7 @@ public class PlayerCombatScript : MonoBehaviour
     IEnumerator SpellMovement(GameObject spell)
     {
         float speed = 15f;
-        float duration = 1.5f;
+        float duration = 6f;
         float elapsed = 0f;
 
         Vector3 moveDirection = transform.forward;

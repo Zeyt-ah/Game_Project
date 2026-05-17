@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Dayne1
+  m_EditorClassIdentifier: 
+  line: Evening, travellor. If you're thinking of heading up the volcano, I'd be
+    careful. I tried going up earlier, there was some mad cult living up there. Barely
+    made it out with my life.
+  option1:
+    text: What happened?
+    next: {fileID: 11400000, guid: 01f2c08915488d348b1a320e78cf468c, type: 2}
+    action: 0
+  option2:
+    text: I don't care.
+    next: {fileID: 11400000, guid: ee3984d01d8b618449875dd4fc1e9a70, type: 2}
+    action: 0
