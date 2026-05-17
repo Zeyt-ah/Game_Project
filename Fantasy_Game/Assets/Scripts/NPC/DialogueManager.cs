@@ -25,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     private string currentNpcName;
     private Action onClose;
     private DialogueNode currentNode;
+    private Action<DialogueActionType> onAction;
 
     public bool IsOpen { get; private set; }
 
@@ -34,7 +35,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null)
+    public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null, Action<DialogueActionType> onDialogueAction = null)
     {
         if (startNode == null) return;
 
@@ -42,6 +43,7 @@ public class DialogueManager : MonoBehaviour
         currentNpcName = npcName;
         currentNode = startNode;
         onClose = onClosed;
+        onAction = onDialogueAction;
 
         if (playerInput) playerInput.SwitchCurrentActionMap(uiMap);
 
@@ -81,6 +83,11 @@ public class DialogueManager : MonoBehaviour
 
         button.onClick.AddListener(() =>
         {
+            if (choice.action != DialogueActionType.None)
+            {
+                onAction?.Invoke(choice.action);
+            }
+
             if (choice.next == null)
             {
                 Close();
@@ -107,6 +114,7 @@ public class DialogueManager : MonoBehaviour
 
         onClose?.Invoke();
         onClose = null;
+        onAction = null;
         currentNode = null;
     }
 }

@@ -3,8 +3,9 @@ using UnityEngine;
 public class NPCSystem : MonoBehaviour
 {
     [SerializeField] private DialogueManager dialogue;
-    [SerializeField] private string npcName = "Peasant";
+    [SerializeField] private string npcName;
     [SerializeField] private DialogueNode startingNode;
+    [SerializeField] private BossIntroSequence bossIntroSequence;
 
     private void Awake()
     {
@@ -21,7 +22,25 @@ public class NPCSystem : MonoBehaviour
         dialogue.StartDialogue(
             npcName,
             startingNode,
-            onClosed: () => player.EnableMovement()
+            onClosed: () => player.EnableMovement(),
+            onDialogueAction: HandleDialogueAction
         );
     }
+
+    // Handles actions triggered by dialogue choices
+    private void HandleDialogueAction(DialogueActionType actionType)
+    {
+        if (actionType == DialogueActionType.StartDragonBossIntro)
+        {
+            if (bossIntroSequence != null)
+            {
+                bossIntroSequence.StartBossIntro();
+            }
+            else
+            {
+                Debug.LogWarning("Boss intro sequence is not assigned on this NPC.");
+            }
+        }
+    }
+
 }

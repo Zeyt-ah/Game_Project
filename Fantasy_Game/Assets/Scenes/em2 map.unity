@@ -5292,6 +5292,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4627547270634096, guid: 93a135b5c8137e5468cb55d97a43df67, type: 3}
   m_PrefabInstance: {fileID: 1374715938}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &259853446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 259853447}
+  m_Layer: 0
+  m_Name: WizardCarryPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &259853447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259853446}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 948332611}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &260727479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6810,6 +6841,7 @@ Transform:
   - {fileID: 1906340871}
   - {fileID: 128628853}
   - {fileID: 1185206113}
+  - {fileID: 502862976}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 44.665, z: 0}
 --- !u!1001 &319916658
@@ -10888,6 +10920,57 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a072c7e3e8fa561438b1e30ee78dcfe0, type: 3}
+--- !u!1 &502862975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 502862976}
+  - component: {fileID: 502862977}
+  m_Layer: 0
+  m_Name: BossIntroSequenceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &502862976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502862975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 318332399}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &502862977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502862975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bccfd0e41b4741488475499db3cfa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragonBossController: {fileID: 948332612}
+  dragonTransform: {fileID: 948332611}
+  wizardTransform: {fileID: 1904027001}
+  wizardCarryPoint: {fileID: 259853447}
+  perchPoint: {fileID: 1185206113}
+  waitBeforeGrab: 1
+  waitBeforeFight: 2
 --- !u!4 &506630563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2475146048813586818, guid: 510f7dfa73ce3c94a91f5916da4c116e, type: 3}
@@ -22357,7 +22440,10 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 114428407355665034, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4763758474929338, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 259853447}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1494583877365688, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       insertIndex: -1
@@ -43605,9 +43691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495e9d788f1c2e948880992efb8fa4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 755451522}
   npcName: WizardDragonArena
   startingNode: {fileID: 11400000, guid: 69424557ed0f0c146b942fc78b720c91, type: 2}
+  bossIntroSequence: {fileID: 0}
 --- !u!4 &1906042837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4472924558029580, guid: 0af388c5f7d3fe8418aecd4b47e51d62, type: 3}
