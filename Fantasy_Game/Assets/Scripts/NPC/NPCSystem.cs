@@ -5,7 +5,14 @@ public class NPCSystem : MonoBehaviour
     [SerializeField] private DialogueManager dialogue;
     [SerializeField] private string npcName;
     [SerializeField] private DialogueNode startingNode;
+
+    [Header("Boss Intro")]
     [SerializeField] private BossIntroSequence bossIntroSequence;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string idleStateName = "Idle";
+    [SerializeField] private string talkingStateName = "HumanM@Talk01";
 
     private void Awake()
     {
@@ -19,10 +26,15 @@ public class NPCSystem : MonoBehaviour
 
         player.DisableMovement();
 
+        PlayTalkingAnimation();
+
         dialogue.StartDialogue(
             npcName,
             startingNode,
-            onClosed: () => player.EnableMovement(),
+            onClosed: () => {
+                player.EnableMovement();
+                PlayIdleAnimation();
+            },
             onDialogueAction: HandleDialogueAction
         );
     }
@@ -41,6 +53,22 @@ public class NPCSystem : MonoBehaviour
                 Debug.LogWarning("Boss intro sequence is not assigned on this NPC.");
             }
         }
+    }
+
+    // Plays the NPC talking animation
+    private void PlayTalkingAnimation()
+    {
+        if (animator == null) return;
+
+        animator.Play(talkingStateName);
+    }
+
+    // Returns the NPC to idle after dialogue closes
+    private void PlayIdleAnimation()
+    {
+        if (animator == null) return;
+
+        animator.Play(idleStateName);
     }
 
 }

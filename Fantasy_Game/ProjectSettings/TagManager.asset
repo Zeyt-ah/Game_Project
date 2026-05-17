@@ -24,6 +24,7 @@ TagManager:
   - BossTrigger
   - EnemyIce
   - BossFightTriggerTag
+  - PlayerSpellHitbox
   layers:
   - Default
   - TransparentFX

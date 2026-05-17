@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossIntroSequence : MonoBehaviour
@@ -10,18 +9,31 @@ public class BossIntroSequence : MonoBehaviour
     [SerializeField] private Transform wizardTransform;
     [SerializeField] private Transform wizardCarryPoint;
     [SerializeField] private Transform perchPoint;
+    [SerializeField] private Transform landingPoint;
 
-    [Header("Dragon Movement")]
-    [SerializeField] private float flyDownSpeed = 18f;
+    [Header("Movement")]
+    [SerializeField] private float flyToWizardTime = 3f;
     [SerializeField] private float flyToPerchSpeed = 18f;
-    [SerializeField] private float rotationSpeed = 4f;
-    [SerializeField] private float grabDistance = 2f;
+    [SerializeField] private float flyToLandingTime = 3f;
+    [SerializeField] private float rotationSpeed = 2f;
     [SerializeField] private float perchDistance = 2f;
+
+    [Header("Path Heights")]
+    [SerializeField] private float wizardGrabHeight = 6f;
+    [SerializeField] private float wizardSwoopHeight = 35f;
+    [SerializeField] private float perchApproachHeight = 30f;
+    [SerializeField] private float perchApproachDistance = 20f;
+    [SerializeField] private float landingSwoopHeight = 25f;
 
     [Header("Timing")]
     [SerializeField] private float waitBeforeGrab = 0.5f;
     [SerializeField] private float waitAfterGrab = 0.5f;
-    [SerializeField] private float waitBeforeFight = 1.5f;
+    [SerializeField] private float battleStanceTime = 2f;
+    [SerializeField] private float waitBeforeFight = 0.5f;
+
+    [Header("Wizard Settings")]
+    [SerializeField] private bool hideWizardAtPerch = true;
+
 
     private bool introRunning = false;
 
@@ -43,13 +55,14 @@ public class BossIntroSequence : MonoBehaviour
     {
         introRunning = true;
 
-        if (dragonBossController == null || dragonTransform == null || wizardTransform == null || wizardCarryPoint == null || perchPoint == null)
+        if (dragonBossController == null || dragonTransform == null || wizardTransform == null || wizardCarryPoint == null || perchPoint == null || landingPoint == null)
         {
             Debug.LogWarning("BossIntroSequence is missing one or more references.");
+            introRunning = false;
             yield break;
         }
 
-        dragonBossController.enabled = false;
+        dragonBossController.PauseDragonBehaviour();
 
         yield return new WaitForSeconds(waitBeforeGrab);
 
@@ -62,11 +75,16 @@ public class BossIntroSequence : MonoBehaviour
         yield return FlyDragonToPerch();
 
         RemoveWizardAtPerch();
+        dragonBossController.PlayBattleStance();
+
+        yield return new WaitForSeconds(battleStanceTime);
+
+        dragonBossController.PlayFlyingAnimation();
+        yield return FlyDragonToLandingPoint();
 
         yield return new WaitForSeconds(waitBeforeFight);
 
-        dragonBossController.enabled = true;
-        dragonBossController.StartBossFight();
+        dragonBossController.StartGroundBossFight();
 
         introRunning = false;
     }
@@ -75,22 +93,18 @@ public class BossIntroSequence : MonoBehaviour
     private IEnumerator FlyDragonToWizard()
     {
         Vector3 startPosition = dragonTransform.position;
-
-        Vector3 endPosition = wizardTransform.position + Vector3.up * 7f;
+        Vector3 endPosition = wizardTransform.position + Vector3.up * wizardGrabHeight;
 
         Vector3 controlPoint = (startPosition + endPosition) * 0.5f;
-        controlPoint.y = Mathf.Max(startPosition.y, endPosition.y) + 25f;
+        controlPoint.y = Mathf.Max(startPosition.y, endPosition.y) + wizardSwoopHeight;
 
-        float journeyTime = 2.5f;
         float elapsedTime = 0f;
 
-        while (elapsedTime < journeyTime)
+        while (elapsedTime < flyToWizardTime)
         {
             elapsedTime += Time.deltaTime;
 
-            float t = elapsedTime / journeyTime;
-
-            // Smooths the motion so the dragon eases in and out instead of moving mechanically
+            float t = elapsedTime / flyToWizardTime;
             float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
             Vector3 nextPosition = CalculateQuadraticBezierPoint(
@@ -100,7 +114,7 @@ public class BossIntroSequence : MonoBehaviour
                 endPosition
             );
 
-            RotateDragonTowards(nextPosition);
+            RotateDragonFlatTowards(nextPosition);
 
             dragonTransform.position = nextPosition;
 
@@ -109,45 +123,7 @@ public class BossIntroSequence : MonoBehaviour
 
         dragonTransform.position = endPosition;
 
-        Debug.Log("Dragon swooped down to the wizard.");
-    }
-
-    // Calculates a curved point between start, control, and end position
-    private Vector3 CalculateQuadraticBezierPoint(float t, Vector3 start, Vector3 control, Vector3 end)
-    {
-        float oneMinusT = 1f - t;
-
-        return
-            oneMinusT * oneMinusT * start +
-            2f * oneMinusT * t * control +
-            t * t * end;
-    }
-
-    // Rotates the dragon towards the next movement position
-    private void RotateDragonTowards(Vector3 targetPosition)
-    {
-        Vector3 direction = targetPosition - dragonTransform.position;
-
-        if (direction.sqrMagnitude <= 0.01f)
-        {
-            return;
-        }
-
-        // Reduce rotation so the dragon turns mostly horizontally instead of nose-diving
-        Vector3 flatDirection = new Vector3(direction.x, 0f, direction.z);
-
-        if (flatDirection.sqrMagnitude <= 0.01f)
-        {
-            return;
-        }
-
-        Quaternion targetRotation = Quaternion.LookRotation(flatDirection.normalized);
-
-        dragonTransform.rotation = Quaternion.Slerp(
-            dragonTransform.rotation,
-            targetRotation,
-            rotationSpeed * Time.deltaTime
-        );
+        Debug.Log("Dragon reached the wizard.");
     }
 
     // Parents the wizard to the dragon carry point so it looks like he is being carried
@@ -177,10 +153,8 @@ public class BossIntroSequence : MonoBehaviour
     // Moves the dragon to the perch point while carrying the wizard
     private IEnumerator FlyDragonToPerch()
     {
-        Vector3 startPosition = dragonTransform.position;
-
-        // Go above the perch first so the dragon does not fly directly through the tower
-        Vector3 highApproachPoint = perchPoint.position + Vector3.up * 25f;
+        Vector3 approachOffset = -perchPoint.forward * perchApproachDistance + Vector3.up * perchApproachHeight;
+        Vector3 highApproachPoint = perchPoint.position + approachOffset;
 
         while (Vector3.Distance(dragonTransform.position, highApproachPoint) > perchDistance)
         {
@@ -203,7 +177,6 @@ public class BossIntroSequence : MonoBehaviour
 
             Vector3 nextPosition = Vector3.Lerp(descendStart, descendEnd, smoothT);
 
-            // Rotate towards the final perch rotation while descending
             dragonTransform.rotation = Quaternion.Slerp(
                 dragonTransform.rotation,
                 perchPoint.rotation,
@@ -221,23 +194,60 @@ public class BossIntroSequence : MonoBehaviour
         Debug.Log("Dragon reached the perch.");
     }
 
-    // Moves the dragon towards a target while rotating mostly horizontally, preventing awkward nose-dives
+    // Deactivates or detaches the wizard once the dragon reaches the perch
+    private void RemoveWizardAtPerch()
+    {
+        wizardTransform.SetParent(null);
+
+        if (hideWizardAtPerch)
+        {
+            wizardTransform.gameObject.SetActive(false);
+        }
+
+        Debug.Log("Wizard removed at perch.");
+    }
+
+    private IEnumerator FlyDragonToLandingPoint()
+    {
+        Vector3 startPosition = dragonTransform.position;
+        Vector3 endPosition = landingPoint.position;
+
+        Vector3 controlPoint = (startPosition + endPosition) * 0.5f;
+        controlPoint.y = Mathf.Max(startPosition.y, endPosition.y) + landingSwoopHeight;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < flyToLandingTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = elapsedTime / flyToLandingTime;
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+            Vector3 nextPosition = CalculateQuadraticBezierPoint(
+                smoothT,
+                startPosition,
+                controlPoint,
+                endPosition
+            );
+
+            RotateDragonFlatTowards(nextPosition);
+
+            dragonTransform.position = nextPosition;
+
+            yield return null;
+        }
+
+        dragonTransform.position = endPosition;
+        dragonTransform.rotation = landingPoint.rotation;
+
+        Debug.Log("Dragon landed in the arena.");
+    }
+
+    // Moves the dragon towards a target while rotating mostly horizontally
     private void MoveDragonTowardsFlat(Vector3 targetPosition, float speed)
     {
-        Vector3 direction = targetPosition - dragonTransform.position;
-
-        Vector3 flatDirection = new Vector3(direction.x, 0f, direction.z);
-
-        if (flatDirection.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(flatDirection.normalized);
-
-            dragonTransform.rotation = Quaternion.Slerp(
-                dragonTransform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
-            );
-        }
+        RotateDragonFlatTowards(targetPosition);
 
         dragonTransform.position = Vector3.MoveTowards(
             dragonTransform.position,
@@ -246,11 +256,37 @@ public class BossIntroSequence : MonoBehaviour
         );
     }
 
-    // Deactivates or detaches the wizard once the dragon reaches the perch
-    private void RemoveWizardAtPerch()
+    // Rotates the dragon horizontally towards a target position
+    private void RotateDragonFlatTowards(Vector3 targetPosition)
     {
-        wizardTransform.SetParent(null);
-        wizardTransform.gameObject.SetActive(false);
-        Debug.Log("Wizard removed at perch.");
+        Vector3 direction = targetPosition - dragonTransform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude <= 0.01f)
+        {
+            return;
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+
+        dragonTransform.rotation = Quaternion.Slerp(
+            dragonTransform.rotation,
+            targetRotation,
+            rotationSpeed * Time.deltaTime
+        );
     }
+
+
+    // Calculates a curved point between start, control, and end positions
+    private Vector3 CalculateQuadraticBezierPoint(float t, Vector3 start, Vector3 control, Vector3 end)
+    {
+        float oneMinusT = 1f - t;
+
+        return
+            oneMinusT * oneMinusT * start +
+            2f * oneMinusT * t * control +
+            t * t * end;
+    }
+
+    
 }
