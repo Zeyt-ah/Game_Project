@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Net.Http.Headers;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 public class PriestScript : MonoBehaviour
 {
 

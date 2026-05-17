@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/UI/Start Page.unity
     guid: bff8d7ca39ec23a439a18bf80566499a
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 9b0e7bef8b41b8449bdfcdcb1ae50835
+    path: Assets/Scenes/NewMainScene.unity
+    guid: f147a2ec63e8bca4c82d64ba4371f32f
   - enabled: 1
     path: Assets/Scenes/UI/Keybinds.unity
     guid: 31c7a65745cca514ba26ec31bd10bcf4

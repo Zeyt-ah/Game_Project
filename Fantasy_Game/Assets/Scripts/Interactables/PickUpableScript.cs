@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEditor.UI;
 
 public class PickUpableScript : MonoBehaviour
 {
