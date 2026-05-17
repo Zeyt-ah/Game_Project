@@ -5316,13 +5316,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259853446}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.0024, y: -0.001, z: -0.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 948332611}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1790692521}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1001 &260727479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10969,7 +10969,13 @@ MonoBehaviour:
   wizardTransform: {fileID: 1904027001}
   wizardCarryPoint: {fileID: 259853447}
   perchPoint: {fileID: 1185206113}
+  flyDownSpeed: 18
+  flyToPerchSpeed: 18
+  rotationSpeed: 4
+  grabDistance: 2
+  perchDistance: 2
   waitBeforeGrab: 1
+  waitAfterGrab: 0.5
   waitBeforeFight: 2
 --- !u!4 &506630563 stripped
 Transform:
@@ -22441,7 +22447,7 @@ PrefabInstance:
     - {fileID: 114428407355665034, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4763758474929338, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 4176569631110812, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       insertIndex: -1
       addedObject: {fileID: 259853447}
     m_AddedComponents:
@@ -40290,6 +40296,11 @@ RectTransform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5521807432873174370, guid: 768a9a1d507347440aa8921a9a517f9c, type: 3}
   m_PrefabInstance: {fileID: 1760334785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1790692521 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4176569631110812, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+  m_PrefabInstance: {fileID: 1058702466}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1791283961
 GameObject:

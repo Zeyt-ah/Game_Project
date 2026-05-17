@@ -47,7 +47,6 @@ public class PlayerInteractionScript : MonoBehaviour
         }
     }
 
-
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Crystal"))
