@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PT_NPC_Mat
+  m_Name: Billy
   m_Shader: {fileID: 4800000, guid: 5fdb92501eac48d4a87329098a14e790, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -50,7 +50,7 @@ Material:
     - _AlphaCutoff: 0.5
     - _EYESSMOOTHNESS: 0.7
     - _EnvironmentReflections: 1
-    - _HAIRSMOOTHNESS: 0.1
+    - _HAIRSMOOTHNESS: 0.342
     - _LEATHER1SMOOTHNESS: 0.3
     - _LEATHER2SMOOTHNESS: 0.3
     - _LEATHER3SMOOTHNESS: 0.3
@@ -74,27 +74,27 @@ Material:
     - _SpecularHighlights: 1
     - __dirty: 1
     m_Colors:
-    - _CLOTH1COLOR: {r: 0, g: 0.1792453, b: 0.05062231, a: 0}
+    - _CLOTH1COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _CLOTH2COLOR: {r: 1, g: 0, b: 0, a: 0}
-    - _CLOTH3COLOR: {r: 0.3962264, g: 0.3391397, b: 0.2710039, a: 0}
-    - _CLOTH4COLOR: {r: 0.2011392, g: 0.3773585, b: 0.3739074, a: 0}
+    - _CLOTH3COLOR: {r: 0.16896713, g: 0.16789782, b: 0.46226418, a: 0}
+    - _CLOTH4COLOR: {r: 0.04905659, g: 0.011053094, b: 0, a: 0}
     - _COATOFARMSCOLOR: {r: 1, g: 0, b: 0, a: 0}
-    - _EYESCOLOR: {r: 0.0734529, g: 0.1320755, b: 0.05046281, a: 1}
+    - _EYESCOLOR: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FEATHERS1COLOR: {r: 0.7735849, g: 0.492613, b: 0.492613, a: 0}
     - _FEATHERS2COLOR: {r: 0.6792453, g: 0, b: 0, a: 0}
-    - _HAIRCOLOR: {r: 0.7584905, g: 0.4220594, b: 0.18175146, a: 0}
-    - _LEATHER1COLOR: {r: 0.4811321, g: 0.2041155, b: 0.08851016, a: 1}
-    - _LEATHER2COLOR: {r: 0.4245283, g: 0.190437, b: 0.09011215, a: 1}
+    - _HAIRCOLOR: {r: 0, g: 0, b: 0, a: 0}
+    - _LEATHER1COLOR: {r: 0.19999999, g: 0.1488264, b: 0.12792452, a: 1}
+    - _LEATHER2COLOR: {r: 0.04150939, g: 0.008380197, b: 0.008380197, a: 1}
     - _LEATHER3COLOR: {r: 0.1698113, g: 0.04637412, b: 0.02963688, a: 1}
     - _LEATHER4COLOR: {r: 0.1698113, g: 0.04637412, b: 0.02963688, a: 1}
-    - _LIPSCOLOR: {r: 0.8301887, g: 0.3185886, b: 0.2780349, a: 0}
+    - _LIPSCOLOR: {r: 0.09433961, g: 0.0066907518, b: 0, a: 0}
     - _METAL1COLOR: {r: 0.8792791, g: 0.9922886, b: 1.007606, a: 0}
     - _METAL2COLOR: {r: 0.4674706, g: 0.4677705, b: 0.5188679, a: 0}
     - _METAL3COLOR: {r: 0.4383232, g: 0.4383232, b: 0.4716981, a: 0}
     - _METAL4COLOR: {r: 0.4383232, g: 0.4383232, b: 0.4716981, a: 0}
     - _OTHERCOLOR: {r: 0.5188679, g: 0.4637216, b: 0.3206212, a: 0}
     - _SCLERACOLOR: {r: 0.9056604, g: 0.8159487, b: 0.8159487, a: 0}
-    - _SKINCOLOR: {r: 2.02193, g: 1.0081, b: 0.6199315, a: 0}
+    - _SKINCOLOR: {r: 0.31132078, g: 0.17938575, b: 0.12775901, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: PT_Armors_Material Variant 4
   m_Shader: {fileID: 4800000, guid: 66cf399cd52203c4685e11681d535f09, type: 3}
-  m_Parent: {fileID: 2100000, guid: 6f1a3abc3e476eb4f823f1ab4687b4ed, type: 2}
+  m_Parent: {fileID: 2100000, guid: d33cfde66bd711f4c8e3c7bcefa672a8, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
@@ -39,9 +39,10 @@ Material:
     m_Colors:
     - _CLOTH2COLOR: {r: 0.0039215665, g: 0.31217304, b: 0.43529412, a: 0}
     - _CLOTH3COLOR: {r: 0.004024717, g: 0.31398875, b: 0.4341537, a: 0}
+    - _HAIRCOLOR: {r: 0.01886791, g: 0.000818794, b: 0.000818794, a: 0}
     - _LEATHER1COLOR: {r: 0.13207549, g: 0.043786757, b: 0.0077251634, a: 1}
     - _LEATHER3COLOR: {r: 0.23018861, g: 0.023018863, b: 0, a: 1}
     - _METAL1COLOR: {r: 0.25190157, g: 0.25190157, b: 0.25190157, a: 0}
-    - _SKINCOLOR: {r: 2.59757, g: 2.403569, b: 2.3280106, a: 0}
+    - _SKINCOLOR: {r: 1.0403876, g: 0.6889081, b: 0.5633797, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
