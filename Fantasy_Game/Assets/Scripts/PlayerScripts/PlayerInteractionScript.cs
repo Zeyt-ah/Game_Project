@@ -12,9 +12,11 @@ public class PlayerInteractionScript : MonoBehaviour
     [SerializeField] private BoxCollider pickupHitbox;
     [SerializeField] private InteractionPromptUI promptUI;
     [SerializeField] private DialogueManager dialogueManager;
+    [SerializeField] private GameObject dayneForSpell;
 
     private bool isInteracting = false;
     private bool dialogueStarting = false;
+    private bool berryBagRetrieved = false;
 
     private int coinCount = 0;
     private int crystalCount = 0;
@@ -88,6 +90,16 @@ public class PlayerInteractionScript : MonoBehaviour
                 countIncreased = true;
             }
         }
+        else if (other.CompareTag("berryBag"))
+        {
+            if (!onPickupable) { onPickupable = true; UpdatePrompt(); }
+
+            if (isInteracting && !countIncreased)
+            {
+                countIncreased = true;
+            }
+            berryBagRetrieved = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -107,7 +119,7 @@ public class PlayerInteractionScript : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Crystal") || other.CompareTag("Egg") || other.CompareTag("Mushroom"))
+        if (other.CompareTag("Crystal") || other.CompareTag("Egg") || other.CompareTag("Mushroom") || other.CompareTag("berryBag"))
         {
             onPickupable = false;
             UpdatePrompt();

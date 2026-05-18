@@ -3,7 +3,10 @@ using UnityEngine;
 public enum DialogueActionType
 {
     None,
-    StartDragonBossIntro
+    StartDragonBossIntro,
+    GiveSpell,
+    AllowWindmillEggPickup,
+    KalQuestAllowPickup
 }
 
 [System.Serializable]

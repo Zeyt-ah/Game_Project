@@ -19,6 +19,7 @@ public class PlayerScriptNew : MonoBehaviour
     public CharacterController _characterController;
     public Animator _animator;
     public GameManagerScript gameManager;
+    public PlayerInteractionScript playerInteraction;
     private int eggsRequired = 5;
     public GameObject escapeMenu;
 
@@ -103,7 +104,7 @@ public class PlayerScriptNew : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("BossFightTriggerTag")&& gameManager.EggCount() == eggsRequired)
+        if (other.CompareTag("BossFightTriggerTag")&& playerInteraction.eggCount >= eggsRequired)
         {
             DisableAttack();
             DisableMovement();

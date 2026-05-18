@@ -8,6 +8,7 @@ public class BossTriggerScript : MonoBehaviour
 
     [Header("References")]
     public PlayerScriptNew player;
+    public PlayerInteractionScript interactionScript;
     public GameManagerScript gameManager;
     public Collider triggerCollider;
     public GameObject wizard;
@@ -36,7 +37,7 @@ public class BossTriggerScript : MonoBehaviour
         if (triggered) return;
 
 
-        if (other.CompareTag("Player") && gameManager.EggCount() == eggsRequired)
+        if (other.CompareTag("Player") && interactionScript.eggCount >= eggsRequired)
         {
            
             triggered = true;

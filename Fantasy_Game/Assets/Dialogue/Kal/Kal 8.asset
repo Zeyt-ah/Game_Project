@@ -19,8 +19,8 @@ MonoBehaviour:
   option1:
     text: I will help you.
     next: {fileID: 11400000, guid: 47e8427a489192f4ea65f47f7416bb5f, type: 2}
-    action: 0
+    action: 4
   option2:
     text: I'm just going to take the egg.
     next: {fileID: 0}
-    action: 0
+    action: 4

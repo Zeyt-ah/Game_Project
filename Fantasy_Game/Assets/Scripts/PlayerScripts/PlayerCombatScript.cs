@@ -16,6 +16,7 @@ public class PlayerCombatScript : MonoBehaviour
     [SerializeField] private float swordAttackTime = 0.9f;
     [SerializeField] private float spellTime = 2f;
     private bool swordEquipped = false;
+    private bool spellEnabled = false;
 
     public System.Action OnAttackStarted;
     public System.Action OnCastStarted;
@@ -53,7 +54,7 @@ public class PlayerCombatScript : MonoBehaviour
 
     public void CastSpell(InputAction.CallbackContext context)
     {
-        if (!context.started || !player.CanAttack() || player.IsDead()) return;
+        if (!context.started || !player.CanAttack() || player.IsDead() || !spellEnabled) return;
         if (player._characterController.isGrounded)
         {
             player.DisableMovement();
@@ -167,5 +168,10 @@ public class PlayerCombatScript : MonoBehaviour
     {
         swordEquipped = false;
         sword.SetActive(swordEquipped);
+    }
+
+    public void EnableSpell()
+    {
+        spellEnabled = true;
     }
 }

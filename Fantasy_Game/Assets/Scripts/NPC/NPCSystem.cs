@@ -6,6 +6,12 @@ public class NPCSystem : MonoBehaviour
     [SerializeField] private string npcName;
     [SerializeField] private DialogueNode startingNode;
 
+    [Header("Player Info For Quests/ receiving items")]
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject windmillEgg;
+    [SerializeField] private GameObject windmillEggVisual;
+    [SerializeField] private GameObject berryBag;
+
     [Header("Boss Intro")]
     [SerializeField] private BossIntroSequence bossIntroSequence;
 
@@ -18,6 +24,7 @@ public class NPCSystem : MonoBehaviour
     {
         if (dialogue == null)
             dialogue = FindFirstObjectByType<DialogueManager>();
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void StartDialogue(PlayerScriptNew player)
@@ -56,6 +63,26 @@ public class NPCSystem : MonoBehaviour
                 Debug.LogWarning("Boss intro sequence is not assigned on this NPC.");
             }
         }
+        //fpr dayne to give spell to the player.
+        if (actionType == DialogueActionType.GiveSpell)
+        {
+            PlayerCombatScript playerCombat = player.GetComponent<PlayerCombatScript>();
+            playerCombat.EnableSpell();
+        }
+
+        //for kals quest (enables egg pickup)
+        if(actionType == DialogueActionType.AllowWindmillEggPickup)
+        {
+            windmillEgg.SetActive(true);
+            windmillEggVisual.GetComponent<MeshRenderer>().enabled = false;
+        }
+        //spawns the bag after talking
+        if(actionType == DialogueActionType.KalQuestAllowPickup)
+        {
+ 
+            berryBag.SetActive(true);
+        }
+        
     }
 
     // Plays the NPC talking animation

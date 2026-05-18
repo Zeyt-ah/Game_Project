@@ -17,8 +17,8 @@ MonoBehaviour:
   option1:
     text: Terrible Day?
     next: {fileID: 11400000, guid: 66541afe97606f94da8a4bbd25e96d2e, type: 2}
-    action: 0
+    action: 3
   option2:
     text: I'm gathering all the dragon's eggs.
     next: {fileID: 11400000, guid: 2f308c8a6c9202b44a9463f6dfb92c69, type: 2}
-    action: 0
+    action: 3

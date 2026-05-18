@@ -77,6 +77,7 @@ public class GameManagerScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winText.gameObject.SetActive(true);
+        winText.text = "You Win!\n Good Ending";
         finalScore.gameObject.SetActive(true);
         quitButtonWin.gameObject.SetActive(true);
         StartCoroutine(WaitForWin());
