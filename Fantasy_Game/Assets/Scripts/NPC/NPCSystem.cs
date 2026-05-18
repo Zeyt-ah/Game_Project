@@ -6,6 +6,14 @@ public class NPCSystem : MonoBehaviour
     [SerializeField] private string npcName;
     [SerializeField] private DialogueNode startingNode;
 
+    [Header("player quests /spell")]
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject windMillEgg;
+    [SerializeField] private GameObject windMillEggVisual;
+    [SerializeField] private GameObject berryBag;
+    private bool eggDone = false;
+    private bool bagDone = false;
+
     [Header("Boss Intro")]
     [SerializeField] private BossIntroSequence bossIntroSequence;
 
@@ -28,6 +36,7 @@ public class NPCSystem : MonoBehaviour
         {
             dialogue = FindFirstObjectByType<DialogueManager>();
         }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Starts this NPC's dialogue if the player is allowed to speak to them
@@ -159,6 +168,22 @@ public class NPCSystem : MonoBehaviour
                     npcCollider.enabled = false;
                 }
             }
+        }
+        if(actionType == DialogueActionType.GiveSpell)
+        {
+            PlayerCombatScript playerCombat = player.GetComponent<PlayerCombatScript>();
+            playerCombat.EnableSpell();
+        }
+        if(actionType == DialogueActionType.AllowWindmillEggPickup && !eggDone)
+        {
+            windMillEggVisual.GetComponent<MeshRenderer>().enabled = false;
+            windMillEgg.SetActive(true);
+            eggDone = true;
+        }
+        if(actionType == DialogueActionType.KalQuestAllowPickup && !bagDone)
+        {
+            berryBag.SetActive(true);
+            bagDone = true;
         }
     }
 

@@ -11,7 +11,6 @@ public class PlayerInteractionScript : MonoBehaviour
     [SerializeField] private BoxCollider pickupHitbox;
     [SerializeField] private InteractionPromptUI promptUI;
     [SerializeField] private DialogueManager dialogueManager;
-    [SerializeField] private GameObject dayneForSpell;
 
     private bool isInteracting = false;
     private bool dialogueStarting = false;
@@ -96,8 +95,11 @@ public class PlayerInteractionScript : MonoBehaviour
             if (isInteracting && !countIncreased)
             {
                 countIncreased = true;
+                berryBagRetrieved = true;
+                other.gameObject.SetActive(false);
+                onPickupable = false;
+                UpdatePrompt();
             }
-            berryBagRetrieved = true;
         }
     }
 
@@ -211,5 +213,10 @@ public class PlayerInteractionScript : MonoBehaviour
         }
 
         promptUI.Hide();
+    }
+
+    public bool berryBagPickep()
+    {
+        return berryBagRetrieved;
     }
 }

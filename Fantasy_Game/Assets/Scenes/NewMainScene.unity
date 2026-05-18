@@ -7232,13 +7232,16 @@ MonoBehaviour:
   npcName: Ren
   startingNode: {fileID: 11400000, guid: 8893d50ef9ca05e4a9df2cc787d2e5dc, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &107064231
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -25274,13 +25277,16 @@ MonoBehaviour:
   npcName: Dayne
   startingNode: {fileID: 11400000, guid: 1aa624acf2318de47b4de1783c4070b2, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!1001 &302655021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27148,13 +27154,16 @@ MonoBehaviour:
   npcName: Morterson
   startingNode: {fileID: 11400000, guid: df8e1b95cb994134d8a18114ec35d483, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &341604197
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -47435,13 +47444,16 @@ MonoBehaviour:
   npcName: Kal
   startingNode: {fileID: 11400000, guid: 7d1a23189caac3d449189d25fa6f522f, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 1576407737}
-  windmillEggVisual: {fileID: 1846899624}
+  windMillEgg: {fileID: 1576407737}
+  windMillEggVisual: {fileID: 1846899624}
   berryBag: {fileID: 1768574803}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &494553449
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -56305,8 +56317,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596860324}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.32421705, y: 2.0931698e-15, z: 1.654222e-15, w: 0.94598275}
-  m_LocalPosition: {x: -1108.6547, y: 135.30551, z: 1059.1393}
+  m_LocalRotation: {x: -0.26183778, y: 0.000000028762578, z: 0.000000007803375, w: 0.9651119}
+  m_LocalPosition: {x: 60.153, y: 44.14999, z: 36.928436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59181,13 +59193,16 @@ MonoBehaviour:
   npcName: Johnny
   startingNode: {fileID: 11400000, guid: 4d47a4f227c41484a935da798e3666d4, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!1001 &633859420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86507,13 +86522,16 @@ MonoBehaviour:
   npcName: Myra
   startingNode: {fileID: 11400000, guid: 9928fc56cd5a4f44a8ff02b1e1d0f6af, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!224 &1011102451 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4728712881440623472, guid: 2b50da12e94068446b95674c01b708fe, type: 3}
@@ -88947,8 +88965,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046603700}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.324217, y: -0.0000000033276748, z: -0.0000000011404954, w: 0.94598275}
-  m_LocalPosition: {x: -1108.6547, y: 135.74171, z: 1059.1393}
+  m_LocalRotation: {x: -0.26183084, y: -0.00000000770693, z: -0.0000000020908533, w: 0.9651138}
+  m_LocalPosition: {x: 60.153, y: 44.915855, z: 36.928436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -114586,13 +114604,16 @@ MonoBehaviour:
   npcName: Goromand
   startingNode: {fileID: 11400000, guid: 80700e1c0b80dde4cb7621c31086339c, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &1261423237
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -122718,7 +122739,8 @@ Transform:
   m_LocalPosition: {x: 60.153, y: 45.926, z: 38.657}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8016632542863088390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1360348571 stripped
@@ -126019,13 +126041,16 @@ MonoBehaviour:
   npcName: Doctor
   startingNode: {fileID: 11400000, guid: e206a0da9a96dc94999d834f1488b364, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &1397308976
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -126178,13 +126203,16 @@ MonoBehaviour:
   npcName: Tyrell
   startingNode: {fileID: 11400000, guid: 36e54eebbc538ae429f1243a1a848249, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &1399103019
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -143407,9 +143435,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2090261984195776453, guid: 4a2f1fe7e36596049b29f061a77ff748, type: 3}
       insertIndex: -1
       addedObject: {fileID: 637126926}
-    - targetCorrespondingSourceObject: {fileID: 2090261984195776453, guid: 4a2f1fe7e36596049b29f061a77ff748, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8016632542863088390}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1606037529433101695, guid: 4a2f1fe7e36596049b29f061a77ff748, type: 3}
       insertIndex: -1
@@ -148207,13 +148232,16 @@ MonoBehaviour:
   npcName: WizardDragonArena
   startingNode: {fileID: 11400000, guid: 69424557ed0f0c146b942fc78b720c91, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!4 &1607248732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4783406214236609665, guid: 256aae4f03077eb41bc657bce9fb58f8, type: 3}
@@ -149534,13 +149562,16 @@ MonoBehaviour:
   npcName: Billy
   startingNode: {fileID: 11400000, guid: 6087b324cd398b447a20809846b65142, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!1001 &1623733607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152302,13 +152333,16 @@ MonoBehaviour:
   npcName: Grohn
   startingNode: {fileID: 0}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &1658375943
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -154175,10 +154209,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   animator: {fileID: 1681682553}
+  gameManager: {fileID: 0}
+  eggsRequiredToStartCircling: 5
+  startCirclingOnlyAfterEggs: 1
   bossHealthBarPanel: {fileID: 0}
   bossNameText: {fileID: 0}
   healthBar: {fileID: 0}
   bossDisplayName: Ashfang
+  dragonAudioSource: {fileID: 0}
+  roarClip: {fileID: 0}
+  biteClip: {fileID: 0}
+  fireballClip: {fileID: 0}
+  roarVolume: 1
+  biteVolume: 0.8
+  fireballVolume: 0.8
   orbitCentre: {fileID: 1572122538}
   orbitRadiusX: 95
   orbitRadiusZ: 110
@@ -154196,17 +154240,25 @@ MonoBehaviour:
   phaseTwoAttackCooldown: 2.2
   phaseThreeAttackCooldown: 1.8
   regularAttackRange: 7
-  fireBreathRange: 15
   regularAttackDamage: 20
-  fireBreathDamage: 35
-  chargeDamage: 45
+  phaseTwoRegularAttackDamage: 25
+  phaseThreeRegularAttackDamage: 35
+  biteAttackPoint: {fileID: 0}
+  fireballSpawnPoint: {fileID: 0}
+  fireballPrefab: {fileID: 0}
+  lingeringFirePrefab: {fileID: 0}
+  fireballSpeed: 18
+  fireballLifetime: 4
+  fireballImpactDamage: 15
+  lingeringFireDuration: 5
+  fireballAttackRange: 35
+  fireballAttackAngle: 45
   flyingStateName: FlyingFWD
   walkStateName: Walk
   idleStateName: IdleSimple
   battleStanceStateName: BattleStance
   regularAttackStateName: Bite
-  fireBreathStateName: Drakaris
-  chargeAttackStateName: FlyingAttack
+  fireBallStateName: Drakaris
   deathStateName: Die
 --- !u!95 &1681682553 stripped
 Animator:
@@ -157855,13 +157907,16 @@ MonoBehaviour:
   npcName: rock
   startingNode: {fileID: 11400000, guid: cb1757cde421f23498705a030167df30, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!1001 &1725704925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166058,13 +166113,16 @@ MonoBehaviour:
   npcName: Mayor
   startingNode: {fileID: 11400000, guid: e37e27ebc7e6866489b205ba3daced5d, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!4 &1819792365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2526177359119428613, guid: 56e61bfb0698c744dba84cdebab05c19, type: 3}
@@ -176060,13 +176118,16 @@ MonoBehaviour:
   npcName: Ghost
   startingNode: {fileID: 11400000, guid: f4a0d9346d8a70b4ab7a5899968a650f, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!1001 &1938990282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176746,13 +176807,16 @@ MonoBehaviour:
   npcName: Ashla
   startingNode: {fileID: 11400000, guid: 0583267d20000f74aae73b51f03e95a4, type: 2}
   player: {fileID: 0}
-  windmillEgg: {fileID: 0}
-  windmillEggVisual: {fileID: 0}
+  windMillEgg: {fileID: 0}
+  windMillEggVisual: {fileID: 0}
   berryBag: {fileID: 0}
   bossIntroSequence: {fileID: 0}
   animator: {fileID: 0}
   idleStateName: Idle
   talkingStateName: HumanM@Talk01
+  requiresEggsToInteract: 0
+  requiredEggCount: 3
+  disableAfterDragonFightAccepted: 0
 --- !u!136 &1945636121
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -196888,7 +196952,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 216323806}
+    m_TransformParent: {fileID: 1359973210}
     m_Modifications:
     - target: {fileID: 731217471749537725, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_ActionEvents.Array.size
@@ -196936,7 +197000,7 @@ PrefabInstance:
       objectReference: {fileID: 1379371647}
     - target: {fileID: 2989633986186118002, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: sprintSpeed
-      value: 50
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2989633986186118002, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: currentHorse
@@ -196971,6 +197035,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7278590917476236548, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
+      propertyPath: NPCfirst
+      value: 
+      objectReference: {fileID: 494553448}
+    - target: {fileID: 7278590917476236548, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: eggCount
       value: 0
       objectReference: {fileID: 0}
@@ -196978,6 +197046,10 @@ PrefabInstance:
       propertyPath: promptUI
       value: 
       objectReference: {fileID: 73706623}
+    - target: {fileID: 7278590917476236548, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
+      propertyPath: NPCsecond
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7278590917476236548, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: gameManager
       value: 
@@ -197000,31 +197072,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.28
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.41540775
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 5.088505e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.9096353
+      value: -0.000000059604645
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.0000000018513127
       objectReference: {fileID: 0}
     - target: {fileID: 8448275286341841197, guid: b2193e92a1d5f7b49b3b83487b652b6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
