@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Dayne1
   m_EditorClassIdentifier: 
-  line: Evening, travellor. If you're thinking of heading up the volcano, I'd be
+  line: Evening, traveller. If you're thinking of heading up the volcano, I'd be
     careful. I tried going up earlier, there was some mad cult living up there. Barely
     made it out with my life.
   option1:

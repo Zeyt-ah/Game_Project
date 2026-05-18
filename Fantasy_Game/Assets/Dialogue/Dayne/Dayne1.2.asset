@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   line: Charming. I'll see you when you roll back down here burnt to a crisp.
   option1:
-    text: 
+    text: Bye
     next: {fileID: 0}
     action: 0
   option2:

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Doctor 3
+  m_EditorClassIdentifier: 
+  line: 'We must gather all the Eggs to one place, to use them as bait. Then, I will
+    slay the foul beast, freeing all in the land from living in fear.
+
+    I need
+    you to collect all five eggs, so I can go and set up the trap. I will reward
+    you with ten thousand gold pieces and a journey home. You have my word. '
+  option1:
+    text: Okay I'll do it, if you can get me home.
+    next: {fileID: 11400000, guid: 65ddfe6fe3f1a104d8b477db37b3e56e, type: 2}
+    action: 0
+  option2:
+    text: Why me? I just want to go home.
+    next: {fileID: 11400000, guid: caee50063c0499e469ba93f33c9eb04e, type: 2}
+    action: 0

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Myra 1
+  m_EditorClassIdentifier: 
+  line: I had one, found it this morning. But then a gang of skeletons raided us
+    and took the egg. I assume they went back to their camp.
+  option1:
+    text: Their camp?
+    next: {fileID: 11400000, guid: fdf40b06f88a71d45a4a1bef0b231c00, type: 2}
+    action: 0
+  option2:
+    text: 
+    next: {fileID: 0}
+    action: 0

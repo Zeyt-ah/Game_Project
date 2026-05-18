@@ -17,10 +17,10 @@ MonoBehaviour:
     those cultists. I would come with you, but I can barely move after what they
     did to me. Good luck, friend.
   option1:
-    text: 
-    next: {fileID: 0}
+    text: Thank you. Before I go, I have some questions.
+    next: {fileID: 11400000, guid: 05fd0703b5cbd024e92e2ced429dd5af, type: 2}
     action: 0
   option2:
-    text: 
+    text: Thank you.
     next: {fileID: 0}
     action: 0

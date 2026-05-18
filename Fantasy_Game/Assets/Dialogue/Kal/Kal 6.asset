@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Kal 6
+  m_EditorClassIdentifier: 
+  line: Are you sure? I don't trust that doctor. All the years he's been here, I've
+    never seen him actually heal anyone. He gives me the creeps. Maybe the eggs should
+    be returned home?
+  option1:
+    text: I'll think over my choice.
+    next: {fileID: 11400000, guid: 1785760bd4020a34da4164937c9486b3, type: 2}
+    action: 0
+  option2:
+    text: I'm sure. He has a good plan and he pays well.
+    next: {fileID: 0}
+    action: 0

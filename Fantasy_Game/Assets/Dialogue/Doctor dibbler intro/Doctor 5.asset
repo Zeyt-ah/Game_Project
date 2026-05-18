@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Doctor 5
+  m_EditorClassIdentifier: 
+  line: 'Terrific. I got to see the rough area where each egg landed:
+
+    This island
+    here (South)
+
+    The village, Helver (North)
+
+    The Sacred Cliffs (East)
+
+    The
+    Windmill at Treff (North)
+
+    The top of the Volcano (Far North west)
+
+'
+  option1:
+    text: Okay
+    next: {fileID: 11400000, guid: 38d4f952104689540acdf9098aedc26c, type: 2}
+    action: 0
+  option2:
+    text: 
+    next: {fileID: 0}
+    action: 0

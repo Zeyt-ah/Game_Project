@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Dayne1.1.2.1.2.1.2
+  m_EditorClassIdentifier: 
+  line: I've studied dragons my whole life. They are peaceful, they keep to themselves
+    and only engage with humans if they are threatened. The only recorded dragon
+    attack on humans was the Screegle Town slaughter, over two hundred years ago.
+    Which happened because some fool stole the dragon's eggs. But everyone seems
+    to forget that part of the story. People around here need to read more. I implore
+    you, do not take the eggs to this doctor. Return them to their nest.
+  option1:
+    text: Okay. I'll reconsider my choice.
+    next: {fileID: 11400000, guid: da51ea874160b6b4b902200e9b750267, type: 2}
+    action: 0
+  option2:
+    text: I don't care. The Doctor made a good offer.
+    next: {fileID: 11400000, guid: 6af44788e195a30498f2ff010c49994c, type: 2}
+    action: 0

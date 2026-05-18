@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: johnny
+  m_EditorClassIdentifier: 
+  line: Hey there stranger. I'm sorry, I can't talk. It's... It's all too much. I
+    - I can't handle it.
+  option1:
+    text: It's going to be okay. I'm here for you.
+    next: {fileID: 0}
+    action: 0
+  option2:
+    text: What Happened?
+    next: {fileID: 0}
+    action: 0

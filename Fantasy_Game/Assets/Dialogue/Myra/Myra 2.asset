@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Myra 2
+  m_EditorClassIdentifier: 
+  line: 'They''ve taken over the canyon of the life tree, up the road north of here.
+    which is bad because we need it. '
+  option1:
+    text: What is the life tree?
+    next: {fileID: 11400000, guid: beeefba2c48975d4280db930cf52ea73, type: 2}
+    action: 0
+  option2:
+    text: I need to go there.
+    next: {fileID: 11400000, guid: fb407d0f0d92d7944be109eaaecf51c7, type: 2}
+    action: 0

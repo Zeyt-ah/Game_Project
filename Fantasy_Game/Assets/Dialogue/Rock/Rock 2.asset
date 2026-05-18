@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Rock 2
+  m_EditorClassIdentifier: 
+  line: We are vibrating the ground beneath your feet in the right way to affect
+    your mind into thinking you can hear us speaking.
+  option1:
+    text: That's amazing.
+    next: {fileID: 11400000, guid: f6f98c0a3560cc340885b961f14333ab, type: 2}
+    action: 0
+  option2:
+    text: That's weird
+    next: {fileID: 11400000, guid: 303e1b63035f4da4d84691d13b29173c, type: 2}
+    action: 0

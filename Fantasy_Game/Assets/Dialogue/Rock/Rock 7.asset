@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Rock 7
+  m_EditorClassIdentifier: 
+  line: 'We have tried connecting with them in the past, but only to be met with
+    cruelty and fear. They are so obsessed with their opinions, they don''t open
+    themselves to anything new. It will mean their death, and yours, if you make
+    the same mistake as them. We will raise stones around the great mountain to assist
+    you on your way to the nest, should you choose help life rather than fight it. '
+  option1:
+    text: Do you think I could make it up that mountain?
+    next: {fileID: 11400000, guid: 898fd0e4b01d2a24fb039b916fb616c4, type: 2}
+    action: 0
+  option2:
+    text: The Doctor has a good plan, I'm going with him.
+    next: {fileID: 11400000, guid: c4a38e28a95895f4fb396b00957c7d6b, type: 2}
+    action: 0

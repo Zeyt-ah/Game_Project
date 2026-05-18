@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Ashla 2
+  m_EditorClassIdentifier: 
+  line: They're living stones, who worship the sacred cliffs in exchange for wisdom.
+    But nobody ever goes to learn from them, I guess they're just a bit creeped out.
+    Have you travelled from far?
+  option1:
+    text: That tornado threw me across the land. I'm very lost.
+    next: {fileID: 11400000, guid: 537c7b98244d59e44a7b9a8091514bc3, type: 2}
+    action: 0
+  option2:
+    text: None of your business.
+    next: {fileID: 11400000, guid: 07dac4b0031a8bc43adf47cfb01365dd, type: 2}
+    action: 0

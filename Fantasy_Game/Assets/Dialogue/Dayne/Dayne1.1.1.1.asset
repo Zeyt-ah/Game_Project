@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Dayne1.1.1.1
   m_EditorClassIdentifier: 
-  line: I'm I professor from the college in Nalimor. Out on an expedition to find
-    and chart unkown monsters across all of Menari, been exploring for about three
-    months now. I heard there were some unique golems up the volcano, so I set up
-    camp here.
+  line: Wow, you must be from another continent if you dont know Nalimor. It's the
+    biggest city in Menari. About a week on horseback away from here.
   option1:
-    text: Nalimor?
-    next: {fileID: 0}
+    text: That tornado picked me up and threw me across the world.
+    next: {fileID: 11400000, guid: 67cc613c65f049f429d04c0a0eba1c6f, type: 2}
     action: 0
   option2:
     text: 

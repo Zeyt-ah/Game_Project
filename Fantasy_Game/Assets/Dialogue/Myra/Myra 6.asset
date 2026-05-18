@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Myra 6
+  m_EditorClassIdentifier: 
+  line: Really! That's great, I've been waiting years for someone to kill that disgusting
+    thing.
+  option1:
+    text: I need to find the dragon's eggs.
+    next: {fileID: 11400000, guid: 97385d7e89c29a04e8c757ca0a762ef0, type: 2}
+    action: 0
+  option2:
+    text: 
+    next: {fileID: 0}
+    action: 0

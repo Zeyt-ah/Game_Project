@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Myra 3
+  m_EditorClassIdentifier: 
+  line: It's an old magical tree with healing powers, everyone in the land would
+    go there to heal when sick. But then it got overrun with the undead. I assume
+    they were hoping it would bring their lives back. It didnt.
+  option1:
+    text: I need to go there.
+    next: {fileID: 11400000, guid: fb407d0f0d92d7944be109eaaecf51c7, type: 2}
+    action: 0
+  option2:
+    text: 
+    next: {fileID: 0}
+    action: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Rock 6
+  m_EditorClassIdentifier: 
+  line: 'We believe the eggs should be returned to their nest, atop the great mountain.
+    In our centuries we have learned that dragons are only hostile when provoked.
+    All life can live in harmony. '
+  option1:
+    text: Tell the people of Helver, they are terrified.
+    next: {fileID: 11400000, guid: 9dc4e38888a3e7341960c06d76e97894, type: 2}
+    action: 0
+  option2:
+    text: No. many people have told me the dragon needs to die.
+    next: {fileID: 11400000, guid: d83f11fad7e33184c9b19dc4afb479e1, type: 2}
+    action: 0

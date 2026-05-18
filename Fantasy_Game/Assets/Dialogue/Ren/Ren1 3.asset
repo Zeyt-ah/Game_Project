@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Ren1 3
+  m_EditorClassIdentifier: 
+  line: 'That''s a coincidence. Bumped into a man looking for eggs this morning.
+    So what, are you some kind of egg man too? '
+  option1:
+    text: I guess so. I've got to go, see you later.
+    next: {fileID: 11400000, guid: 20e5b5fe4595f974a8f6a7694a4f5e10, type: 2}
+    action: 0
+  option2:
+    text: Trying to get a bunch of eggs to someone for money.
+    next: {fileID: 0}
+    action: 0

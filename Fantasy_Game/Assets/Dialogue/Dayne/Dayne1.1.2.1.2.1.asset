@@ -20,5 +20,5 @@ MonoBehaviour:
     action: 0
   option2:
     text: What do you know about dragons?
-    next: {fileID: 0}
+    next: {fileID: 11400000, guid: d9d9886039fb9694f9f48c7c5a2de271, type: 2}
     action: 0
