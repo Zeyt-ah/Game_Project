@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class PlayerInteractionScript : MonoBehaviour
 {
@@ -120,8 +119,7 @@ public class PlayerInteractionScript : MonoBehaviour
         }
     }
 
-
-    //checks if player is interacting
+    // Checks if player is interacting
     public void Interact(InputAction.CallbackContext context)
     {
         if (playerMovement.isRidingHorse()) return;
@@ -131,6 +129,13 @@ public class PlayerInteractionScript : MonoBehaviour
 
         if (npcInRange && currentNpc != null)
         {
+            if (!currentNpc.CanInteract(gameObject))
+            {
+                Debug.Log(currentNpc.GetBlockedInteractionMessage(gameObject));
+                UpdatePrompt();
+                return;
+            }
+
             dialogueStarting = true;
             promptUI.Hide();
             currentNpc.StartDialogue(player);
@@ -161,28 +166,38 @@ public class PlayerInteractionScript : MonoBehaviour
         onPickupable = false;
     }
 
+    // Updates the interaction prompt depending on what the player can currently interact with
     private void UpdatePrompt()
     {
         if (promptUI == null) return;
 
-        // If dialogue is open, never show the interact prompt
+        // If dialogue is opening/open, never show the interact prompt
         if (dialogueStarting || (dialogueManager != null && dialogueManager.IsOpen))
         {
             promptUI.Hide();
             return;
         }
 
-        bool canInteract = npcInRange || onPickupable;
-
-        if (!canInteract)
+        if (npcInRange && currentNpc != null)
         {
-            promptUI.Hide();
+            if (currentNpc.CanInteract(gameObject))
+            {
+                promptUI.Show("Press E to talk");
+            }
+            else
+            {
+                promptUI.Hide();
+            }
+
             return;
         }
 
-        if (npcInRange)
-            promptUI.Show("Press E to talk");
-        else
+        if (onPickupable)
+        {
             promptUI.Show("Press E to pick up");
+            return;
+        }
+
+        promptUI.Hide();
     }
 }
