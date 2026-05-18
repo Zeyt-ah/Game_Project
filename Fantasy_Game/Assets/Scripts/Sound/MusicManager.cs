@@ -16,7 +16,7 @@ public class MusicManager : MonoBehaviour
 
     private Coroutine fadeCoroutine;
 
-    // Sets up the music manager and starts the default music
+    // Sets up the singleton and finds the music AudioSource
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,10 +36,29 @@ public class MusicManager : MonoBehaviour
     // Starts the default ambient music when the scene begins
     private void Start()
     {
-        PlayDefaultMusic();
+        if (musicSource == null)
+        {
+            Debug.LogWarning("MusicManager has no AudioSource assigned.");
+            return;
+        }
+
+        if (defaultMusic == null)
+        {
+            Debug.LogWarning("MusicManager has no default music assigned.");
+            return;
+        }
+
+        musicSource.loop = true;
+        musicSource.playOnAwake = false;
+        musicSource.spatialBlend = 0f;
+        musicSource.volume = musicVolume;
+        musicSource.clip = defaultMusic;
+        musicSource.Play();
+
+        Debug.Log("Default music started: " + defaultMusic.name);
     }
 
-    // Plays the normal ambient music
+    // Plays the default ambient music
     public void PlayDefaultMusic()
     {
         ChangeMusic(defaultMusic);
@@ -51,11 +70,18 @@ public class MusicManager : MonoBehaviour
         ChangeMusic(dragonBossMusic);
     }
 
-    // Changes the current music with a fade transition
+    // Changes music with a fade transition
     private void ChangeMusic(AudioClip newClip)
     {
-        if (musicSource == null || newClip == null)
+        if (musicSource == null)
         {
+            Debug.LogWarning("Cannot change music because MusicSource is missing.");
+            return;
+        }
+
+        if (newClip == null)
+        {
+            Debug.LogWarning("Cannot change music because the new clip is missing.");
             return;
         }
 
@@ -72,7 +98,7 @@ public class MusicManager : MonoBehaviour
         fadeCoroutine = StartCoroutine(FadeToNewMusic(newClip));
     }
 
-    // Fades out the current track, swaps clip, then fades the new track in
+    // Fades out the current track, swaps to the new track, then fades in
     private IEnumerator FadeToNewMusic(AudioClip newClip)
     {
         float startVolume = musicSource.volume;
@@ -101,5 +127,7 @@ public class MusicManager : MonoBehaviour
         }
 
         musicSource.volume = musicVolume;
+
+        Debug.Log("Music changed to: " + newClip.name);
     }
 }

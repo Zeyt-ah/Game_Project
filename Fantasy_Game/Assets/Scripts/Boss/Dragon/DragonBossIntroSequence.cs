@@ -86,6 +86,7 @@ public class BossIntroSequence : MonoBehaviour
 
         RemoveWizardAtPerch();
         dragonBossController.PlayBattleStance();
+        dragonBossController.PlayRoarSound();
 
         yield return new WaitForSeconds(battleStanceTime);
 
