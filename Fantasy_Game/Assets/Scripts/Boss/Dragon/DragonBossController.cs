@@ -37,6 +37,15 @@ public class DragonBossController : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private string bossDisplayName = "Ashfang";
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource dragonAudioSource;
+    [SerializeField] private AudioClip roarClip;
+    [SerializeField] private AudioClip biteClip;
+    [SerializeField] private AudioClip fireballClip;
+    [SerializeField] private float roarVolume = 1f;
+    [SerializeField] private float biteVolume = 0.8f;
+    [SerializeField] private float fireballVolume = 0.8f;
+
     [Header("Circling Settings")]
     [SerializeField] private Transform orbitCentre;
     [SerializeField] private float orbitRadiusX = 95f;
@@ -530,6 +539,7 @@ public class DragonBossController : MonoBehaviour
 
         yield return new WaitForSeconds(0.6f);
 
+        PlayBiteSound();
         DamagePlayerIfInRange(biteAttackPoint, regularAttackRange, currentRegularAttackDamage);
 
         yield return new WaitForSeconds(0.8f);
@@ -543,6 +553,7 @@ public class DragonBossController : MonoBehaviour
 
         yield return new WaitForSeconds(0.35f);
 
+        PlayFireballSound();
         SpawnFireball();
 
         yield return new WaitForSeconds(0.8f);
@@ -784,5 +795,41 @@ public class DragonBossController : MonoBehaviour
         {
             Gizmos.DrawWireSphere(biteAttackPoint.position, regularAttackRange);
         }
+    }
+
+    // Plays the dragon roar sound effect
+    public void PlayRoarSound()
+    {
+        if (dragonAudioSource == null || roarClip == null)
+        {
+            Debug.LogWarning("Dragon roar AudioSource or AudioClip is missing.");
+            return;
+        }
+
+        dragonAudioSource.PlayOneShot(roarClip, roarVolume);
+    }
+
+    // Plays the dragon bite sound effect without interrupting music
+    private void PlayBiteSound()
+    {
+        if (dragonAudioSource == null || biteClip == null)
+        {
+            Debug.LogWarning("Dragon bite AudioSource or AudioClip is missing.");
+            return;
+        }
+
+        dragonAudioSource.PlayOneShot(biteClip, biteVolume);
+    }
+
+    // Plays the dragon fireball sound effect without interrupting music
+    private void PlayFireballSound()
+    {
+        if (dragonAudioSource == null || fireballClip == null)
+        {
+            Debug.LogWarning("Dragon fireball AudioSource or AudioClip is missing.");
+            return;
+        }
+
+        dragonAudioSource.PlayOneShot(fireballClip, fireballVolume);
     }
 }

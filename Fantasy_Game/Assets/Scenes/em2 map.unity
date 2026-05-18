@@ -19779,14 +19779,14 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -4003320220510966530, guid: c63f2bbc545a8f445aece78074edea38, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.203
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -22093,12 +22093,19 @@ MonoBehaviour:
   player: {fileID: 2349387442471229148}
   animator: {fileID: 948332613}
   gameManager: {fileID: 1007714634}
-  eggsRequiredToStartCircling: 5
+  eggsRequiredToStartCircling: 0
   startCirclingOnlyAfterEggs: 1
   bossHealthBarPanel: {fileID: 1806502564}
   bossNameText: {fileID: 1946395521}
   healthBar: {fileID: 789425239}
   bossDisplayName: Ashfang
+  dragonAudioSource: {fileID: 948332617}
+  roarClip: {fileID: 8300000, guid: 255fa93c87ed6b5448e770544c4efc98, type: 3}
+  biteClip: {fileID: 8300000, guid: 9e7d03e4c70bdc847a7633897f0ef905, type: 3}
+  fireballClip: {fileID: 8300000, guid: 3bffe50a77f814049a39d7ebbca7e6a8, type: 3}
+  roarVolume: 1
+  biteVolume: 0.8
+  fireballVolume: 0.8
   orbitCentre: {fileID: 128628853}
   orbitRadiusX: 95
   orbitRadiusZ: 110
@@ -22210,6 +22217,103 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 7.9469757, z: 36.15875}
   m_Center: {x: -0.000033568136, y: 3.4734879, z: -8.829477}
+--- !u!82 &948332617
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948332610}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 1339124666521145163, guid: c63f2bbc545a8f445aece78074edea38, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.85
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &949160728
 GameObject:
   m_ObjectHideFlags: 0
@@ -26157,6 +26261,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1494583877365688, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       insertIndex: -1
       addedObject: {fileID: 948332614}
+    - targetCorrespondingSourceObject: {fileID: 1494583877365688, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 948332617}
   m_SourcePrefab: {fileID: 100100000, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
 --- !u!4 &1058767891 stripped
 Transform:
