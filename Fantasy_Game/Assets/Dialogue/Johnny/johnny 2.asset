@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
-  m_Name: DayneQ1
+  m_Name: johnny 2
   m_EditorClassIdentifier: 
-  line: Go ahead.
+  line: You monster! Get out of my sight! Leave me!
   option1:
-    text: What do you think of the dragon?
-    next: {fileID: 11400000, guid: 4f89d87d982d71b4cbf418047324f9f3, type: 2}
+    text: Bye.
+    next: {fileID: 0}
     action: 0
   option2:
-    text: What do you think of Doctor Dibbler?
-    next: {fileID: 11400000, guid: 0ac32c6d65fcf7a4a849866fa5637a2b, type: 2}
+    text: 
+    next: {fileID: 0}
     action: 0

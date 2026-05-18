@@ -19,6 +19,6 @@ MonoBehaviour:
     next: {fileID: 11400000, guid: 96ff6df1ae327e74eabe827578121b7e, type: 2}
     action: 0
   option2:
-    text: I'm going to give the Eggs to Doctor Dibbler.
+    text: I'm going to give the eggs to Doctor Dibbler.
     next: {fileID: 11400000, guid: 96ff6df1ae327e74eabe827578121b7e, type: 2}
     action: 0

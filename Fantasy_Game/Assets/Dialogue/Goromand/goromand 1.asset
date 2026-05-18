@@ -18,6 +18,6 @@ MonoBehaviour:
     next: {fileID: 11400000, guid: 744246aa7182243448fb4f01ef2d187f, type: 2}
     action: 0
   option2:
-    text: 
+    text: Okay. Goodbye.
     next: {fileID: 0}
     action: 0

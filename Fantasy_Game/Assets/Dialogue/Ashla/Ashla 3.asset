@@ -18,10 +18,10 @@ MonoBehaviour:
     part is how unnatural it is. We never get Tornados in this part of the world.
     Call me crazy but I think it was conjured specifically to cause this chaos.
   option1:
-    text: Thanks for the help.
-    next: {fileID: 0}
+    text: What do you do out here?
+    next: {fileID: 11400000, guid: 301285d48d903944187329a34ea807b7, type: 2}
     action: 0
   option2:
-    text: Thanks.
+    text: Thanks for the help, Bye.
     next: {fileID: 0}
     action: 0

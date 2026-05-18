@@ -15,10 +15,10 @@ MonoBehaviour:
   line: Amazing! We love old Dibbler, getting things done. And he's just got such
     a charismatic aura. I really admire the guy.
   option1:
-    text: goodbye.
-    next: {fileID: 0}
+    text: Do you think he is trustworthy?
+    next: {fileID: 11400000, guid: 698da033ee54fe949a64e765b16acff5, type: 2}
     action: 0
   option2:
-    text: 
+    text: goodbye.
     next: {fileID: 0}
     action: 0

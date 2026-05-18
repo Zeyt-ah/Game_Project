@@ -17,7 +17,7 @@ MonoBehaviour:
     the worshippers are to remain! They will be ready in about a month or so.
   option1:
     text: Oh...
-    next: {fileID: 11400000}
+    next: {fileID: 11400000, guid: cb6b495a8b93670499e864048f34874a, type: 2}
     action: 0
   option2:
     text: 

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  line: Where am I, no, where are they, I'm lost, i'm alone, where are they, I'm
-    lost, I'm Alone, My Family, I'm trapped, I'm alone, Where are they, Who are they,
-    who are you, Dibbler, I'm Alone, Where are they, My family, Where are they, I'm
+  line: Where am I, No, Where are they, I'm lost, I'm alone, Where are they, I'm
+    lost, I'm alone, My Family, I'm trapped, I'm alone, Where are they, Who are they,
+    Who are you, Dibbler, I'm Alone, Where are they, My family, Where are they, I'm
     lost.
   option1:
     text: Hello? Are you okay?

@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
-  m_Name: DayneQ1
+  m_Name: Ashla 7
   m_EditorClassIdentifier: 
-  line: Go ahead.
+  line: I'm an alchemist. I make all sorts of potions for people. And I provide the
+    beverages for Myra's tavern in Helver.
   option1:
-    text: What do you think of the dragon?
-    next: {fileID: 11400000, guid: 4f89d87d982d71b4cbf418047324f9f3, type: 2}
+    text: Why do you live so far from Helver?
+    next: {fileID: 11400000, guid: 41c8debdb36ae5a4aad7161d2a9bea07, type: 2}
     action: 0
   option2:
-    text: What do you think of Doctor Dibbler?
-    next: {fileID: 11400000, guid: 0ac32c6d65fcf7a4a849866fa5637a2b, type: 2}
+    text: Thanks for the help, Bye.
+    next: {fileID: 0}
     action: 0

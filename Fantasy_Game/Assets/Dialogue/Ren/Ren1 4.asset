@@ -18,6 +18,6 @@ MonoBehaviour:
     next: {fileID: 0}
     action: 0
   option2:
-    text: Trying to get a bunch of eggs to someone for money.
+    text: Bye.
     next: {fileID: 0}
     action: 0

@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
-  m_Name: DayneQ1
+  m_Name: johnny 5
   m_EditorClassIdentifier: 
-  line: Go ahead.
+  line: No, I live up in Treff, in the windmill. I heard the screams last night and
+    came down to help. But I was already too late.
   option1:
-    text: What do you think of the dragon?
-    next: {fileID: 11400000, guid: 4f89d87d982d71b4cbf418047324f9f3, type: 2}
+    text: I'm sorry. You did all you could. Were there any survivors?
+    next: {fileID: 11400000, guid: 550128f2b67362a46a9bc068f6af777b, type: 2}
     action: 0
   option2:
-    text: What do you think of Doctor Dibbler?
-    next: {fileID: 11400000, guid: 0ac32c6d65fcf7a4a849866fa5637a2b, type: 2}
+    text: Have you seen a dragon egg anywhere?
+    next: {fileID: 11400000, guid: 4c650c6a44c8c2148a2c9402cfc5f848, type: 2}
     action: 0

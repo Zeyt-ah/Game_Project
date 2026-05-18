@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Tyrell 1
   m_EditorClassIdentifier: 
-  line: There you are, II thought you'd never wake up!
+  line: There you are, I'd thought you'd never wake up!
   option1:
     text: Where am I?
     next: {fileID: 11400000, guid: 54fb48b6ecc778d41ab2c1763177854e, type: 2}

@@ -19,6 +19,6 @@ MonoBehaviour:
     next: {fileID: 11400000, guid: f6f98c0a3560cc340885b961f14333ab, type: 2}
     action: 0
   option2:
-    text: That's weird
+    text: That's weird.
     next: {fileID: 11400000, guid: 303e1b63035f4da4d84691d13b29173c, type: 2}
     action: 0

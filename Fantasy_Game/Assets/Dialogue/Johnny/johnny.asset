@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: johnny
   m_EditorClassIdentifier: 
-  line: Hey there stranger. I'm sorry, I can't talk. It's... It's all too much. I
-    - I can't handle it.
+  line: It's... It's all too much. I - I can't handle it.
   option1:
-    text: It's going to be okay. I'm here for you.
-    next: {fileID: 0}
+    text: What Happened?
+    next: {fileID: 11400000, guid: 3e725dda4a565bd49aca1a095e9bcb6d, type: 2}
     action: 0
   option2:
-    text: What Happened?
-    next: {fileID: 0}
+    text: I'm looking for a dragon egg.
+    next: {fileID: 11400000, guid: 5b0310be2efe676449e7f3e079956f7a, type: 2}
     action: 0

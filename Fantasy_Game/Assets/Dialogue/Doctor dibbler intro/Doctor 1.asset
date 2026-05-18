@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Doctor 1
   m_EditorClassIdentifier: 
-  line: Such a long way from home. Well, I can help you. I'm a scientist, Doctor
-    Dibbler, and have invented means of teleportation. I can get you home in an instant.
+  line: You seem like you're a long way from home. Well, I can help you. I'm a scientist,
+    Doctor Dibbler, and have invented means of teleportation. I can get you home
+    in an instant.
   option1:
     text: That sounds perfect.
     next: {fileID: 11400000, guid: 8c5098d3ecf8c0a4a81311602f6c93bd, type: 2}

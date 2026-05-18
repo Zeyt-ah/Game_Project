@@ -16,9 +16,9 @@ MonoBehaviour:
     So what, are you some kind of egg man too? '
   option1:
     text: I guess so. I've got to go, see you later.
-    next: {fileID: 11400000, guid: 20e5b5fe4595f974a8f6a7694a4f5e10, type: 2}
+    next: {fileID: 11400000, guid: bbfe5d7d1f1e4a8409f796a78a368cd7, type: 2}
     action: 0
   option2:
-    text: Trying to get a bunch of eggs to someone for money.
+    text: 
     next: {fileID: 0}
     action: 0

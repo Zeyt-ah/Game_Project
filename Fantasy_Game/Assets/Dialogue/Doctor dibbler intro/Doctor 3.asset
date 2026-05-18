@@ -20,7 +20,7 @@ MonoBehaviour:
     you with ten thousand gold pieces and a journey home. You have my word. '
   option1:
     text: Okay I'll do it, if you can get me home.
-    next: {fileID: 11400000, guid: 65ddfe6fe3f1a104d8b477db37b3e56e, type: 2}
+    next: {fileID: 11400000, guid: b3e6566b843142948b5909fd0e34bc70, type: 2}
     action: 0
   option2:
     text: Why me? I just want to go home.
