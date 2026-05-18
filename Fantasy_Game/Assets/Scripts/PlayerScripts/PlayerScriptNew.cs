@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerScriptNew : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class PlayerScriptNew : MonoBehaviour
     public CharacterController _characterController;
     public Animator _animator;
     public GameManagerScript gameManager;
-    public int eggsRequired;
+    private int eggsRequired = 5;
+    public GameObject escapeMenu;
 
     private void Awake()
     {
@@ -101,7 +103,7 @@ public class PlayerScriptNew : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("BossFightTriggerTag"))// && gameManager.EggCount() == eggsRequired)
+        if (other.CompareTag("BossFightTriggerTag")&& gameManager.EggCount() == eggsRequired)
         {
             DisableAttack();
             DisableMovement();
@@ -134,7 +136,15 @@ public class PlayerScriptNew : MonoBehaviour
         dead = true;
         gameManager.GameOver();
     }
-
+    public void EscapeMenu(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            escapeMenu.SetActive(!escapeMenu.activeSelf);
+            Cursor.visible = escapeMenu.activeSelf;
+        }
+    }
     public void EnableMovement()
     {
         canAttack = true;
