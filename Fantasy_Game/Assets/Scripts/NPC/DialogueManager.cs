@@ -38,7 +38,6 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null, Action<DialogueActionType> onDialogueAction = null)
     {
         if (startNode == null) return;
-
         IsOpen = true;
         currentNpcName = npcName;
         currentNode = startNode;

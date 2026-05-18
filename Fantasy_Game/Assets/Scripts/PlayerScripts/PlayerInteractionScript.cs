@@ -14,6 +14,7 @@ public class PlayerInteractionScript : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager;
 
     private bool isInteracting = false;
+    private bool dialogueStarting = false;
 
     private int coinCount = 0;
     private int crystalCount = 0;
@@ -46,7 +47,11 @@ public class PlayerInteractionScript : MonoBehaviour
             UpdatePrompt();
         }
     }
-
+    public void DialogueClosed()
+    {
+        dialogueStarting = false;
+        UpdatePrompt();
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Crystal"))
@@ -126,8 +131,9 @@ public class PlayerInteractionScript : MonoBehaviour
 
         if (npcInRange && currentNpc != null)
         {
-            currentNpc.StartDialogue(player);
+            dialogueStarting = true;
             promptUI.Hide();
+            currentNpc.StartDialogue(player);
             return;
         }
 
@@ -160,7 +166,7 @@ public class PlayerInteractionScript : MonoBehaviour
         if (promptUI == null) return;
 
         // If dialogue is open, never show the interact prompt
-        if (dialogueManager != null && dialogueManager.IsOpen)
+        if (dialogueStarting || (dialogueManager != null && dialogueManager.IsOpen))
         {
             promptUI.Hide();
             return;

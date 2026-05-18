@@ -13,6 +13,7 @@ public class PlayerMovementScript : MonoBehaviour
     private PlayerCombatScript playerCombat;
     public Image staminaBar;
     public GameObject staminaBarBackground;
+    public GameObject doubleJumpPopup;
 
     [Header("stats")]
     public float baseSpeed = 6f;
@@ -492,5 +493,17 @@ public class PlayerMovementScript : MonoBehaviour
     public void EnableDoubleJump()
     {
         maxJumpCount = 2;
+        ShowPopup();
+    }
+    private void ShowPopup()
+    {
+        doubleJumpPopup.SetActive(true);
+        StartCoroutine(PopupTimer());
+    }
+
+    private IEnumerator PopupTimer()
+    {
+        yield return new WaitForSeconds(1f);
+        doubleJumpPopup.SetActive(false);
     }
 }

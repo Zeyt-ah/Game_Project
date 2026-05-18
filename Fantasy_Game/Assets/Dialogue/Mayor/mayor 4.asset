@@ -15,7 +15,7 @@ MonoBehaviour:
   line: Who am I?! I am the Mayor of Damton, and the wealthiest man in the region!
   option1:
     text: If you're the mayor of Damton, how come you don't live there?
-    next: {fileID: 11400000, guid: 8828f9f5f9a2d9a4cac32f365969549a, type: 2}
+    next: {fileID: 11400000, guid: a54c8ab40d489a24e975eef967394e8f, type: 2}
     action: 0
   option2:
     text: 

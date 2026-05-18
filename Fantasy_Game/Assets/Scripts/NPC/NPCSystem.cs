@@ -23,7 +23,6 @@ public class NPCSystem : MonoBehaviour
     public void StartDialogue(PlayerScriptNew player)
     {
         if (dialogue == null || startingNode == null) return;
-
         player.DisableMovement();
 
         PlayTalkingAnimation();
@@ -34,6 +33,10 @@ public class NPCSystem : MonoBehaviour
             onClosed: () => {
                 player.EnableMovement();
                 PlayIdleAnimation();
+
+                PlayerInteractionScript interaction = player.GetComponent<PlayerInteractionScript>();
+
+                if (interaction != null) interaction.DialogueClosed();
             },
             onDialogueAction: HandleDialogueAction
         );

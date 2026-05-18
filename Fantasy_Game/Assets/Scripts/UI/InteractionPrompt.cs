@@ -3,8 +3,8 @@ using TMPro;
 
 public class InteractionPromptUI : MonoBehaviour
 {
-    [SerializeField] private GameObject root;   
     [SerializeField] private TMP_Text promptText;
+    [SerializeField] private GameObject promptObject;
 
     private void Awake()
     {
@@ -14,13 +14,11 @@ public class InteractionPromptUI : MonoBehaviour
     public void Show(string text = "Press E to interact")
     {
         if (promptText) promptText.text = text;
-        if (root) root.SetActive(true);
-        else gameObject.SetActive(true);
+        promptObject.SetActive(true);
     }
 
     public void Hide()
     {
-        if (root) root.SetActive(false);
-        else gameObject.SetActive(false);
+        promptObject.SetActive(false);
     }
 }
