@@ -152331,7 +152331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 1089845603}
   npcName: Grohn
-  startingNode: {fileID: 0}
+  startingNode: {fileID: 11400000, guid: 1afa3726742226248b9257f6c8272587, type: 2}
   player: {fileID: 0}
   windMillEgg: {fileID: 0}
   windMillEggVisual: {fileID: 0}

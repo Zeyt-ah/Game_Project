@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
+  m_Name: Grohn_Myra
+  m_EditorClassIdentifier: 
+  line: "Speak to Myra in the tavern if you want answers. Or, if you\u2019re brave
+    enough, there\u2019s the forest east of town. They say at the bottom of its valley,
+    old magic still seeps from the earth. Some folk go there seeking power. Fewer
+    come back the same."
+  option1:
+    text: Magical power?
+    next: {fileID: 11400000, guid: 704a724f65f091b4ca99f009e3149187, type: 2}
+    action: 0
+  option2:
+    text: "I\u2019ll find Myra."
+    next: {fileID: 0}
+    action: 0

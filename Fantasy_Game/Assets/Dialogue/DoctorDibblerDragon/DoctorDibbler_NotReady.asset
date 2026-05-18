@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
-  m_Name: DragonWizard_intro
+  m_Name: DoctorDibbler_NotReady
   m_EditorClassIdentifier: 
-  line: 'You made it to Ashfangs arena... good. The beast circles above us, waiting
-    for weakness. '
+  line: No one ever is. Courage is not waiting until fear is gone. It is moving while
+    fear still grips your throat.
   option1:
-    text: Tell me what to do.
-    next: {fileID: 11400000, guid: 4f1de8428ce71f0448d1ebfd01d54eff, type: 2}
+    text: I am ready.
+    next: {fileID: 11400000, guid: cb1d409fe8ad90648964123fe6a22b98, type: 2}
   option2:
-    text: 
+    text: I need more time.
     next: {fileID: 0}
