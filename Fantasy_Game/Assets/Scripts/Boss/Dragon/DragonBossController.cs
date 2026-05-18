@@ -146,7 +146,7 @@ public class DragonBossController : MonoBehaviour
             currentState = DragonState.Circling;
             PlayAnimation(flyingStateName);
         }
-            }
+    }
 
     // Updates the dragon behaviour depending on its current state 
     private void Update()
@@ -313,6 +313,11 @@ public class DragonBossController : MonoBehaviour
         if (bossNameText != null)
         {
             bossNameText.text = bossDisplayName;
+        }
+
+        if (MusicManager.Instance != null)
+        {
+            MusicManager.Instance.PlayDragonBossMusic();
         }
 
         groundCombatY = transform.position.y;
