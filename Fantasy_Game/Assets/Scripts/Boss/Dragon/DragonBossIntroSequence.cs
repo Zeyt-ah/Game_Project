@@ -23,7 +23,15 @@ public class BossIntroSequence : MonoBehaviour
     [SerializeField] private float wizardSwoopHeight = 35f;
     [SerializeField] private float perchApproachHeight = 30f;
     [SerializeField] private float perchApproachDistance = 20f;
-    [SerializeField] private float landingSwoopHeight = 25f;
+
+    [Header("Landing Fix")]
+    [SerializeField] private float landingGroundOffset = 0f;
+    [SerializeField] private float landingSwoopHeight = 30f;
+    [SerializeField] private float landingForwardOffset = 12f;
+
+    [Header("Landing Animation Fix")]
+    [SerializeField] private float flyingLandingHeightOffset = 2f;
+    [SerializeField] private float landingSettleTime = 0.35f;
 
     [Header("Timing")]
     [SerializeField] private float waitBeforeGrab = 0.5f;
@@ -55,12 +63,14 @@ public class BossIntroSequence : MonoBehaviour
     {
         introRunning = true;
 
-        if (dragonBossController == null || dragonTransform == null || wizardTransform == null || wizardCarryPoint == null || perchPoint == null || landingPoint == null)
+        if (dragonBossController == null || wizardTransform == null || wizardCarryPoint == null || perchPoint == null || landingPoint == null)
         {
             Debug.LogWarning("BossIntroSequence is missing one or more references.");
             introRunning = false;
             yield break;
         }
+
+        dragonTransform = dragonBossController.transform;
 
         dragonBossController.PauseDragonBehaviour();
 
@@ -76,10 +86,12 @@ public class BossIntroSequence : MonoBehaviour
 
         RemoveWizardAtPerch();
         dragonBossController.PlayBattleStance();
+        dragonBossController.PlayRoarSound();
 
         yield return new WaitForSeconds(battleStanceTime);
 
         dragonBossController.PlayFlyingAnimation();
+
         yield return FlyDragonToLandingPoint();
 
         yield return new WaitForSeconds(waitBeforeFight);
@@ -207,13 +219,37 @@ public class BossIntroSequence : MonoBehaviour
         Debug.Log("Wizard removed at perch.");
     }
 
+    // Moves the dragon from the perch to the arena floor without dipping below the landing height
     private IEnumerator FlyDragonToLandingPoint()
     {
-        Vector3 startPosition = dragonTransform.position;
-        Vector3 endPosition = landingPoint.position;
+        if (dragonBossController == null || landingPoint == null)
+        {
+            yield break;
+        }
 
-        Vector3 controlPoint = (startPosition + endPosition) * 0.5f;
-        controlPoint.y = Mathf.Max(startPosition.y, endPosition.y) + landingSwoopHeight;
+        Transform dragonRoot = dragonBossController.transform;
+
+        dragonBossController.PlayFlyingAnimation();
+
+        Vector3 startPosition = dragonRoot.position;
+
+        Vector3 groundLandingPosition = landingPoint.position + Vector3.up * landingGroundOffset;
+
+        Vector3 flyingEndPosition = groundLandingPosition + Vector3.up * flyingLandingHeightOffset;
+
+        Vector3 flatDirectionToLanding = flyingEndPosition - startPosition;
+        flatDirectionToLanding.y = 0f;
+
+        if (flatDirectionToLanding.sqrMagnitude <= 0.01f)
+        {
+            flatDirectionToLanding = dragonRoot.forward;
+        }
+
+        flatDirectionToLanding.Normalize();
+
+        Vector3 controlPoint = startPosition;
+        controlPoint += flatDirectionToLanding * landingForwardOffset;
+        controlPoint += Vector3.up * landingSwoopHeight;
 
         float elapsedTime = 0f;
 
@@ -221,27 +257,77 @@ public class BossIntroSequence : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            float t = elapsedTime / flyToLandingTime;
+            float t = Mathf.Clamp01(elapsedTime / flyToLandingTime);
             float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
             Vector3 nextPosition = CalculateQuadraticBezierPoint(
                 smoothT,
                 startPosition,
                 controlPoint,
-                endPosition
+                flyingEndPosition
             );
 
-            RotateDragonFlatTowards(nextPosition);
+            if (nextPosition.y < flyingEndPosition.y)
+            {
+                nextPosition.y = flyingEndPosition.y;
+            }
 
-            dragonTransform.position = nextPosition;
+            dragonRoot.position = nextPosition;
+
+            Vector3 lookDirection = flyingEndPosition - dragonRoot.position;
+            lookDirection.y = 0f;
+
+            if (lookDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection.normalized);
+
+                dragonRoot.rotation = Quaternion.Slerp(
+                    dragonRoot.rotation,
+                    targetRotation,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
 
             yield return null;
         }
 
-        dragonTransform.position = endPosition;
-        dragonTransform.rotation = landingPoint.rotation;
+        dragonRoot.position = flyingEndPosition;
 
-        Debug.Log("Dragon landed in the arena.");
+        Vector3 finalLookDirection = landingPoint.forward;
+        finalLookDirection.y = 0f;
+
+        if (finalLookDirection.sqrMagnitude > 0.01f)
+        {
+            dragonRoot.rotation = Quaternion.LookRotation(finalLookDirection.normalized);
+        }
+
+        dragonBossController.PlayBattleStance();
+
+        yield return SettleDragonOntoGround(flyingEndPosition, groundLandingPosition);
+
+        Debug.Log("Dragon settled onto ground. Root Y: " + dragonRoot.position.y);
+    }
+
+    // Lowers the dragon from its flying pose height to its real ground position
+    private IEnumerator SettleDragonOntoGround(Vector3 startPosition, Vector3 endPosition)
+    {
+        Transform dragonRoot = dragonBossController.transform;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < landingSettleTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsedTime / landingSettleTime);
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+
+            dragonRoot.position = Vector3.Lerp(startPosition, endPosition, smoothT);
+
+            yield return null;
+        }
+
+        dragonRoot.position = endPosition;
     }
 
     // Moves the dragon towards a target while rotating mostly horizontally
