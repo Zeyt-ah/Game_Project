@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
-  m_Name: Tyrell
+  m_Name: Tyrell5
   m_EditorClassIdentifier: 
   line: Welcome to Menari! Or more specifically, my front garden. I'm glad you're
     okay, that tornado last night turned everything upside down! It even lodged a
