@@ -178,7 +178,8 @@ public class PriestScript : MonoBehaviour
 
     private void CastSpell()
     {
-        Vector3 castPosition = staff.transform.position;
+        Vector3 castPosition =
+    staff.transform.position + transform.forward * 1.2f;
         GameObject spawnedSpell = Instantiate(fireBall, castPosition, Quaternion.identity);
 
         Vector3 moveDirection = (player.position - castPosition).normalized;

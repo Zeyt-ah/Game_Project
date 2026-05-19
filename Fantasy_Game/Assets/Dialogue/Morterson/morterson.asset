@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: morterson
   m_EditorClassIdentifier: 
-  line: Hello mate! welcome to Helver.
+  line: Hello mate! Welcome to Helver.
   option1:
     text: Hello, have you seen a dragon egg anywhere?
     next: {fileID: 11400000, guid: f0258e0da02ac7149afd9c51a358bf25, type: 2}

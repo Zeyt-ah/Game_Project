@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: morterson 5
   m_EditorClassIdentifier: 
-  line: What? of course he is! He's a genius scientist! He make all sorts of new
+  line: What? Of course he is! He's a genius scientist! He make all sorts of new
     technology to improve our lives.
   option1:
     text: What has he made?

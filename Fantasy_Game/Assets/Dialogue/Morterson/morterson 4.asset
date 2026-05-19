@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: morterson 4
   m_EditorClassIdentifier: 
   line: Uhhhhh.. no I haven't. You should ask Myra, in the tavern. She's the one
-    who thinks about stuff
+    who thinks about stuff.
   option1:
     text: What were you guys talking about?
     next: {fileID: 11400000, guid: c3f44320c4239484fa97496e2f14704c, type: 2}

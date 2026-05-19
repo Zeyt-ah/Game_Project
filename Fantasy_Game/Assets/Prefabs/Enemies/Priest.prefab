@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cb65eb249b552d742b211f18f4f01f7e, type: 3}
       propertyPath: m_Name
-      value: Priest 2
+      value: Priest
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -400,8 +400,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 1.9, z: 0.3}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 0.3, y: 0.95601726, z: 0.3}
+  m_Center: {x: 0, y: 1.4719914, z: 0}
 --- !u!114 &861363669385341401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +425,9 @@ MonoBehaviour:
   attackRange: 10
   attackCooldown: 7
   maxHealth: 1
+  spellSpeed: 5
+  spellRange: 10
+  spellDuration: 3
   roamRadius: 5
 --- !u!4 &4379063524752662599 stripped
 Transform:
