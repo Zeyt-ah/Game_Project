@@ -22,6 +22,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string uiMap = "UI";
     [SerializeField] private Behaviour cinemachineRotationControl;
 
+    [Header("Shop")] // Newly added section!
+    [SerializeField] private GameObject shopUI;
+
     private string currentNpcName;
     private Action onClose;
     private DialogueNode currentNode;
@@ -32,8 +35,8 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         dialogueRoot.SetActive(false);
+        if (shopUI != null) shopUI.SetActive(false); // Hide shop UI on awake
     }
-
 
     public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null, Action<DialogueActionType> onDialogueAction = null)
     {
@@ -82,6 +85,9 @@ public class DialogueManager : MonoBehaviour
 
         button.onClick.AddListener(() =>
         {
+            // Check if the selected action is opening the shop (Newly added)
+            bool isOpeningShop = (choice.action == DialogueActionType.OpenShop); 
+
             if (choice.action != DialogueActionType.None)
             {
                 onAction?.Invoke(choice.action);
@@ -94,6 +100,19 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 ShowNode(choice.next);
+            }
+
+            // Open the shop UI immediately after the dialogue closes and regain mouse control (Newly added)
+            if (isOpeningShop && shopUI != null)
+            {
+                shopUI.SetActive(true);
+
+                // Re-enable the cursor that was hidden by Close()
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                
+                if (playerInput) playerInput.SwitchCurrentActionMap(uiMap);
+                if (cinemachineRotationControl) cinemachineRotationControl.enabled = false;
             }
         });
     }
@@ -115,5 +134,18 @@ public class DialogueManager : MonoBehaviour
         onClose = null;
         onAction = null;
         currentNode = null;
+    }
+
+    // Function to call when the 'Close' button in the Shop UI is clicked (Newly added)
+    public void CloseShop()
+    {
+        if (shopUI != null) shopUI.SetActive(false);
+
+        // Return to gameplay state (hide cursor, enable player input and rotation)
+        if (playerInput) playerInput.SwitchCurrentActionMap(gameplayMap);
+        if (cinemachineRotationControl) cinemachineRotationControl.enabled = true;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

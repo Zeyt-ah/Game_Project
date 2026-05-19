@@ -6,7 +6,8 @@ public enum DialogueActionType
     StartDragonBossIntro,
     GiveSpell,
     AllowWindmillEggPickup,
-    KalQuestAllowPickup
+    KalQuestAllowPickup,
+    OpenShop
 }
 
 [System.Serializable]
