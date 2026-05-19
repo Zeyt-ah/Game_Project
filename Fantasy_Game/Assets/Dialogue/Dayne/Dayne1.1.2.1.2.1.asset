@@ -16,7 +16,7 @@ MonoBehaviour:
     all.
   option1:
     text: Kleora?
-    next: {fileID: 11400000, guid: 08ff9c9275614f148b04eb8ad699c8a0, type: 2}
+    next: {fileID: 11400000, guid: 62ceb89e52adc104293d373b234566a2, type: 2}
     action: 0
   option2:
     text: What do you know about dragons?

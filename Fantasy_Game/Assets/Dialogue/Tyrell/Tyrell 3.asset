@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Tyrell 3
   m_EditorClassIdentifier: 
-  line: Oh.. that's a shame.
+  line: Oh.. that's a shame. I hope you find your way home.
   option1:
     text: Bye
     next: {fileID: 0}

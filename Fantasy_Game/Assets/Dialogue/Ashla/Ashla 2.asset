@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ashla 2
   m_EditorClassIdentifier: 
   line: They're living stones, who worship the sacred cliffs in exchange for wisdom.
-    But nobody ever goes visits, I guess they're just a bit creeped out. Have you
-    travelled from far?
+    But nobody ever visits, I guess they're just a bit creeped out. Have you travelled
+    from far?
   option1:
     text: That tornado threw me across the land. I'm very lost.
     next: {fileID: 11400000, guid: 537c7b98244d59e44a7b9a8091514bc3, type: 2}

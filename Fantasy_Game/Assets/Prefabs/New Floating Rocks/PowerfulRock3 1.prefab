@@ -10296,12 +10296,24 @@ PrefabInstance:
       value: PowerfulRock3 1
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: dad8f8ba492de29448d3a44edc395580, type: 3}
+      propertyPath: m_FadeMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: dad8f8ba492de29448d3a44edc395580, type: 3}
+      propertyPath: m_AnimateCrossFading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: dad8f8ba492de29448d3a44edc395580, type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.09100157
+      value: 0.051517364
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: dad8f8ba492de29448d3a44edc395580, type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.041177373
+      value: 0.027947243
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: dad8f8ba492de29448d3a44edc395580, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.0133500425
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

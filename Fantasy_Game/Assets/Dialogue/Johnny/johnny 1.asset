@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: johnny 1
   m_EditorClassIdentifier: 
-  line: "The dam... it broke in the storm last night. They... They're all dead. Everyone
-    in \nDamton."
+  line: The dam... it broke in the storm last night. They... They're all dead. Everyone
+    in Damton.
   option1:
     text: 'Thats terrible. '
     next: {fileID: 11400000, guid: b0f0e649bd17ffc46958a33d48c50616, type: 2}

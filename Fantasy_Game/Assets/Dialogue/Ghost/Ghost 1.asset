@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Ghost 1
   m_EditorClassIdentifier: 
-  line: Where am I, Where are they, I'm alone, Everyone is gone, I'm lost, Where
-    am I, I'm alone, Help me, Save me, take me home, Where am I. I'm lost, Where
-    are they.
+  line: Where am I? Where are they? I'm alone. Everyone is gone, I'm lost, where
+    am I? I'm alone, help me. Save me. Take me home. Where am I? I'm lost, where
+    are they?
   option1:
     text: 'Hello? '
     next: {fileID: 11400000, guid: fea9981a763ebd546b474f8ad1f7a6a0, type: 2}
