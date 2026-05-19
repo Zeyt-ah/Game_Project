@@ -34,8 +34,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        dialogueRoot.SetActive(false);
-        if (shopUI != null) shopUI.SetActive(false); // Hide shop UI on awake
+        if (dialogueRoot != null) dialogueRoot.SetActive(false);
+        if (shopUI != null) shopUI.SetActive(false);
     }
 
     public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null, Action<DialogueActionType> onDialogueAction = null)
@@ -47,21 +47,23 @@ public class DialogueManager : MonoBehaviour
         onClose = onClosed;
         onAction = onDialogueAction;
 
-        if (playerInput) playerInput.SwitchCurrentActionMap(uiMap);
-        if (cinemachineRotationControl) cinemachineRotationControl.enabled = false;
+        if (playerInput != null) playerInput.SwitchCurrentActionMap(uiMap);
+        if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = false;
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        dialogueRoot.SetActive(true);
+        if (dialogueRoot != null) dialogueRoot.SetActive(true);
         ShowNode(currentNode);
     }
 
     private void ShowNode(DialogueNode node)
     {
+        if (node == null) return;
+
         currentNode = node;
-        nameText.text = currentNpcName;
-        lineText.text = node.line;
+        if (nameText != null) nameText.text = currentNpcName;
+        if (lineText != null) lineText.text = node.line;
 
         SetupChoice(option1Button, option1Label, node.option1);
         SetupChoice(option2Button, option2Label, node.option2);
@@ -69,9 +71,9 @@ public class DialogueManager : MonoBehaviour
 
     private void SetupChoice(Button button, TMP_Text label, DialogueChoice choice)
     {
+        if (button == null) return;
         button.onClick.RemoveAllListeners();
 
-        // If no text, hide the button
         if (choice == null || string.IsNullOrWhiteSpace(choice.text))
         {
             button.gameObject.SetActive(false);
@@ -79,53 +81,46 @@ public class DialogueManager : MonoBehaviour
         }
 
         button.gameObject.SetActive(true);
-        label.text = choice.text;
+        if (label != null) label.text = choice.text;
 
         button.onClick.AddListener(() =>
         {
-            // Check if the selected action is opening the shop
             bool isOpeningShop = (choice.action == DialogueActionType.OpenShop);
 
+            // Prevent external script exceptions from blocking execution
             if (choice.action != DialogueActionType.None)
             {
-                onAction?.Invoke(choice.action);
+                try { onAction?.Invoke(choice.action); }
+                catch (Exception e) { Debug.LogWarning("Action Error Blocked: " + e.Message); }
             }
 
-            // If opening the shop, bypass the standard Close() method
             if (isOpeningShop)
             {
                 IsOpen = false;
-                dialogueRoot.SetActive(false); // Hide the dialogue UI
+                if (dialogueRoot != null) dialogueRoot.SetActive(false);
+
+                // Secure cursor visibility and input control immediately
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                if (playerInput != null) playerInput.SwitchCurrentActionMap(uiMap);
+                if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = false;
 
                 if (shopUI != null)
                 {
-                    shopUI.SetActive(true); // Show the shop UI
-                }
-                else
-                {
-                    Debug.LogError("Shop UI is not assigned! Please check the Inspector.");
+                    shopUI.SetActive(true);
                 }
 
-                // Trigger the onClose event (This might lock the cursor depending on other scripts)
-                onClose?.Invoke();
+                // Handle external close callbacks safely
+                try { onClose?.Invoke(); }
+                catch (Exception e) { Debug.LogWarning("Close Error Blocked: " + e.Message); }
 
-                // Force the cursor to be visible and unlocked immediately after onClose
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-
-                // Ensure input is set to UI mode so the player can click
-                if (playerInput) playerInput.SwitchCurrentActionMap(uiMap);
-
-                // Clear dialogue references
                 onClose = null;
                 onAction = null;
                 currentNode = null;
 
-                // Return early to prevent the standard dialogue Close() execution
                 return;
             }
 
-            // Proceed normally if not opening the shop
             if (choice.next == null)
             {
                 Close();
@@ -140,28 +135,28 @@ public class DialogueManager : MonoBehaviour
     public void Close()
     {
         IsOpen = false;
-        dialogueRoot.SetActive(false);
+        if (dialogueRoot != null) dialogueRoot.SetActive(false);
 
-        if (playerInput) playerInput.SwitchCurrentActionMap(gameplayMap);
-        if (cinemachineRotationControl) cinemachineRotationControl.enabled = true;
+        if (playerInput != null) playerInput.SwitchCurrentActionMap(gameplayMap);
+        if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = true;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        onClose?.Invoke();
+        try { onClose?.Invoke(); }
+        catch (Exception e) { Debug.LogWarning("Close Error Blocked: " + e.Message); }
+
         onClose = null;
         onAction = null;
         currentNode = null;
     }
 
-    // Function to call when the 'Close' button in the Shop UI is clicked
     public void CloseShop()
     {
         if (shopUI != null) shopUI.SetActive(false);
 
-        // Return to gameplay state (hide cursor, enable player input and rotation)
-        if (playerInput) playerInput.SwitchCurrentActionMap(gameplayMap);
-        if (cinemachineRotationControl) cinemachineRotationControl.enabled = true;
+        if (playerInput != null) playerInput.SwitchCurrentActionMap(gameplayMap);
+        if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = true;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
