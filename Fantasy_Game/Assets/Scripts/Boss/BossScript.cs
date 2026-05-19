@@ -519,7 +519,7 @@ public class BossScript : MonoBehaviour
         DestroySummonedMinions();
 
         yield return new WaitForSeconds(2f);
-        gameManager.Win();
+        gameManager.Win(GameManagerScript.EndingType.GoodEnding);
 
         Destroy(gameObject);
     }

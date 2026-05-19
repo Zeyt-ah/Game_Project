@@ -772,7 +772,7 @@ public class DragonBossController : MonoBehaviour
     private void Win()
     {
         Debug.Log("you win");
-        gameManager.Win();
+        gameManager.Win(GameManagerScript.EndingType.BadEnding);
     }
 
     // Plays an Animator state by string name

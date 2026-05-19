@@ -12,19 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: Doctor 5
   m_EditorClassIdentifier: 
-  line: 'Terrific. I got to see the rough area where each egg landed:
-
-    This island
-    here (South)
-
-    The village, Helver (North)
-
-    The Sacred Cliffs (East)
-
-    The
-    Windmill at Treff (North)
-
-    The top of the Volcano (Far North west)
+  line: 'Terrific. I got to see the rough area where each egg landed: This island
+    here, The Sacred Cliffs (East), The Windmill at Treff (North), and The top of
+    the Volcano (Far North west).
 
 '
   option1:

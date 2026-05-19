@@ -13,8 +13,8 @@ public class NestWin : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (playerScript == null) return;
 
-
-        if (playerScript.eggCount >= 3) { 
+        if (playerScript.eggCount >= 3)
+        {
             hasWon = true;
             Win();
         }
@@ -23,6 +23,7 @@ public class NestWin : MonoBehaviour
     private void Win()
     {
         Debug.Log("you win");
-        gameManager.Win();
+
+        gameManager.Win(GameManagerScript.EndingType.GoodEnding);
     }
 }

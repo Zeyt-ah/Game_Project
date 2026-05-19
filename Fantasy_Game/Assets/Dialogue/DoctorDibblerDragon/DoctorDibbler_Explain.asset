@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: DoctorDibbler_Explain
   m_EditorClassIdentifier: 
-  line: Listen quickly. Kill the dragon, or this island dies before sunrise.
+  line: You have no choice now, fool. Kill the dragon!
   option1:
-    text: I will kill the dragon.
+    text: Okay. I will kill it.
     next: {fileID: 11400000, guid: cb1d409fe8ad90648964123fe6a22b98, type: 2}
-    onChosen:
-      m_PersistentCalls:
-        m_Calls: []
+    action: 0
   option2:
     text: I am not ready.
     next: {fileID: 11400000, guid: b6c00d42ba139ab4da50110fe2d22b3b, type: 2}
-    onChosen:
-      m_PersistentCalls:
-        m_Calls: []
+    action: 0

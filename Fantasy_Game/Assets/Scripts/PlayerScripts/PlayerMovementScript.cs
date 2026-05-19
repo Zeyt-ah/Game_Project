@@ -77,7 +77,10 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        if (player.IsDead()) Dismount();
+        if (player.IsDead() && isMounted)
+        {
+            Dismount();
+        }
         if (player == null) return;
         if (!playerCanMove()) return;
         UpdateStaminaBar();

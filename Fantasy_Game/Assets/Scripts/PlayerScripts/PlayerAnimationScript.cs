@@ -40,7 +40,10 @@ public class PlayerAnimationScript : MonoBehaviour
         //checks if the player is grounded for the running animation
         animator.SetBool("Grounded", movementScript.IsGrounded());
 
-        bool falling = !movementScript.IsGrounded() && movementScript.VerticalVelocity() < -1.5;
+        bool falling =
+    !movementScript.IsGrounded() &&
+    !movementScript.IsClimbing();
+
         animator.SetBool("isFalling", falling);
 
         animator.SetBool("isClimbingBool", movementScript.IsClimbing());

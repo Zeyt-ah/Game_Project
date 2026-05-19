@@ -27,7 +27,17 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject heartPrefab;
     public GameObject coinPrefab;
+    
+    public GameObject goodEndingUI;
+    public GameObject badEndingUI;
 
+    public void AddScore(int amount)
+    {
+        score += amount;
+
+        scoreText.text = "Score: " + score;
+        finalScore.text = "Final Score: " + score;
+    }
     void Start()
     {
         score = 0;
@@ -35,7 +45,11 @@ public class GameManagerScript : MonoBehaviour
         UpdateScore(score);
     }
 
-
+    public enum EndingType
+    {
+        GoodEnding,
+        BadEnding
+    }
 
     public void UpdateScore(int scoreToAdd)
     {
@@ -72,20 +86,26 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
-    public void Win()
+    
+
+    public void Win(EndingType ending)
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        winText.gameObject.SetActive(true);
-        winText.text = "You Win!\n Good Ending";
-        finalScore.gameObject.SetActive(true);
-        quitButtonWin.gameObject.SetActive(true);
-        StartCoroutine(WaitForWin());
-    }
 
-    private IEnumerator WaitForWin()
-    {
-        yield return new WaitForSeconds(0f);
+        finalScore.gameObject.SetActive(true);
+
+        switch (ending)
+        {
+            case EndingType.GoodEnding:
+                goodEndingUI.SetActive(true);
+                break;
+
+            case EndingType.BadEnding:
+                badEndingUI.SetActive(true);
+                break;
+        }
+
         Time.timeScale = 0f;
     }
 

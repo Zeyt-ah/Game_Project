@@ -15,8 +15,10 @@ MonoBehaviour:
   line: No one ever is. Courage is not waiting until fear is gone. It is moving while
     fear still grips your throat.
   option1:
-    text: I am ready.
+    text: Fine.
     next: {fileID: 11400000, guid: cb1d409fe8ad90648964123fe6a22b98, type: 2}
+    action: 0
   option2:
-    text: I need more time.
+    text: 
     next: {fileID: 0}
+    action: 0

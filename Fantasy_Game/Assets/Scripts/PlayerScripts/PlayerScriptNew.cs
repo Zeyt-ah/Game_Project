@@ -23,6 +23,11 @@ public class PlayerScriptNew : MonoBehaviour
     private int eggsRequired = 5;
     public GameObject escapeMenu;
 
+    public Transform respawnPoint;
+    public Transform currentCheckpoint;
+
+    private Coroutine iFrameRoutine;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -32,6 +37,10 @@ public class PlayerScriptNew : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
     }
 
+    public void SetCheckpoint(Transform newCheckpoint)
+    {
+        currentCheckpoint = newCheckpoint;
+    }
 
     public void TakeDamage(int amount)
     {
@@ -50,7 +59,10 @@ public class PlayerScriptNew : MonoBehaviour
             Death();
             return;
         }
-        StartCoroutine(IFrames());
+        if (iFrameRoutine != null)
+            StopCoroutine(iFrameRoutine);
+
+        iFrameRoutine = StartCoroutine(IFrames());
     }
 
     public void Heal(int amount)
@@ -133,10 +145,59 @@ public class PlayerScriptNew : MonoBehaviour
     {
         _animator.SetTrigger("Death");
         _animator.SetBool("Dead", true);
+
         canMove = false;
+        canAttack = false;
         dead = true;
-        gameManager.GameOver();
+
+        if (iFrameRoutine != null)
+            StopCoroutine(iFrameRoutine);
+
+        StartCoroutine(Respawn());
     }
+
+
+    private IEnumerator Respawn()
+    {
+        canMove = false;
+        canAttack = false;
+
+        _animator.SetTrigger("Death");
+        _animator.SetBool("Dead", true);
+
+        yield return new WaitForSeconds(2f); // wait for animation
+
+        RespawnPlayer();
+    }
+
+    private void RespawnPlayer()
+    {
+        currentHealth = maxHealth;
+        gameManager.UpdateHealth(currentHealth);
+
+        canTakeDmg = true;
+        canMove = true;
+        canAttack = true;
+        dead = false;
+        tookDamageRecently = false;
+
+        if (currentCheckpoint != null)
+        {
+            _characterController.enabled = false;
+            transform.position = currentCheckpoint.position;
+            _characterController.enabled = true;
+        }
+
+        _animator.SetBool("Dead", false);
+
+        gameManager.AddScore(-500);
+    }
+
+    private void Start()
+    {
+        currentCheckpoint = transform; 
+    }
+
     public void EscapeMenu(InputAction.CallbackContext context)
     {
         if (context.started)

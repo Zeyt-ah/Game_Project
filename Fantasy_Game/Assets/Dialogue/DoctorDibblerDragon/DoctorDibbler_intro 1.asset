@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
-  m_Name: Ashla 1
+  m_Name: DoctorDibbler_intro 1
   m_EditorClassIdentifier: 
-  line: They're directly east of here, through the forest. It's nice that you're
-    going there, a lot of people around here don't go to see the stones. There's
-    so much to learn from them.
+  line: 'Good, you made it. It has already injured me, a claw to the spine. The beast
+    circles above us, Watching my weakness. '
   option1:
-    text: The Stones?
-    next: {fileID: 11400000, guid: 5be0f1fcd1c50ad4fbec4b968604266b, type: 2}
+    text: What do we do?
+    next: {fileID: 11400000, guid: 4f1de8428ce71f0448d1ebfd01d54eff, type: 2}
     action: 0
   option2:
-    text: Thanks.
+    text: Where's my reward?
     next: {fileID: 0}
     action: 0

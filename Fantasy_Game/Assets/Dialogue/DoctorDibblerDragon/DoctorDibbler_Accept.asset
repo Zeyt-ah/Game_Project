@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864f32d36e36a5644aa8fbd495f2626a, type: 3}
   m_Name: DoctorDibbler_Accept
   m_EditorClassIdentifier: 
-  line: Then go. Save the island... and may the old magic forgive what must be done.
+  line: Go, save the island... and may the old magic forgive what must be done.
   option1:
     text: Begin the fight.
     next: {fileID: 0}
