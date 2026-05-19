@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using Ilumisoft.HealthSystem; // Required for HealthComponent
 
 public class ShopManager : MonoBehaviour
 {
@@ -26,9 +25,22 @@ public class ShopManager : MonoBehaviour
     public bool useDebugKey = true;
     public KeyCode debugOpenKey = KeyCode.P;
 
+    [Header("Close Settings")]
+    [SerializeField] private KeyCode shopCloseKey = KeyCode.E;
+
+    [Header("Dialogue System Connection")]
+    [SerializeField] private DialogueManager dialogueManager;
+
+    private bool isShopActive = false;
+
     private void Start()
     {
         CloseShop();
+
+        if (dialogueManager == null)
+        {
+            dialogueManager = FindFirstObjectByType<DialogueManager>();
+        }
 
         if (clearOwnedItemsOnStart && ownedInventory != null)
         {
@@ -57,6 +69,19 @@ public class ShopManager : MonoBehaviour
 
     private void Update()
     {
+        if (isShopActive && Input.GetKeyDown(shopCloseKey))
+        {
+            CloseShop();
+            return;
+        }
+
+        // Force maximum UI priority constraints to keep hardware mouse inputs alive
+        if (isShopActive)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         if (!useDebugKey) return;
 
         if (Input.GetKeyDown(debugOpenKey))
@@ -90,6 +115,8 @@ public class ShopManager : MonoBehaviour
 
     public void OpenShop()
     {
+        isShopActive = true;
+
         if (shopUI != null) shopUI.SetActive(true);
 
         Cursor.visible = true;
@@ -103,18 +130,38 @@ public class ShopManager : MonoBehaviour
 
     public void CloseShop()
     {
+        isShopActive = false;
+
         if (shopUI != null) shopUI.SetActive(false);
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if (dialogueManager != null)
+        {
+            dialogueManager.Close();
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                PlayerScriptNew playerScript = player.GetComponent<PlayerScriptNew>();
+                if (playerScript != null)
+                {
+                    playerScript.EnableMovement();
+                    playerScript.EnableAttack();
+                }
+            }
+        }
     }
 
     /// <summary>
-    /// Core logic for buying items from the shop
+    /// Processes item purchase sequences. 
+    /// Restores player health even if current health parameters are full.
     /// </summary>
     public void Buy(int index)
     {
-        // 1. Validation Checks
         if (items == null || index < 0 || index >= items.Length)
         {
             Debug.LogError("ShopManager: Invalid item index!");
@@ -124,40 +171,36 @@ public class ShopManager : MonoBehaviour
         ItemData item = items[index];
         if (item == null) return;
 
-        // 2. Check One-Time Purchase
         if (item.oneTimePurchase && ownedInventory != null && ownedInventory.IsOwned(item.itemId))
         {
             ShowShopMessage("You already own this item.");
             return;
         }
 
-        // 3. Try to spend gold
         if (wallet == null || !wallet.Spend(item.price))
         {
             ShowShopMessage("You don't have enough gold.");
             return;
         }
 
-        // 4. Branching Logic based on Item Index
         bool purchaseProcessed = false;
 
-        // INDEX 0 & 1: Consumables (Roasted Meat, Beer) -> Immediate Healing
         if (index == 0 || index == 1)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
-                HealthComponent health = player.GetComponent<HealthComponent>();
-                if (health != null)
+                PlayerScriptNew playerScript = player.GetComponent<PlayerScriptNew>();
+                if (playerScript != null)
                 {
-                    // Restores 20 health. You can change this value.
-                    health.AddHealth(20f);
+                    // Forces execution cycle to call Heal regardless of active currentHealth ratios
+                    playerScript.Heal(20);
                     ShowShopMessage("You consumed " + item.displayName + " and felt better!");
                     purchaseProcessed = true;
                 }
                 else
                 {
-                    Debug.LogWarning("Player found but HealthComponent is missing!");
+                    Debug.LogWarning("Player found but PlayerScriptNew is missing!");
                 }
             }
             else
@@ -165,28 +208,13 @@ public class ShopManager : MonoBehaviour
                 Debug.LogWarning("Player object with tag 'Player' not found!");
             }
         }
-        // INDEX 2 (and others): Equipment (Sword) -> Add to Inventory
         else
         {
-            if (playerInventory != null)
-            {
-                purchaseProcessed = playerInventory.AddItem(item);
-
-                if (purchaseProcessed)
-                {
-                    ShowShopMessage("Purchased " + item.displayName + ".");
-                }
-                else
-                {
-                    // Refund if inventory is full
-                    ShowShopMessage("Your bag is full.");
-                    wallet.AddGold(item.price); 
-                    return; 
-                }
-            }
+            ShowShopMessage("This item is no longer available.");
+            wallet.AddGold(item.price);
+            return;
         }
 
-        // 5. Finalize Purchase
         if (purchaseProcessed)
         {
             if (item.oneTimePurchase && ownedInventory != null)

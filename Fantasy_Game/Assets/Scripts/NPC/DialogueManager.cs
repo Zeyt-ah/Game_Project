@@ -22,8 +22,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string uiMap = "UI";
     [SerializeField] private Behaviour cinemachineRotationControl;
 
-    [Header("Shop")]
-    [SerializeField] private GameObject shopUI;
+    [Header("Shop Integration")]
+    [SerializeField] private ShopManager shopManager;
 
     private string currentNpcName;
     private Action onClose;
@@ -35,7 +35,15 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         if (dialogueRoot != null) dialogueRoot.SetActive(false);
-        if (shopUI != null) shopUI.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (IsOpen)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void StartDialogue(string npcName, DialogueNode startNode, Action onClosed = null, Action<DialogueActionType> onDialogueAction = null)
@@ -87,7 +95,6 @@ public class DialogueManager : MonoBehaviour
         {
             bool isOpeningShop = (choice.action == DialogueActionType.OpenShop);
 
-            // Prevent external script exceptions from blocking execution
             if (choice.action != DialogueActionType.None)
             {
                 try { onAction?.Invoke(choice.action); }
@@ -96,27 +103,22 @@ public class DialogueManager : MonoBehaviour
 
             if (isOpeningShop)
             {
+                // Maintain internal track parameters to bypass regular close logic during setup transitions
                 IsOpen = false;
+
                 if (dialogueRoot != null) dialogueRoot.SetActive(false);
 
-                // Secure cursor visibility and input control immediately
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
                 if (playerInput != null) playerInput.SwitchCurrentActionMap(uiMap);
                 if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = false;
 
-                if (shopUI != null)
+                if (shopManager != null)
                 {
-                    shopUI.SetActive(true);
+                    shopManager.OpenShop();
                 }
-
-                // Handle external close callbacks safely
-                try { onClose?.Invoke(); }
-                catch (Exception e) { Debug.LogWarning("Close Error Blocked: " + e.Message); }
-
-                onClose = null;
-                onAction = null;
-                currentNode = null;
+                else
+                {
+                    Debug.LogError("[Dialogue Error] ShopManager component is not assigned in the inspector!");
+                }
 
                 return;
             }
@@ -137,6 +139,7 @@ public class DialogueManager : MonoBehaviour
         IsOpen = false;
         if (dialogueRoot != null) dialogueRoot.SetActive(false);
 
+        // Safely re-enable original action maps and camera control behaviours upon close triggers
         if (playerInput != null) playerInput.SwitchCurrentActionMap(gameplayMap);
         if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = true;
 
@@ -149,16 +152,5 @@ public class DialogueManager : MonoBehaviour
         onClose = null;
         onAction = null;
         currentNode = null;
-    }
-
-    public void CloseShop()
-    {
-        if (shopUI != null) shopUI.SetActive(false);
-
-        if (playerInput != null) playerInput.SwitchCurrentActionMap(gameplayMap);
-        if (cinemachineRotationControl != null) cinemachineRotationControl.enabled = true;
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 }
